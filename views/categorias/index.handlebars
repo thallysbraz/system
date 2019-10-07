@@ -1,0 +1,25 @@
+<div>
+    <div class="jumbotron ">
+        <h1 class="display-4 text-center"><strong>Página de categorias!</strong></h1>
+
+        <div class="card-body" style="width: 18rem;">
+
+            {{#each categorias}}
+
+
+            <a href="/categorias/{{slug}}">
+                <button class="btn btn-primary btn-lg btn-block mt-4">{{nome}}</button>
+            </a>
+
+            {{else}}
+            {{/each}}
+
+            {{#if user}}
+            {{else}}
+
+            {{/if}}
+
+        </div>
+
+    </div>
+</div>

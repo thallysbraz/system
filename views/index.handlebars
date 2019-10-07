@@ -1,0 +1,36 @@
+<div>
+    <div class="jumbotron ">
+        <div class="text-center">
+            <h1 class="display-4"><strong>Bem-vindo!</strong></h1>
+            <p class="lead"><strong>First Educação e Tecnologia</strong></p>
+            <hr class="my-4">
+        </div>
+        {{#if user}}
+        {{else}}
+
+        {{/if}}
+
+        <br><br>
+
+        <h2>Informações: </h2>
+
+        {{#each categorias }}
+
+        <div class="card mt-4">
+            <div class="card-body">
+                <h3>Categoria: {{nome}}</h3>
+                <br>
+                <p>Slug: {{slug}}</p>
+                <hr>
+                <p>Semestre: {{date}}</p>
+
+            </div>
+        </div>
+
+        {{else}}
+
+        <h5 class="alert alert-danger">Nenhuma postagem</h5>
+
+        {{/each}}
+    </div>
+</div>

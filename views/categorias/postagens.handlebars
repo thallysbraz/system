@@ -1,0 +1,30 @@
+<div>
+    <div class="jumbotron ">
+
+        {{#if user}}
+        {{else}}
+        <a class="btn btn-primary btn-lg" href="/usuarios/registro" role="button">Crie uma conta</a>
+        {{/if}}
+        <br>
+        <div>
+            <h1>
+                <center>{{categoria.nome}}</center>
+            </h1>
+        </div>
+        {{#each postagens}}
+        <div class="card mt-4">
+            <div class="card-body">
+                <h3>Titulo: {{titulo}}</h3>
+                <hr>
+                <p>Descrição: {{descricao}}</p>
+                <a href="/postagem/{{slug}}"><button class="btn btn-success">Leia!</button></a>
+                <hr>
+                <small>Data de publicação: {{data}}</small>
+
+            </div>
+        </div>
+        {{else}}
+        <h5>Nenhuma postagem.</h5>
+        {{/each}}
+    </div>
+</div>
