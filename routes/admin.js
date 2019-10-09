@@ -21,7 +21,7 @@ router.get("/", (req, res) => {
 // ROTAS DE CATEGORIAS
 
 //rota para categorias
-router.get("/categorias", (req, res) => {
+router.get("/categorias", eAdmin, (req, res) => {
   Categoria.find()
     .sort({ date: "desc" })
     .then(categorias => {
@@ -34,12 +34,12 @@ router.get("/categorias", (req, res) => {
 });
 
 //view para categorias/add
-router.get("/categorias/add", (req, res) => {
+router.get("/categorias/add", eAdmin, (req, res) => {
   res.render("admin/addcategorias");
 });
 
 //rota para validar e inserir nova categoria no Banco de Dados
-router.post("/categorias/nova", (req, res) => {
+router.post("/categorias/nova", eAdmin, (req, res) => {
   var erros = [];
 
   if (
@@ -80,7 +80,7 @@ router.post("/categorias/nova", (req, res) => {
 });
 
 //rota par view categoria/edit
-router.get("/categorias/edit/:id", (req, res) => {
+router.get("/categorias/edit/:id", eAdmin, (req, res) => {
   Categoria.findOne({ _id: req.params.id })
     .then(categoria => {
       res.render("admin/editcategorias", { categoria: categoria });
@@ -92,7 +92,7 @@ router.get("/categorias/edit/:id", (req, res) => {
 });
 
 //rota para validar e registrar edição na categoria
-router.post("/categorias/edit", (req, res) => {
+router.post("/categorias/edit", eAdmin, (req, res) => {
   var erros = [];
 
   if (
@@ -142,7 +142,7 @@ router.post("/categorias/edit", (req, res) => {
 });
 
 //rota para deletar categoria
-router.post("/categorias/deletar", (req, res) => {
+router.post("/categorias/deletar", eAdmin, (req, res) => {
   Categoria.remove({ _id: req.body.id })
     .then(() => {
       req.flash("success_msg", "Categoria deletada com sucesso!");
@@ -157,7 +157,7 @@ router.post("/categorias/deletar", (req, res) => {
 // ROTAS DE POST
 
 //rota da pagina de post
-router.get("/postagens", (req, res) => {
+router.get("/postagens", eAdmin, (req, res) => {
   Postagem.find()
     .populate("categoria")
     .sort({ data: "desc" })
@@ -171,7 +171,7 @@ router.get("/postagens", (req, res) => {
 });
 
 //rota para criar post
-router.get("/postagens/add", (req, res) => {
+router.get("/postagens/add", eAdmin, (req, res) => {
   Categoria.find()
     .then(categorias => {
       res.render("admin/addpostagem", { categorias: categorias });
@@ -183,7 +183,7 @@ router.get("/postagens/add", (req, res) => {
 });
 
 //rota para validar e inserir post no Banco de Dados
-router.post("/postagens/nova", (req, res) => {
+router.post("/postagens/nova", eAdmin, (req, res) => {
   var erros = [];
 
   if (req.body.categoria == "0") {
@@ -214,7 +214,7 @@ router.post("/postagens/nova", (req, res) => {
 });
 
 // editar post
-router.get("/postagens/edit/:id", (req, res) => {
+router.get("/postagens/edit/:id", eAdmin, (req, res) => {
   Postagem.findOne({ _id: req.params.id })
     .then(postagem => {
       Categoria.find()
@@ -236,7 +236,7 @@ router.get("/postagens/edit/:id", (req, res) => {
 });
 
 //rota para atualizar os dados do post
-router.post("/postagem/edit", (req, res) => {
+router.post("/postagem/edit", eAdmin, (req, res) => {
   Postagem.findOne({ _id: req.body.id })
     .then(postagem => {
       (postagem.titulo = req.body.titulo),
@@ -263,7 +263,7 @@ router.post("/postagem/edit", (req, res) => {
 });
 
 //rota para deletar
-router.get("/postagens/deletar/:id", (req, res) => {
+router.get("/postagens/deletar/:id", eAdmin, (req, res) => {
   Postagem.remove({ _id: req.params.id })
     .then(() => {
       req.flash("success_msg", "Sucesso ao deletar post!");
@@ -277,7 +277,7 @@ router.get("/postagens/deletar/:id", (req, res) => {
 
 // ROTAS DE DISCIPLINAS
 
-router.get("/disciplinas", (req, res) => {
+router.get("/disciplinas", eAdmin, (req, res) => {
   Disciplina.find()
     .sort({ date: "desc" })
     .then(disciplinas => {
@@ -290,12 +290,12 @@ router.get("/disciplinas", (req, res) => {
 });
 
 //view para disciplina/add
-router.get("/disciplinas/add", (req, res) => {
+router.get("/disciplinas/add", eAdmin, (req, res) => {
   res.render("admin/adddisciplinas");
 });
 
 //rota para validar e inserir nova disciplina no Banco de Dados
-router.post("/disciplinas/nova", (req, res) => {
+router.post("/disciplinas/nova", eAdmin, (req, res) => {
   var erros = [];
 
   if (
@@ -339,7 +339,7 @@ router.post("/disciplinas/nova", (req, res) => {
 });
 
 //rota par view disciplina/edit
-router.get("/disciplinas/edit/:id", (req, res) => {
+router.get("/disciplinas/edit/:id", eAdmin, (req, res) => {
   Categoria.findOne({ _id: req.params.id })
     .then(categoria => {
       res.render("admin/editcategorias", { categoria: categoria });
@@ -351,7 +351,7 @@ router.get("/disciplinas/edit/:id", (req, res) => {
 });
 
 //rota para validar e registrar edição na disciplina
-router.post("/disciplinas/edit", (req, res) => {
+router.post("/disciplinas/edit", eAdmin, (req, res) => {
   var erros = [];
 
   if (
@@ -401,7 +401,7 @@ router.post("/disciplinas/edit", (req, res) => {
 });
 
 //rota para deletar disciplina
-router.post("/disciplinas/deletar", (req, res) => {
+router.post("/disciplinas/deletar", eAdmin, (req, res) => {
   Categoria.remove({ _id: req.body.id })
     .then(() => {
       req.flash("success_msg", "Categoria deletada com sucesso!");

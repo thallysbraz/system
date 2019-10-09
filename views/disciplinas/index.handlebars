@@ -1,11 +1,39 @@
 <div class="jumbotron">
     <div class="container">
-        <h1 class="display-4 text-center"><strong>Página de Disciplinas!</strong></h1><br>
-        <div class="card text-center">
-            <div class="card-body">
-                <h5 class="card-title">Aviso:</h5>
-                <p class="card-text">Descrição:</p>
-            </div>
-        </div>
+        <h1 class="display-4 text-center"><strong>Lista de disciplinas ofertadas</strong></h1><br><br>
+
+        <center>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            <h2>Codigo</h2>
+                        </th>
+                        <th scope="col">
+                            <h2>Nome</h2>
+                        </th>
+                        <th scope="col">
+                            <h2>Ementa</h2>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each disciplinas}}
+                    <tr>
+                        <th scope="row">
+                            <h4>{{codigo}}</h4>
+                        </th>
+                        <td>
+                            <h4>{{nome}}</h4>
+                        </td>
+                        <td>
+                            <h4>{{ementa}}</h4>
+                        </td>
+                    </tr>
+                    {{else}}
+                    {{/each}}
+                </tbody>
+            </table>
+        </center>
     </div>
 </div>

@@ -4,7 +4,7 @@
 
 <p align="justify"> Encarregado de armazenar o codigo fonte da aplicação</p>
 
-[Link para o repositorio](https://github.com/thallysbraz/Crud)
+[Link para o repositorio](https://github.com/thallysbraz/system)
 
 ## 1 - Sobre o projeto
 
