@@ -5,24 +5,29 @@
         {{else}}
         <a class="btn btn-primary btn-lg" href="/usuarios/registro" role="button">Crie uma conta</a>
         {{/if}}
-        <br>
+
+
+
+        <br><br>
+
         <div>
-            <h1>
-                <center>{{categoria.nome}}</center>
-            </h1>
+            <h1>{{categoria.nome}}</h1>
         </div>
         {{#each postagens}}
         <div class="card mt-4">
             <div class="card-body">
-                <h3>Titulo: {{titulo}}</h3>
-                <hr>
-                <p>Descrição: {{descricao}}</p>
-                <a href="/postagem/{{slug}}"><button class="btn btn-success">Leia!</button></a>
+                <h3>{{titulo}}</h3>
+                <p>{{descricao}}</p><br>
+                <a href="/postagem/{{slug}}"><button class="btn btn-success">Leia mais!</button></a>
                 <hr>
                 <small>Data de publicação: {{data}}</small>
 
             </div>
         </div>
+
+
+
+
         {{else}}
         <h5>Nenhuma postagem.</h5>
         {{/each}}

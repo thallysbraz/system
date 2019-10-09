@@ -5,6 +5,9 @@
   "repository": "https://github.com/thallysbraz/system",
   "author": "thallysbraz <thallysbraz3@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
   "dependencies": {
     "@sendgrid/mail": "^6.4.0",
     "bcryptjs": "^2.4.3",

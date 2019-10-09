@@ -12,27 +12,39 @@
         <a class="nav-link" href="/">Inicio<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/categorias">Disciplinas</a>
+        <a class="nav-link" href="/categorias">Informações</a>
       </li>
-
       {{#if user}}
+      <li class="nav-item">
+        <a class="nav-link" href="/disciplinas">Disciplinas</a>
+      </li>
       {{#if adm2}}
       <li class="nav-item">
         <a class="nav-link" href="/admin">Gerenciar</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/posts">Alunos</a>
-      </li>
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Lançar notas
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">Disciplinas</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </div>
+
       {{else}}
       {{/if}}
       {{else}}
+
       {{/if}}
 
     </ul>
     {{#if user}}
     <ul class="nav justify-content-end">
       <li class="nav-item">
-        <a class="nav-link" href="/usuarios/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        <a class="nav-link" href="/usuarios/logout"><i class="fas fa-sign-out-alt"></i> Sair</a>
       </li>
     </ul>
     {{else}}
@@ -43,4 +55,5 @@
     </ul>
     {{/if}}
   </div>
+
 </nav>

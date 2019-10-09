@@ -2,19 +2,26 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 
+require("../models/Usuario");
 require("../models/Categoria");
 require("../models/Postagem");
+require("../models/Disciplina");
+require("../models/Nota");
 
 const Categoria = mongoose.model("categorias");
 const Postagem = mongoose.model("postagens");
+const Disciplina = mongoose.model("disciplinas");
+const Nota = mongoose.model("notas");
 const { eAdmin } = require("../helpers/eAdmin");
 
-router.get("/", eAdmin, (req, res) => {
+router.get("/", (req, res) => {
   res.render("admin/index");
 });
 
+// ROTAS DE CATEGORIAS
+
 //rota para categorias
-router.get("/categorias", eAdmin, (req, res) => {
+router.get("/categorias", (req, res) => {
   Categoria.find()
     .sort({ date: "desc" })
     .then(categorias => {
@@ -27,12 +34,12 @@ router.get("/categorias", eAdmin, (req, res) => {
 });
 
 //view para categorias/add
-router.get("/categorias/add", eAdmin, (req, res) => {
+router.get("/categorias/add", (req, res) => {
   res.render("admin/addcategorias");
 });
 
 //rota para validar e inserir nova categoria no Banco de Dados
-router.post("/categorias/nova", eAdmin, (req, res) => {
+router.post("/categorias/nova", (req, res) => {
   var erros = [];
 
   if (
@@ -73,7 +80,7 @@ router.post("/categorias/nova", eAdmin, (req, res) => {
 });
 
 //rota par view categoria/edit
-router.get("/categorias/edit/:id", eAdmin, (req, res) => {
+router.get("/categorias/edit/:id", (req, res) => {
   Categoria.findOne({ _id: req.params.id })
     .then(categoria => {
       res.render("admin/editcategorias", { categoria: categoria });
@@ -85,7 +92,7 @@ router.get("/categorias/edit/:id", eAdmin, (req, res) => {
 });
 
 //rota para validar e registrar edição na categoria
-router.post("/categorias/edit", eAdmin, (req, res) => {
+router.post("/categorias/edit", (req, res) => {
   var erros = [];
 
   if (
@@ -135,7 +142,7 @@ router.post("/categorias/edit", eAdmin, (req, res) => {
 });
 
 //rota para deletar categoria
-router.post("/categorias/deletar", eAdmin, (req, res) => {
+router.post("/categorias/deletar", (req, res) => {
   Categoria.remove({ _id: req.body.id })
     .then(() => {
       req.flash("success_msg", "Categoria deletada com sucesso!");
@@ -147,8 +154,10 @@ router.post("/categorias/deletar", eAdmin, (req, res) => {
     });
 });
 
+// ROTAS DE POST
+
 //rota da pagina de post
-router.get("/postagens", eAdmin, (req, res) => {
+router.get("/postagens", (req, res) => {
   Postagem.find()
     .populate("categoria")
     .sort({ data: "desc" })
@@ -162,7 +171,7 @@ router.get("/postagens", eAdmin, (req, res) => {
 });
 
 //rota para criar post
-router.get("/postagens/add", eAdmin, (req, res) => {
+router.get("/postagens/add", (req, res) => {
   Categoria.find()
     .then(categorias => {
       res.render("admin/addpostagem", { categorias: categorias });
@@ -174,7 +183,7 @@ router.get("/postagens/add", eAdmin, (req, res) => {
 });
 
 //rota para validar e inserir post no Banco de Dados
-router.post("/postagens/nova", eAdmin, (req, res) => {
+router.post("/postagens/nova", (req, res) => {
   var erros = [];
 
   if (req.body.categoria == "0") {
@@ -205,7 +214,7 @@ router.post("/postagens/nova", eAdmin, (req, res) => {
 });
 
 // editar post
-router.get("/postagens/edit/:id", eAdmin, (req, res) => {
+router.get("/postagens/edit/:id", (req, res) => {
   Postagem.findOne({ _id: req.params.id })
     .then(postagem => {
       Categoria.find()
@@ -227,7 +236,7 @@ router.get("/postagens/edit/:id", eAdmin, (req, res) => {
 });
 
 //rota para atualizar os dados do post
-router.post("/postagem/edit", eAdmin, (req, res) => {
+router.post("/postagem/edit", (req, res) => {
   Postagem.findOne({ _id: req.body.id })
     .then(postagem => {
       (postagem.titulo = req.body.titulo),
@@ -254,7 +263,7 @@ router.post("/postagem/edit", eAdmin, (req, res) => {
 });
 
 //rota para deletar
-router.get("/postagens/deletar/:id", eAdmin, (req, res) => {
+router.get("/postagens/deletar/:id", (req, res) => {
   Postagem.remove({ _id: req.params.id })
     .then(() => {
       req.flash("success_msg", "Sucesso ao deletar post!");
@@ -263,6 +272,144 @@ router.get("/postagens/deletar/:id", eAdmin, (req, res) => {
     .catch(err => {
       req.flash("error_msg", "Error ao deletar post");
       res.redirect("/admin/postagens");
+    });
+});
+
+// ROTAS DE DISCIPLINAS
+
+router.get("/disciplinas", (req, res) => {
+  Disciplina.find()
+    .sort({ date: "desc" })
+    .then(disciplinas => {
+      res.render("admin/disciplinas", { disciplinas: disciplinas });
+    })
+    .catch(err => {
+      req.flash("error_msg", "Houve error ao listar as categorias");
+      req.redirect("/admin");
+    });
+});
+
+//view para disciplina/add
+router.get("/disciplinas/add", (req, res) => {
+  res.render("admin/adddisciplinas");
+});
+
+//rota para validar e inserir nova disciplina no Banco de Dados
+router.post("/disciplinas/nova", (req, res) => {
+  var erros = [];
+
+  if (
+    !req.body.codigo ||
+    typeof req.body.codigo == undefined ||
+    req.body.codigo == null
+  ) {
+    erros.push({ texto: "Codigo invalido" });
+  }
+  const cod = req.body.codigo;
+  console.log("codigo: ", cod);
+  if (erros.length > 0) {
+    res.render("admin/adddisciplinas", { erros: erros });
+  } else {
+    const novaDisciplina = {
+      nome: req.body.nome,
+      codigo: req.body.codigo,
+      ementa: req.body.ementa,
+      matriculados: [
+        { aluno: ["5d9cb6fa369c1d778493fd2b", "MM", "2/2019"] },
+        { aluno: ["5d5ee71cb9156b4c28a432d6", "SS", "2/2019"] },
+        { aluno: ["5d9795601088223e8cc40760", "II", "2/2019"] }
+      ]
+    };
+
+    new Disciplina(novaDisciplina)
+      .save()
+      .then(() => {
+        req.flash("success_msg", "Disciplina criada com sucesso!");
+        res.redirect("/admin/disciplinas");
+      })
+      .catch(err => {
+        req.flash(
+          "error_msg",
+          "Error ao salvar a disciplina, tente novamente!"
+        );
+        console.log("error: ", err);
+        res.redirect("/admin");
+      });
+  }
+});
+
+//rota par view disciplina/edit
+router.get("/disciplinas/edit/:id", (req, res) => {
+  Categoria.findOne({ _id: req.params.id })
+    .then(categoria => {
+      res.render("admin/editcategorias", { categoria: categoria });
+    })
+    .catch(err => {
+      req.flash("error_msg", "Essa categoria não existe");
+      res.redirect("/admin/categorias");
+    });
+});
+
+//rota para validar e registrar edição na disciplina
+router.post("/disciplinas/edit", (req, res) => {
+  var erros = [];
+
+  if (
+    !req.body.nome ||
+    typeof req.body.nome == undefined ||
+    req.body.nome == null
+  ) {
+    erros.push({ texto: "Nome invalido" });
+  }
+
+  if (
+    !req.body.slug ||
+    typeof req.body.slug == undefined ||
+    req.body.slug == null
+  ) {
+    erros.push({ texto: "Slug invalido" });
+  }
+
+  if (erros.length > 0) {
+    req.flash("error_msg", "Error ao salvar a categoria, tente novamente!");
+    res.redirect("/admin/categorias");
+  } else {
+    Categoria.findOne({ _id: req.body.id })
+      .then(categoria => {
+        categoria.nome = req.body.nome;
+        categoria.slug = req.body.slug;
+
+        categoria
+          .save()
+          .then(() => {
+            req.flash("success_msg", "categoria editada com sucesso");
+            res.redirect("/admin/categorias");
+          })
+          .catch(err => {
+            req.flash(
+              "error_msg",
+              "Houve erro ao salvar a edição da categoria"
+            );
+            res.redirect("/admin/categorias");
+          });
+      })
+      .catch(err => {
+        req.flash("error_msg", "Houve um error ao editar a categoria");
+        res.redirect("/admin/categorias");
+      });
+  }
+});
+
+//rota para deletar disciplina
+router.post("/disciplinas/deletar", (req, res) => {
+  Categoria.remove({ _id: req.body.id })
+    .then(() => {
+      req.flash("success_msg", "Categoria deletada com sucesso!");
+      res.redirect("/admin/categorias");
+    })
+    .catch(err => {
+      req.flash("error_msg", "Error ao deletar categoria!");
+      res.redirect("/admin/categorias");
     });
 });
 

@@ -1,6 +1,16 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const Nota = new Schema({
+  mencao: {
+    type: String
+  },
+  semestre: {
+    type: String,
+    required: true
+  }
+});
+
 const Usuario = new Schema({
   nome: {
     type: String,
@@ -25,7 +35,8 @@ const Usuario = new Schema({
   passwordResetExpires: {
     type: Date,
     select: false
-  }
+  },
+  notas: [Nota]
 });
 
 mongoose.model("usuarios", Usuario);

@@ -16,15 +16,6 @@
             <input type="text" name="descricao" placeholder="Descrição" class="form-control" required>
             <label for="conteudo">Conteudo: </label>
             <textarea name="conteudo" placeholder="Conteudo" class="form-control" required></textarea>
-            <br>
-            <select name="nota" placeholder="Menção" class="custom-select" required>
-                <option value="notas">SR - SEM RENDIMENTO (Zero)</option>
-                <option value="notas">II - INFERIOR (0,1 a 2,9)</option>
-                <option value="notas">MI - MÉDIO INFERIOR (3,0 a 4,9)</option>
-                <option value="notas">MM - MÉDIO (5,0 a 6,9)</option>
-                <option value="notas">MS - MÉDIO SUPERIOR (7,0 a 8,9)</option>
-                <option value="notas">SS - SUPERIOR (9,0 a 10,0)</option>
-            </select>
             <label for="categoria">Categoria: </label>
             <select name="categoria" placeholder="Categoria" class="custom-select">
                 {{#each categorias}}
@@ -33,7 +24,6 @@
                 <option value="0">Nenhuma categoria registrada</option>
                 {{/each}}
             </select>
-
             <button class="btn btn-success mt-2" type="submit">Criar Post</button>
         </form>
     </div>

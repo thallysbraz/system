@@ -12,11 +12,14 @@ const passport = require("passport");
 require("./models/Usuario");
 require("./models/Categoria");
 require("./models/Postagem");
+require("./models/Disciplina");
+require("./models/Nota");
 require("./config/auth")(passport);
-//require("./config/authADM")(passport);
 
 const Categoria = mongoose.model("categorias");
 const Postagem = mongoose.model("postagens");
+const Disciplina = mongoose.model("disciplinas");
+const Nota = mongoose.model("notas");
 const usuarios = require("./routes/usuario");
 const app = express();
 
@@ -60,7 +63,7 @@ app.set("view engine", "handlebars");
 //Mongoose
 mongoose.Promise = global.Promise;
 mongoose
-  .connect("mongodb://localhost/sistemaEscola", { useNewUrlParser: true })
+  .connect("mongodb://localhost/scholl", { useNewUrlParser: true })
   .then(() => {
     console.log("conectado ao banco MONGODB");
   })
@@ -75,7 +78,100 @@ app.use((req, res, next) => {
 });
 
 //rotas
-app.get("/", (req, res) => {});
+app.get("/", (req, res) => {
+  Postagem.find()
+    .populate("categoria")
+    .sort({ data: "desc" })
+    .then(postagens => {
+      res.render("index", { postagens: postagens });
+    })
+    .catch(err => {
+      req.flash("error_msg", "Error interno ");
+      res.redirect("/404");
+    });
+});
+
+app.get("/postagem/:slug", (req, res) => {
+  Postagem.findOne({ slug: req.params.slug })
+    .then(postagem => {
+      if (postagem) {
+        res.render("postagem/index", { postagem: postagem });
+      } else {
+        req.flash("error_msg", "Esta postagem não existe!");
+        res.redirect("/");
+      }
+    })
+    .catch(err => {
+      req.flash("error_msg", "Error interno ao buscar postagem");
+      res.redirect("/");
+    });
+});
+
+//rota para listar categorias
+app.get("/categorias", (req, res) => {
+  Categoria.find()
+    .then(categorias => {
+      res.render("categorias/index", { categorias: categorias });
+    })
+    .catch(err => {
+      req.flash("error_msg", "Error ao listar categorias");
+      res.redirect("/");
+    });
+});
+
+app.get("/categorias/:slug", (req, res) => {
+  Categoria.findOne({ slug: req.params.slug })
+    .then(categoria => {
+      if (categoria) {
+        Postagem.find({ categoria: categoria._id })
+          .then(postagens => {
+            res.render("categorias/postagens", {
+              postagens: postagens,
+              categoria: categoria
+            });
+          })
+          .catch(err => {
+            req.flash("error_msg", "Error ao listar posts!");
+            res.redirect("/categorias");
+          });
+      } else {
+        req.flash("error_msg", "Essa categoria não existe");
+        res.redirect("/categorias");
+      }
+    })
+    .catch(err => {
+      req.flash("error_msg", "Houve error ao carregar está página!");
+      res.redirect("/categorias");
+    });
+});
+
+app.get("/404", (req, res) => {
+  res.send("Erro 404!");
+});
+
+app.get("/posts", (req, res) => {
+  Postagem.find()
+    .populate("categoria")
+    .sort({ data: "desc" })
+    .then(postagens => {
+      res.render("posts", { postagens: postagens });
+    })
+    .catch(err => {
+      req.flash("error_msg", "Error interno ");
+      res.redirect("/404");
+    });
+});
+
+app.get("/disciplinas", (req, res) => {
+  Disciplina.find()
+    .then(disciplinas => {
+      res.render("disciplinas/index", { disciplinas: disciplinas });
+    })
+    .catch(err => {
+      req.flash("error_msg", "Error ao listar disciplinas");
+      res.redirect("/");
+    });
+});
 
 app.use("/admin", admin); // rota admin
 app.use("/usuarios", usuarios); // rota usuario

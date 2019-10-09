@@ -1,3 +1,6 @@
+global.ID =
+  "<strong> Olá, {0} sua matricula está concluida. Use o número da matricula e senha para acessar o portal http://localhost:3000</strong>";
+
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
@@ -6,6 +9,7 @@ const crypto = require("crypto");
 const passport = require("passport");
 const mailer = require("../modules/mailer");
 const nodemailer = require("nodemailer");
+const path = require("path");
 
 require("dotenv").config();
 require("../models/Usuario");
@@ -79,12 +83,13 @@ router.post("/registro", (req, res) => {
                       pass: process.env.PASSWORD
                     }
                   });
+                  const nom = novoUsuario.nome;
 
                   let mailOptions = {
                     from: "",
                     to: req.body.email,
                     subject: "Seja bem-vindo", //assunto
-                    text: "Bem-vindo ao Blog App"
+                    html: global.ID.replace("{0}", nom)
                   };
 
                   transporter.sendMail(mailOptions, function(err, data) {
@@ -109,6 +114,7 @@ router.post("/registro", (req, res) => {
                     "error_msg",
                     "Error ao criar o usuário, tente novamente!"
                   );
+                  console.log("errCath: ", err);
                   res.redirect("/usuarios/registro");
                 });
             });
@@ -247,17 +253,17 @@ router.post("/login", (req, res, next) => {
     failureFlash: true
   })(req, res, next);
 });
-
+//rota para logout do usuario
 router.get("/logout", (req, res) => {
   req.logout();
   req.flash("success_msg", "Deslogado com sucesso!");
   res.redirect("/");
 });
-
+//rota render esqueci senha
 router.get("/forgot_password", (req, res) => {
   res.render("usuarios/forgot_password");
 });
-
+//rota para esqueci senha
 router.post("/forgot_password", async (req, res) => {
   const { email } = req.body;
 
@@ -302,11 +308,11 @@ router.post("/forgot_password", async (req, res) => {
     res.status(400).send({ error: "Error na rota de esqueci minha senha." });
   }
 });
-
+//rota render resetar senha
 router.get("/reset_password", (req, res) => {
   res.render("usuarios/reset_password");
 });
-
+//rota para resetar senha
 router.post("/reset_password", async (req, res) => {
   const { email, token, senha } = req.body;
   const user = await Usuario.findOne({ email });

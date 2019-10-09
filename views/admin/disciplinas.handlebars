@@ -1,0 +1,22 @@
+<div class="jumbotron">
+    <h2>Lista de disciplinas:</h2>
+    <hr>
+    <a href="/admin/disciplinas/add"><button class="btn btn-success">Nova disciplina</button></a>
+
+    {{#each disciplinas}}
+    <div class="card mt-4">
+        <div class="card-body">
+            <h2>{{nome}}</h2>
+            <h4>Codigo: {{codigo}}</h4>
+            <h4>Ementa: {{ementa}}</h4>
+            <a href="/admin/disciplinas/edit/{{_id}}"><button class="btn btn-success mt-4">Lançar notas</button></a>
+        </div>
+    </div>
+    {{else}}
+
+    <h4 class="mt-3">
+        <font COLOR="red">Nenhuma disciplina encontrada!</font>
+    </h4>
+
+    {{/each}}
+</div>
