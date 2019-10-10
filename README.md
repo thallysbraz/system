@@ -16,3 +16,6 @@
 | :--------------------: | :-----------------------------------------------------------: | :-------: |
 | Arrumar banco de dados | Fazer relacionamentos e descobrir como arrumar banco de dados | Concluido |
 |  Crud de disciplinas   |   Fazer as rotas de get, post, put e delete das disciplinas   | Pendente  |
+|         Alunos         |   Fazer rotas e view para cadastrar alunos nas disciplinas    | Pendente  |
+|   Relacionamentos BD   |       Fazer relacionamento entre ALUNO/DISCIPLINA/NOTA        | Pendente  |
+|      Lançar notas      |              Termina view de lançamento de notas              | Pendente  |

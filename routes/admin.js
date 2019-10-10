@@ -11,7 +11,7 @@ require("../models/Nota");
 const Categoria = mongoose.model("categorias");
 const Postagem = mongoose.model("postagens");
 const Disciplina = mongoose.model("disciplinas");
-const Nota = mongoose.model("notas");
+const Usuario = mongoose.model("usuarios");
 const { eAdmin } = require("../helpers/eAdmin");
 
 router.get("/", (req, res) => {
@@ -291,7 +291,15 @@ router.get("/disciplinas", eAdmin, (req, res) => {
 
 //view para disciplina/add
 router.get("/disciplinas/add", eAdmin, (req, res) => {
-  res.render("admin/adddisciplinas");
+  Usuario.find()
+    .sort({ date: "desc" })
+    .then(usuarios => {
+      res.render("admin/adddisciplinas", { usuarios: usuarios });
+    })
+    .catch(err => {
+      req.flash("error_msg", "Houve error ao listar as categorias");
+      req.redirect("/admin");
+    });
 });
 
 //rota para validar e inserir nova disciplina no Banco de Dados
@@ -305,8 +313,6 @@ router.post("/disciplinas/nova", eAdmin, (req, res) => {
   ) {
     erros.push({ texto: "Codigo invalido" });
   }
-  const cod = req.body.codigo;
-  console.log("codigo: ", cod);
   if (erros.length > 0) {
     res.render("admin/adddisciplinas", { erros: erros });
   } else {
@@ -340,13 +346,23 @@ router.post("/disciplinas/nova", eAdmin, (req, res) => {
 
 //rota par view disciplina/edit
 router.get("/disciplinas/edit/:id", eAdmin, (req, res) => {
-  Categoria.findOne({ _id: req.params.id })
-    .then(categoria => {
-      res.render("admin/editcategorias", { categoria: categoria });
+  Disciplina.findOne({ _id: req.params.id })
+    .then(disciplina => {
+      Usuario.find()
+        .then(usuarios => {
+          res.render("admin/editdisciplinasnotas", {
+            usuarios: usuarios,
+            disciplina: disciplina
+          });
+        })
+        .catch(err => {
+          req.flash("error_msg", "Houve error ao listar as categorias");
+          res.redirect("/admin/postagens");
+        });
     })
     .catch(err => {
-      req.flash("error_msg", "Essa categoria não existe");
-      res.redirect("/admin/categorias");
+      req.flash("error_msg", "Houve error ao carregar o formulario de edição");
+      res.redirect("/admin/postagens");
     });
 });
 
@@ -355,42 +371,32 @@ router.post("/disciplinas/edit", eAdmin, (req, res) => {
   var erros = [];
 
   if (
-    !req.body.nome ||
-    typeof req.body.nome == undefined ||
-    req.body.nome == null
+    !req.body.codigo ||
+    typeof req.body.codigo == undefined ||
+    req.body.codigo == null
   ) {
-    erros.push({ texto: "Nome invalido" });
+    erros.push({ texto: "Codigo invalido" });
   }
-
-  if (
-    !req.body.slug ||
-    typeof req.body.slug == undefined ||
-    req.body.slug == null
-  ) {
-    erros.push({ texto: "Slug invalido" });
-  }
-
   if (erros.length > 0) {
     req.flash("error_msg", "Error ao salvar a categoria, tente novamente!");
-    res.redirect("/admin/categorias");
+    res.redirect("/admin/disciplinas");
   } else {
-    Categoria.findOne({ _id: req.body.id })
-      .then(categoria => {
-        categoria.nome = req.body.nome;
-        categoria.slug = req.body.slug;
-
-        categoria
+    Disciplina.findOne({ _id: req.body.id })
+      .then(disciplina => {
+        disciplina.nome = req.body.nome;
+        disciplina.slug = req.body.slug;
+        disciplina
           .save()
           .then(() => {
-            req.flash("success_msg", "categoria editada com sucesso");
+            req.flash("success_msg", "disciplina editada com sucesso");
             res.redirect("/admin/categorias");
           })
           .catch(err => {
             req.flash(
               "error_msg",
-              "Houve erro ao salvar a edição da categoria"
+              "Houve erro ao salvar a edição da disciplina"
             );
-            res.redirect("/admin/categorias");
+            res.redirect("/admin/disciplinas");
           });
       })
       .catch(err => {

@@ -63,7 +63,10 @@ app.set("view engine", "handlebars");
 //Mongoose
 mongoose.Promise = global.Promise;
 mongoose
-  .connect("mongodb://localhost/scholl", { useNewUrlParser: true })
+  .connect("mongodb://localhost/scholl", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
   .then(() => {
     console.log("conectado ao banco MONGODB");
   })
