@@ -24,6 +24,10 @@ const Usuario = new Schema({
     type: Boolean,
     default: 0
   },
+  eProf: {
+    type: Boolean,
+    default: 0
+  },
   senha: {
     type: String,
     required: true

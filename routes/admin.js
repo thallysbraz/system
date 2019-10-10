@@ -376,7 +376,10 @@ router.post("/disciplinas/edit", eAdmin, (req, res) => {
   Disciplina.findOne({ _id: req.body.id })
     .then(disciplina => {
       const alun = req.body.matricula;
-      disciplina.matriculados.push({ aluno: [alun, "SR", "2/2019"] });
+      disciplina.matriculados.push({
+        aluno: [alun, "SR", "2/2019"],
+        user: "5d9f67f72017c7744c5e0d48"
+      });
       disciplina
         .save()
         .then(() => {

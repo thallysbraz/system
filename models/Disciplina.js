@@ -7,7 +7,11 @@ const Alunos = new Schema({
     {
       type: String
     }
-  ]
+  ],
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "usuarios"
+  }
 });
 
 const Disciplina = new Schema({
