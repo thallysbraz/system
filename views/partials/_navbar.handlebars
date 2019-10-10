@@ -1,0 +1,58 @@
+<script src="https://kit.fontawesome.com/d9a82de17e.js" crossorigin="anonymous"></script>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">FET</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Inicio<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/categorias">Informações</a>
+      </li>
+      {{#if user}}
+      <li class="nav-item">
+        <a class="nav-link" href="/disciplinas">Disciplinas</a>
+      </li>
+      {{#if adm2}}
+      <li class="nav-item">
+        <a class="nav-link" href="/admin">Gerenciar</a>
+      </li>
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Dados
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">Historico escolar</a>
+          <a class="dropdown-item" href="#">Dados pessoais</a>
+        </div>
+      </div>
+
+      {{else}}
+      {{/if}}
+      {{else}}
+
+      {{/if}}
+
+    </ul>
+    {{#if user}}
+    <ul class="nav justify-content-end">
+      <li class="nav-item">
+        <a class="nav-link" href="/usuarios/logout"><i class="fas fa-sign-out-alt"></i> Sair</a>
+      </li>
+    </ul>
+    {{else}}
+    <ul class="nav justify-content-end">
+      <li class="nav-item">
+        <a class="nav-link" href="/usuarios/login"><i class="fas fa-sign-in-alt"></i> Login</a>
+      </li>
+    </ul>
+    {{/if}}
+  </div>
+
+</nav>

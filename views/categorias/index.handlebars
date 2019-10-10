@@ -1,0 +1,18 @@
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="display-4 text-center"><strong>Página de informações!</strong></h1><br>
+        {{#each categorias}}
+
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Aviso: {{nome}}</h5>
+                <p class="card-text">Descrição: {{slug}}</p>
+                <a href="/categorias/{{slug}}">
+                    <button class="btn btn-primary">Mais informações</button>
+                </a>
+            </div>
+        </div>
+        {{else}}
+        {{/each}}
+    </div>
+</div>
