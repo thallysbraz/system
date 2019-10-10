@@ -20,6 +20,9 @@
                         <th scope="col">
                             <h2>Notas</h2>
                         </th>
+                        <th scope="col">
+                            <h2>Alunos</h2>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,10 +38,18 @@
                             <h5>{{codigo}}</h5>
                         </td>
                         <td>
-                            <a href="/admin/disciplinas/edit/{{_id}}">
+                            <a href="/admin/disciplinas/notas/edit/{{_id}}">
                                 <button class="btn btn-secondary">
                                     <i class="far fa-edit"></i>
                                     Notas
+                                </button>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/admin/disciplinas/edit/{{_id}}">
+                                <button class="btn btn-secondary">
+                                    <i class="fas fa-user-plus"></i>
+                                    Cadastrar alunos
                                 </button>
                             </a>
                         </td>
