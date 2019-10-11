@@ -17,12 +17,12 @@ require("../models/Usuario");
 const { eAdmin } = require("../helpers/eAdmin");
 const Usuario = mongoose.model("usuarios");
 
-router.get("/registro", (req, res) => {
+router.get("/registro", eAdmin, (req, res) => {
   res.render("usuarios/registro");
 });
 
 //validação de usuário
-router.post("/registro", (req, res) => {
+router.post("/registro", eAdmin, (req, res) => {
   var erros = [];
   if (
     !req.body.nome ||
@@ -63,7 +63,8 @@ router.post("/registro", (req, res) => {
           const novoUsuario = new Usuario({
             nome: req.body.nome,
             email: req.body.email,
-            senha: req.body.senha
+            senha: req.body.senha,
+            eProf: req.body.professor
           });
           bcrypt.genSalt(10, (erro, salt) => {
             bcrypt.hash(novoUsuario.senha, salt, (erro, hash) => {
@@ -75,6 +76,7 @@ router.post("/registro", (req, res) => {
               novoUsuario
                 .save()
                 .then(() => {
+                  /*
                   //iniciando envio de email
                   let transporter = nodemailer.createTransport({
                     service: "gmail",
@@ -105,7 +107,7 @@ router.post("/registro", (req, res) => {
                     }
                   });
 
-                  //finalizando envio de email
+                  //finalizando envio de email*/
                   req.flash("success_msg", "Usuário criado com sucesso!");
                   res.redirect("/");
                 })

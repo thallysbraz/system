@@ -24,6 +24,11 @@ module.exports = function(passport) {
                 } else {
                   global.adm = false;
                 }
+                if (usuario.eProf == true) {
+                  global.prof = true;
+                } else {
+                  global.prof = false;
+                }
                 return done(null, usuario);
               } else {
                 return done(null, false, { message: "Senha incorreta" });

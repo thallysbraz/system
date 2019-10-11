@@ -346,14 +346,15 @@ router.post("/disciplinas/nova", eAdmin, async (req, res) => {
   }
 });
 
-router.get("/:projectId", async (req, res) => {
-  const professor = req.params.projectId;
+//rota para mostrar ao professor suas disciplinas
+router.get("/:disciplinaId", async (req, res) => {
+  const professor = req.params.disciplinaId;
   try {
     const disciplina = await Disciplina.find({ professor });
     return res.send({ disciplina });
   } catch (err) {
     console.log(err);
-    return res.status(400).send({ error: "Error, loading project" });
+    return res.status(400).send({ error: "Error, loading disciplina" });
   }
 });
 

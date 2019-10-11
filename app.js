@@ -4,7 +4,6 @@ const handlebars = require("express-handlebars");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
-const admin = require("./routes/admin");
 const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
@@ -20,6 +19,8 @@ const Categoria = mongoose.model("categorias");
 const Postagem = mongoose.model("postagens");
 const Disciplina = mongoose.model("disciplinas");
 const Nota = mongoose.model("notas");
+const admin = require("./routes/admin");
+const professor = require("./routes/professor");
 const usuarios = require("./routes/usuario");
 const app = express();
 
@@ -38,7 +39,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-//Middleware
+//Middleware para controle de acesso/sessão
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash("success_msg");
   res.locals.error_msg = req.flash("error_msg");
@@ -48,6 +49,11 @@ app.use((req, res, next) => {
     res.locals.adm2 = true;
   } else {
     res.locals.adm2 = false;
+  }
+  if (global.prof == true) {
+    res.locals.prof2 = true;
+  } else {
+    res.locals.prof2 = false;
   }
   next();
 });
@@ -178,6 +184,7 @@ app.get("/disciplinas", (req, res) => {
 
 app.use("/admin", admin); // rota admin
 app.use("/usuarios", usuarios); // rota usuario
+app.use("/professor", professor); //rota de professor;
 //outros
 
 app.listen(3000);
