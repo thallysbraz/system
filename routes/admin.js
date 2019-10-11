@@ -303,7 +303,7 @@ router.get("/disciplinas/add", eAdmin, (req, res) => {
 });
 
 //rota para validar e inserir nova disciplina no Banco de Dados
-router.post("/disciplinas/nova", eAdmin, (req, res) => {
+router.post("/disciplinas/nova", eAdmin, async (req, res) => {
   var erros = [];
 
   if (
@@ -319,7 +319,8 @@ router.post("/disciplinas/nova", eAdmin, (req, res) => {
     const novaDisciplina = {
       nome: req.body.nome,
       codigo: req.body.codigo,
-      ementa: req.body.ementa
+      ementa: req.body.ementa,
+      professor: req.body.professor
       /* matriculados: [
         { aluno: ["5d9cb6fa369c1d778493fd2b", "MM", "2/2019"] },
         { aluno: ["5d5ee71cb9156b4c28a432d6", "SS", "2/2019"] },
@@ -327,6 +328,7 @@ router.post("/disciplinas/nova", eAdmin, (req, res) => {
       ]*/
     };
 
+    //const prof = req.body.professor;
     new Disciplina(novaDisciplina)
       .save()
       .then(() => {
@@ -344,8 +346,18 @@ router.post("/disciplinas/nova", eAdmin, (req, res) => {
   }
 });
 
-//rota para cadastrar alunos na disciplina
+router.get("/:projectId", async (req, res) => {
+  const professor = req.params.projectId;
+  try {
+    const disciplina = await Disciplina.find({ professor });
+    return res.send({ disciplina });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send({ error: "Error, loading project" });
+  }
+});
 
+//rota para cadastrar alunos na disciplina
 router.get("/disciplinas/edit/:id", eAdmin, (req, res) => {
   Disciplina.findOne({ _id: req.params.id })
     .then(disciplina => {
