@@ -1,6 +1,6 @@
 const express = require("express");
-const router = express.Router();
 const mongoose = require("mongoose");
+const router = express.Router();
 
 require("../models/Usuario");
 require("../models/Categoria");
@@ -19,7 +19,9 @@ const { eProf } = require("../helpers/eProf");
 router.get("/", eProf, (req, res) => {
   res.render("professor/index");
 });
-router.post("/consulta", async (req, res) => {
+
+//rota para mostrar ao professor suas disciplinas
+router.post("/consulta", eProf, async (req, res) => {
   const professor = req.body.matricula;
   const user = req.user._id;
   console.log("user: ", user);
@@ -43,32 +45,30 @@ router.post("/consulta", async (req, res) => {
     return res.status(400).send({ error: "Error, loading disciplina" });
   }*/
 });
-//rota para mostrar ao professor suas disciplinas
-router.get("/disciplinasList", async (req, res) => {
-  const professor = res.locals.user._id;
-  console.log("professor: ", professor);
-  //res.send(professor);
-  try {
-    const disciplina = await Disciplina.find({ professor }).populate([
-      "matriculados"
-    ]);
-    return res.send({ disciplina });
-  } catch (err) {
-    console.log(err);
-    return res.status(400).send({ error: "Error, loading disciplina" });
-  }
-});
 
-router.get("/disciplinas", eProf, (req, res) => {
-  Disciplina.find()
-    .sort({ date: "desc" })
-    .then(disciplinas => {
-      res.render("admin/disciplinas", { disciplinas: disciplinas });
+//rota par view disciplina/edit
+router.get("/disciplinas/notas/edit/:id", eProf, (req, res) => {
+  Disciplina.findOne({ _id: req.params.id })
+    .then(disciplina => {
+      Usuario.find()
+        .then(usuarios => {
+          res.render("admin/editdisciplinasnotas", {
+            usuarios: usuarios,
+            disciplina: disciplina
+          });
+        })
+        .catch(err => {
+          req.flash("error_msg", "Houve error ao listar as categorias");
+          res.redirect("/professor");
+        });
     })
     .catch(err => {
-      req.flash("error_msg", "Houve error ao listar as categorias");
-      req.redirect("/admin");
+      req.flash("error_msg", "Houve error ao carregar o formulario de edição");
+      res.redirect("/professor");
     });
 });
+
+//rota para validar e registrar edição na disciplina
+router.post("/notas/edit/:id", eProf, (req, res) => {});
 
 module.exports = router;

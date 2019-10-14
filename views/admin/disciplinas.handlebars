@@ -1,7 +1,8 @@
 <div class="jumbotron">
     <h2>Lista de disciplinas:</h2>
     <hr>
-    <a href="/admin/disciplinas/add"><button class="btn btn-secondary">Nova disciplina</button></a>
+    <a href="/admin/disciplinas/add"><button class="btn btn-secondary"><i class="fas fa-plus-square"> Nova
+                disciplina</i></button></a>
     <div class="card mt-4">
         <div class="card-body">
             <table class="table table-striped table-bordered mt-3">
@@ -37,7 +38,7 @@
                             <h5>{{codigo}}</h5>
                         </td>
                         <td>
-                            <a href="/admin/disciplinas/notas/edit/{{_id}}">
+                            <a href="/professor/disciplinas/notas/edit/{{_id}}">
                                 <button class="btn btn-secondary">
                                     <i class="far fa-edit"></i>
                                     Notas

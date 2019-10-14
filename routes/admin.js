@@ -320,6 +320,7 @@ router.post("/disciplinas/nova", eAdmin, async (req, res) => {
       nome: req.body.nome,
       codigo: req.body.codigo,
       ementa: req.body.ementa,
+      curso: req.body.curso,
       professor: req.body.professor
       /* matriculados: [
         { aluno: ["5d9cb6fa369c1d778493fd2b", "MM", "2/2019"] },
@@ -385,13 +386,12 @@ router.get("/disciplinas/edit/:id", eAdmin, (req, res) => {
 
 //rota para validar e cadastrar alunos na disciplina
 router.post("/disciplinas/edit", eAdmin, (req, res) => {
-  var erros = [];
   Disciplina.findOne({ _id: req.body.id })
     .then(disciplina => {
       const alun = req.body.matricula;
       disciplina.matriculados.push({
-        aluno: [alun, "SR", "2/2019"],
-        user: "5d9f67f72017c7744c5e0d48"
+        aluno: ["SR", "2/2019"],
+        user: alun
       });
       disciplina
         .save()
@@ -410,68 +410,6 @@ router.post("/disciplinas/edit", eAdmin, (req, res) => {
       req.flash("error_msg", "Houve um error ao editar a matricula");
       res.redirect("/admin/disciplinas");
     });
-});
-
-//rota par view disciplina/edit
-router.get("/disciplinas/notas/edit/:id", eAdmin, (req, res) => {
-  Disciplina.findOne({ _id: req.params.id })
-    .then(disciplina => {
-      Usuario.find()
-        .then(usuarios => {
-          res.render("admin/editdisciplinasnotas", {
-            usuarios: usuarios,
-            disciplina: disciplina
-          });
-        })
-        .catch(err => {
-          req.flash("error_msg", "Houve error ao listar as categorias");
-          res.redirect("/admin/postagens");
-        });
-    })
-    .catch(err => {
-      req.flash("error_msg", "Houve error ao carregar o formulario de edição");
-      res.redirect("/admin/postagens");
-    });
-});
-
-//rota para validar e registrar edição na disciplina
-router.post("/disciplinas/notas/edit", eAdmin, (req, res) => {
-  var erros = [];
-
-  if (
-    !req.body.codigo ||
-    typeof req.body.codigo == undefined ||
-    req.body.codigo == null
-  ) {
-    erros.push({ texto: "Codigo invalido" });
-  }
-  if (erros.length > 0) {
-    req.flash("error_msg", "Error ao salvar a categoria, tente novamente!");
-    res.redirect("/admin/disciplinas");
-  } else {
-    Disciplina.findOne({ _id: req.body.id })
-      .then(disciplina => {
-        disciplina.nome = req.body.nome;
-        disciplina.slug = req.body.slug;
-        disciplina
-          .save()
-          .then(() => {
-            req.flash("success_msg", "disciplina editada com sucesso");
-            res.redirect("/admin/categorias");
-          })
-          .catch(err => {
-            req.flash(
-              "error_msg",
-              "Houve erro ao salvar a edição da disciplina"
-            );
-            res.redirect("/admin/disciplinas");
-          });
-      })
-      .catch(err => {
-        req.flash("error_msg", "Houve um error ao editar a categoria");
-        res.redirect("/admin/categorias");
-      });
-  }
 });
 
 //rota para deletar disciplina

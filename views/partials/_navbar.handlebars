@@ -9,22 +9,56 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="/">Inicio<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/"><i class="fas fa-home"></i> Inicio<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/categorias">Informações</a>
+        <a class="nav-link" href="/categorias"><i class="fas fa-info-circle"></i> Informações</a>
       </li>
       {{#if user}}
       <li class="nav-item">
-        <a class="nav-link" href="/disciplinas">Disciplinas</a>
+        <a class="nav-link" href="/disciplinas"><i class="fas fa-list-ol"></i> Disciplinas</a>
       </li>
+      {{#if prof2}}
       <li class="nav-item">
-        <a class="nav-link" href="/professor">Professor</a>
+        <a class="nav-link" href="/professor"><i class="fas fa-chalkboard-teacher"></i> Professor</a>
       </li>
+      {{else}}
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Dados
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">
+            <i class="fas fa-list"></i> Historico escolar
+          </a>
+          <a class="dropdown-item" href="#">
+            <i class="fas fa-user-shield"></i> Dados pessoais
+          </a>
+        </div>
+      </div>
+      {{/if}}
       {{#if adm2}}
-      <li class="nav-item">
-        <a class="nav-link" href="/admin">Gerenciar</a>
-      </li>
+      <div class="dropdown dropdown-toggle-split">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Gerenciar
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="/admin/disciplinas">
+            <i class="fas fa-list-ol"></i> Disciplinas
+          </a>
+          <a class="dropdown-item" href="/usuarios/registroADM">
+            <i class="fas fa-user-shield"></i> Usuarios
+          </a>
+          <a class="dropdown-item" href="/admin/postagens">
+            <i class="fas fa-blog"></i> Postagens
+          </a>
+          <a class="dropdown-item" href="/admin/categorias">
+            <i class="fas fa-columns"></i> Categorias
+          </a>
+        </div>
+      </div>
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
@@ -42,8 +76,8 @@
 
       {{else}}
       {{/if}}
-      {{else}}
 
+      {{else}}
       {{/if}}
 
     </ul>

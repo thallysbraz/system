@@ -5,6 +5,9 @@ const Nota = new Schema({
   mencao: {
     type: String
   },
+  disciplina: {
+    type: String
+  },
   semestre: {
     type: String,
     required: true

@@ -28,6 +28,10 @@ const Disciplina = new Schema({
     type: String,
     required: true
   },
+  curso: {
+    type: String,
+    required: true
+  },
   professor: {
     type: Schema.Types.ObjectId,
     ref: "usuarios"
