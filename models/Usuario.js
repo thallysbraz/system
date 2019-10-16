@@ -6,7 +6,8 @@ const Nota = new Schema({
     type: String
   },
   disciplina: {
-    type: String
+    type: Schema.Types.ObjectId,
+    ref: "disciplinas"
   },
   semestre: {
     type: String,

@@ -1,6 +1,6 @@
 <script src="https://kit.fontawesome.com/d9a82de17e.js" crossorigin="anonymous"></script>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="/">FET</a>
+  <a class="navbar-brand" href="/"><i class="fas fa-book-reader"></i> FET</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -22,6 +22,20 @@
       <li class="nav-item">
         <a class="nav-link" href="/professor"><i class="fas fa-chalkboard-teacher"></i> Professor</a>
       </li>
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-database"></i> Dados
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">
+            <i class="fas fa-list"></i> Historico escolar
+          </a>
+          <a class="dropdown-item" href="#">
+            <i class="fas fa-user-shield"></i> Dados pessoais
+          </a>
+        </div>
+      </div>
       {{else}}
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
@@ -42,7 +56,7 @@
       <div class="dropdown dropdown-toggle-split">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
-          Gerenciar
+          <i class="fas fa-cogs"></i> Gerenciar
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <a class="dropdown-item" href="/admin/disciplinas">
@@ -59,20 +73,7 @@
           </a>
         </div>
       </div>
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          Dados
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#">
-            <i class="fas fa-list"></i> Historico escolar
-          </a>
-          <a class="dropdown-item" href="#">
-            <i class="fas fa-user-shield"></i> Dados pessoais
-          </a>
-        </div>
-      </div>
+
 
       {{else}}
       {{/if}}
@@ -82,6 +83,7 @@
 
     </ul>
     {{#if user}}
+
     <ul class="nav justify-content-end">
       <li class="nav-item">
         <a class="nav-link" href="/usuarios/logout"><i class="fas fa-sign-out-alt"></i> Sair</a>
