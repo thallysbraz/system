@@ -390,8 +390,7 @@ router.post("/disciplinas/edit", eAdmin, (req, res) => {
     .then(disciplina => {
       const alun = req.body.matricula;
       disciplina.matriculados.push({
-        aluno: ["SR", "2/2019"],
-        user: alun
+        user: [alun]
       });
       disciplina
         .save()

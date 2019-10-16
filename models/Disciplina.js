@@ -3,11 +3,6 @@ const express = require("express");
 const Schema = mongoose.Schema;
 
 const Alunos = new Schema({
-  aluno: [
-    {
-      type: String
-    }
-  ],
   user: {
     type: Schema.Types.ObjectId,
     ref: "usuarios"
