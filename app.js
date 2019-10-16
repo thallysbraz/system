@@ -92,6 +92,7 @@ app.get("/", (req, res) => {
     .populate("categoria")
     .sort({ data: "desc" })
     .then(postagens => {
+      //res.send(postagens);
       res.render("index", { postagens: postagens });
     })
     .catch(err => {

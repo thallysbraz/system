@@ -23,3 +23,8 @@ Lista de funcionalidades a serem desenvolvidas e status de progresso
 | Pesquisar disciplina por professor | Mostrar ao professor todas as disciplinas que ele da aula (BACKEND)  |   Concluido   |
 | Pesquisar disciplina por professor | Mostrar ao professor todas as disciplinas que ele da aula (Frontend) |   Concluido   |
 |            Lançar notas            |                 Termina view de lançamento de notas                  | Desenvolvendo |
+
+## 3 - proximos objetivos
+
+- desenvolver a tela de editar nota
+- mostrar ao usuario suas notas

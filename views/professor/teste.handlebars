@@ -6,12 +6,31 @@
         <thead class="thead-dark">
             <tr>
                 <th scope="col">MATRICULA</th>
+                <th scope="col">MENÇÃO</th>
+                <th scope="col">STATUS</th>
             </tr>
+
         </thead>
         <tbody>
             {{#each matricula}}
             <tr>
                 <th scope="row">{{mat}}</th>
+                <td>
+                    <select name="nota" class="custom-select">
+                        <option value="SR">SR - SEM RENDIMENTO (Zero)</option>
+                        <option value="II">II - INFERIOR (0,1 a 2,9)</option>
+                        <option value="MI">MI - MÉDIO INFERIOR (3,0 a 4,9)</option>
+                        <option value="MM">MM - MÉDIO (5,0 a 6,9)</option>
+                        <option value="MS">MS - MÉDIO SUPERIOR (7,0 a 8,9)</option>
+                        <option value="SS">SS - SUPERIOR (9,0 a 10,0)</option>
+                    </select>
+                </td>
+                <td>
+                    <a href="/professor/notas/edit/{{mat}}">
+                        <button class="btn btn-success" type="submit">
+                            <i class="far fa-check-circle"> Salvar</i></button>
+                    </a>
+                </td>
             </tr>
             {{else}}
             {{/each}}

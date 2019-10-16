@@ -58,7 +58,7 @@ router.post("/consulta", eProf, async (req, res) => {
 });*/
 
 //rota para tentar mostrar somente os usuarios dessa disciplina (aprendendo)
-router.get("/:disciplinaId", async (req, res) => {
+/*router.get("/:disciplinaId", async (req, res) => {
   try {
     const professor = req.params.disciplinaId;
     console.log("professor: ", professor);
@@ -76,10 +76,10 @@ router.get("/:disciplinaId", async (req, res) => {
     console.log(err);
     return res.status(400).send({ error: "Error, loading disciplina" });
   }
-});
+});*/
 
 //rota par view disciplina/edit
-router.get("/disciplinas/notas/edit/:id", async (req, res) => {
+router.get("/disciplinas/notas/edit/:id", eProf, async (req, res) => {
   Disciplina.findOne({ _id: req.params.id })
     .then(disciplina => {
       //const limite = disciplina.matriculados.length; // saber quantos alunos tem cadastrados
@@ -99,6 +99,10 @@ router.get("/disciplinas/notas/edit/:id", async (req, res) => {
 });
 
 //rota para validar e registrar edição na disciplina
-router.post("/notas/edit/:id", eProf, (req, res) => {});
+router.get("/notas/edit/:id", eProf, (req, res) => {
+  const resultado = req.params.id;
+
+  res.send(resultado);
+});
 
 module.exports = router;
