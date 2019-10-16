@@ -14,12 +14,12 @@
 
 Lista de funcionalidades a serem desenvolvidas e status de progresso
 
-|              Problema              |                              Descrição                               |     Status      |
-| :--------------------------------: | :------------------------------------------------------------------: | :-------------: |
-|       Arrumar banco de dados       |    Fazer relacionamentos e descobrir como arrumar banco de dados     |    Concluido    |
-|        Crud de disciplinas         |      Fazer as rotas de get, post, put e delete das disciplinas       |  Desenvolvendo  |
-|               Alunos               |       Fazer rotas e view para cadastrar alunos nas disciplinas       |  Desenvolvendo  |
-|         Relacionamentos BD         |           Fazer relacionamento entre ALUNO/DISCIPLINA/NOTA           |  Desenvolvendo  |
-|            Lançar notas            |                 Termina view de lançamento de notas                  |  Desenvolvendo  |
-| Pesquisar disciplina por professor | Mostrar ao professor todas as disciplinas que ele da aula (BACKEND)  |    Concluido    |
-| Pesquisar disciplina por professor | Mostrar ao professor todas as disciplinas que ele da aula (Frontend) | Desenvolvimento |
+|              Problema              |                              Descrição                               |    Status     |
+| :--------------------------------: | :------------------------------------------------------------------: | :-----------: |
+|       Arrumar banco de dados       |    Fazer relacionamentos e descobrir como arrumar banco de dados     |   Concluido   |
+|        Crud de disciplinas         |      Fazer as rotas de get, post, put e delete das disciplinas       | Desenvolvendo |
+|               Alunos               |       Fazer rotas e view para cadastrar alunos nas disciplinas       |   Concluido   |
+|         Relacionamentos BD         |           Fazer relacionamento entre ALUNO/DISCIPLINA/NOTA           |   Concluido   |
+| Pesquisar disciplina por professor | Mostrar ao professor todas as disciplinas que ele da aula (BACKEND)  |   Concluido   |
+| Pesquisar disciplina por professor | Mostrar ao professor todas as disciplinas que ele da aula (Frontend) |   Concluido   |
+|            Lançar notas            |                 Termina view de lançamento de notas                  | Desenvolvendo |
