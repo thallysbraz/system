@@ -79,20 +79,18 @@ router.get("/:disciplinaId", async (req, res) => {
 });
 
 //rota par view disciplina/edit
-router.get("/disciplinas/notas/edit/:id", eProf, (req, res) => {
+router.get("/disciplinas/notas/edit/:id", async (req, res) => {
   Disciplina.findOne({ _id: req.params.id })
     .then(disciplina => {
-      Usuario.find()
-        .then(usuarios => {
-          res.render("admin/editdisciplinasnotas", {
-            usuarios: usuarios,
-            disciplina: disciplina
-          });
-        })
-        .catch(err => {
-          req.flash("error_msg", "Houve error ao listar as categorias");
-          res.redirect("/professor");
-        });
+      //const limite = disciplina.matriculados.length; // saber quantos alunos tem cadastrados
+      //console.log("limite: ", limite);
+      const matricula = []; //array de alunos
+      //for para colocar os alunos matriculados dentro de er
+      for (var i = 0; i < disciplina.matriculados.length; i++) {
+        matricula.push({ mat: disciplina.matriculados[i].user });
+      }
+      //er.push({ text: disciplina.matriculados }); // vou usar
+      res.render("professor/teste", { matricula: matricula });
     })
     .catch(err => {
       req.flash("error_msg", "Houve error ao carregar o formulario de edição");
