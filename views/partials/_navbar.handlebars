@@ -37,7 +37,7 @@
         </div>
       </div>
       {{else}}
-      <div class="dropdown">
+      <div class="dropdown dropdown-toggle-split">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
           Dados
@@ -56,7 +56,7 @@
       <div class="dropdown dropdown-toggle-split">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-cogs"></i> Gerenciar
+          <i class="fas fa-users-cog"></i> Gerenciar
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <a class="dropdown-item" href="/admin/disciplinas">
@@ -86,7 +86,7 @@
 
     <ul class="nav justify-content-end">
       <li class="nav-item">
-        <a class="nav-link" href="/usuarios/logout"><i class="fas fa-sign-out-alt"></i> Sair</a>
+        <a class="nav-link" href="/usuarios/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
       </li>
     </ul>
     {{else}}

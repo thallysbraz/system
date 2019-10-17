@@ -25,6 +25,7 @@ router.post("/consulta", eProf, async (req, res) => {
   const professor = req.body.matricula;
   await Disciplina.find({ professor })
     .then(disciplinas => {
+      //res.send({ disciplinas });
       res.render("professor/disciplinas", { disciplinas: disciplinas });
     })
     .catch(err => {
@@ -84,16 +85,20 @@ router.get("/disciplinas/notas/edit/:id", eProf, async (req, res) => {
     .then(disciplina => {
       //const limite = disciplina.matriculados.length; // saber quantos alunos tem cadastrados
       //console.log("limite: ", limite);
+      //matricula.push({ text: disciplina.matriculados }); // vou usar
       const matricula = []; //array de alunos
-      //for para colocar os alunos matriculados dentro de er
+      //for para colocar os alunos matriculados dentro de matricula
       for (var i = 0; i < disciplina.matriculados.length; i++) {
         matricula.push({ mat: disciplina.matriculados[i].user });
       }
-      //er.push({ text: disciplina.matriculados }); // vou usar
+      //res.send({ matricula });
       res.render("professor/teste", { matricula: matricula });
     })
     .catch(err => {
-      req.flash("error_msg", "Houve error ao carregar o formulario de edição");
+      req.flash(
+        "error_msg",
+        "Houve error ao carregar o formulario de lançamento"
+      );
       res.redirect("/professor");
     });
 });
@@ -102,7 +107,7 @@ router.get("/disciplinas/notas/edit/:id", eProf, async (req, res) => {
 router.get("/notas/edit/:id", eProf, (req, res) => {
   const resultado = req.params.id;
 
-  res.send(resultado);
+  res.send({ resultado });
 });
 
 module.exports = router;

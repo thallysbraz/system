@@ -1,26 +1,25 @@
-<div>
-    <div class="jumbotron ">
-        <div class="text-center">
-            <h1 class="display-4"><strong>Bem-vindo! <i class="fab fa-java"></i></strong></h1>
-            <p class="lead"><strong>First Educação e Tecnologia</strong></p>
-            <hr class="my-4">
-        </div>
-
-        <center>
-            <h2>Informações recentes:</h2>
-        </center>
-
-        {{#each postagens}}
-        <div class="card mt-4" style="width: 50rem;">
-            <div class="card-body">
-                <h3><i class="fas fa-exclamation-circle"></i> Aviso: {{titulo}}</h3>
-                <h5>Descrição: {{descricao}}</h5>
-                <h5>Categoria: {{categoria.nome}}</h5>
-                <h5><i class="fas fa-calendar-alt"></i> Data de publicação: {{data}}</h5><br>
-            </div>
-        </div>
-        {{else}}
-        <h5 class="alert alert-danger">Nenhuma informação!</h5>
-        {{/each}}
+<div class="jumbotron ">
+    <div class="text-center">
+        <h1 class="display-4"><strong>Bem-vindo! <i class="fab fa-java"></i></strong></h1>
+        <p class="lead"><strong>First Education and Technology</strong></p>
+        <hr class="my-4">
     </div>
+
+    <center>
+        <h2>Informações recentes:</h2>
+    </center>
+
+    {{#each postagens}}
+    <div class="card mt-4" style="width: 50rem;">
+        <div class="card-body">
+            <h3><i class="fas fa-exclamation-circle"></i> Aviso: {{titulo}}</h3>
+            <h5>Descrição: {{descricao}}</h5>
+            <h5>Categoria: {{categoria.nome}}</h5>
+            <h5><i class="fas fa-calendar-alt"></i> Data de publicação: {{data}}</h5><br>
+        </div>
+    </div>
+    {{else}}
+    <h5 class="alert alert-danger">Nenhuma informação!</h5>
+    {{/each}}
+
 </div>
