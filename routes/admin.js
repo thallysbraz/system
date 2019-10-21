@@ -390,8 +390,30 @@ router.post("/disciplinas/edit", eAdmin, (req, res) => {
     .then(disciplina => {
       const alun = req.body.matricula;
       disciplina.matriculados.push({
-        user: [alun]
+        user: alun
       });
+      //Salvar disciplina no aluno
+      const RefDisc = disciplina._id;
+      Usuario.findOne({ _id: alun }).then(usuario => {
+        usuario.notas.push({
+          mencao: "0",
+          disciplina: RefDisc,
+          semestre: "2/2019"
+        });
+        usuario
+          .save()
+          .then(() => {
+            console.log("Disciplina adicionada ao aluno");
+          })
+          .catch(err => {
+            console.log("error ao adicionar disciplina ao aluno: ", err);
+            res.redirect("/admin/disciplinas");
+          });
+      });
+
+      //FInalizando Salvar disicplina no aluno
+
+      //salvando aluno na disciplina
       disciplina
         .save()
         .then(() => {

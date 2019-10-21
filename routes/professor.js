@@ -45,6 +45,78 @@ router.post("/consulta", eProf, async (req, res) => {
   }*/
 });
 
+//rota par view disciplina/edit
+router.get("/disciplinas/notas/edit/:id", async (req, res) => {
+  Disciplina.findOne({ _id: req.params.id })
+    .then(disciplina => {
+      //const limite = disciplina.matriculados.length; // saber quantos alunos tem cadastrados
+      //console.log("limite: ", limite);
+      //matricula.push({ text: disciplina.matriculados }); // vou usar
+      const matricula = []; //array de alunos
+      //for para colocar os alunos matriculados dentro de matricula
+      for (var i = 0; i < disciplina.matriculados.length; i++) {
+        //matricula.push({ mat: disciplina.matriculados[i].user });
+        matricula.push(disciplina.matriculados[i].user);
+      }
+      //pegando ID da disciplina e mandando para a view
+      const dis = disciplina._id;
+      //dis.push({ cod: disciplina._id });
+      //console.log("dis: ", dis);
+      Usuario.find({ _id: matricula })
+        .then(usuario => {
+          //res.send({ usuario });
+          res.render("professor/teste2", {
+            usuario: usuario,
+            disciplina: disciplina
+          });
+        })
+        .catch(err => {
+          console.log(err);
+          req.flash("error_msg", "Houve error interno ao testar");
+          res.redirect("/");
+        });
+      //res.send({ matricula });
+      //res.render("professor/teste2", { matricula: matricula });
+    })
+    .catch(err => {
+      console.log("err: ", err);
+      req.flash(
+        "error_msg",
+        "Houve error ao carregar o formulario de lançamento"
+      );
+      res.redirect("/professor");
+    });
+});
+
+//rota para validar e registrar edição na disciplina
+router.post("/notas/edit/:id", eProf, (req, res) => {
+  //const resultado = req.params.id;
+  const matricula = req.body.matricula;
+  try {
+    console.log("nota: ", matricula);
+  } catch (err) {
+    console.log("err: ", err);
+  }
+  //res.send({ resultado });
+});
+
+router.post("/notas/matricula/:id", (req, res) => {
+  const nota = req.body.nota;
+  const id = req.body.id;
+  const semestre = req.body.semestre;
+  const disci = req.params.id;
+  try {
+    console.log("id: ", id);
+    console.log("disci: ", disci);
+    console.log("semestre: ", semestre);
+    console.log("nota: ", nota);
+  } catch (err) {
+    console.log("err: ", err);
+  }
+});
+
+module.exports = router;
+
 //rota para testar como mostrar o professor as suas disciplinas
 /*router.get("/:disciplinaId", async (req, res) => {
   try {
@@ -78,52 +150,3 @@ router.post("/consulta", eProf, async (req, res) => {
     return res.status(400).send({ error: "Error, loading disciplina" });
   }
 });*/
-
-//rota par view disciplina/edit
-router.get("/disciplinas/notas/edit/:id", eProf, async (req, res) => {
-  Disciplina.findOne({ _id: req.params.id })
-    .then(disciplina => {
-      //const limite = disciplina.matriculados.length; // saber quantos alunos tem cadastrados
-      //console.log("limite: ", limite);
-      //matricula.push({ text: disciplina.matriculados }); // vou usar
-      const matricula = []; //array de alunos
-      //for para colocar os alunos matriculados dentro de matricula
-      for (var i = 0; i < disciplina.matriculados.length; i++) {
-        matricula.push({ mat: disciplina.matriculados[i].user });
-      }
-      //res.send({ matricula });
-      res.render("professor/teste", { matricula: matricula });
-    })
-    .catch(err => {
-      req.flash(
-        "error_msg",
-        "Houve error ao carregar o formulario de lançamento"
-      );
-      res.redirect("/professor");
-    });
-});
-
-//rota para validar e registrar edição na disciplina
-router.post("/notas/edit/:id", eProf, (req, res) => {
-  //const resultado = req.params.id;
-  const matricula = req.body.matricula;
-  try {
-    console.log("nota: ", matricula);
-  } catch (err) {
-    console.log("err: ", err);
-  }
-  //res.send({ resultado });
-});
-
-router.post("/notas/matricula", (req, res) => {
-  const nota = req.body.nota;
-  const id = req.body.id;
-  try {
-    console.log("id: ", id);
-    console.log("nota: ", nota);
-  } catch (err) {
-    console.log("err: ", err);
-  }
-});
-
-module.exports = router;
