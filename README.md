@@ -29,3 +29,5 @@ Lista de funcionalidades a serem desenvolvidas e status de progresso
 - desenvolver a tela de editar nota
 - mostrar ao usuario suas notas
 - Cadastrar aluno em disciplina e disciplina em aluno com menção e semestre
+- fazer validações nas rotas de adicionar aluno
+- continuar arrumando views e validações nas adição de nota

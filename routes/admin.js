@@ -410,7 +410,6 @@ router.post("/disciplinas/edit", eAdmin, (req, res) => {
             res.redirect("/admin/disciplinas");
           });
       });
-
       //FInalizando Salvar disicplina no aluno
 
       //salvando aluno na disciplina
