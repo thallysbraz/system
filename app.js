@@ -25,7 +25,7 @@ const usuarios = require("./routes/usuario");
 const app = express();
 
 //configurações
-
+const PORT = process.env.PORT || 3000;
 //Sessão
 app.use(
   session({
@@ -188,4 +188,6 @@ app.use("/usuarios", usuarios); // rota usuario
 app.use("/professor", professor); //rota de professor;
 //outros
 
-app.listen(3000);
+app.listen(PORT, () => {
+  console.log("server startado, na porta:", PORT);
+});

@@ -104,10 +104,26 @@ router.get("/disciplinas/notas/edit/:id", eProf, async (req, res) => {
 });
 
 //rota para validar e registrar edição na disciplina
-router.get("/notas/edit/:id", eProf, (req, res) => {
-  const resultado = req.params.id;
+router.post("/notas/edit/:id", eProf, (req, res) => {
+  //const resultado = req.params.id;
+  const matricula = req.body.matricula;
+  try {
+    console.log("nota: ", matricula);
+  } catch (err) {
+    console.log("err: ", err);
+  }
+  //res.send({ resultado });
+});
 
-  res.send({ resultado });
+router.post("/notas/matricula", (req, res) => {
+  const nota = req.body.nota;
+  const id = req.body.id;
+  try {
+    console.log("id: ", id);
+    console.log("nota: ", nota);
+  } catch (err) {
+    console.log("err: ", err);
+  }
 });
 
 module.exports = router;
