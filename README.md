@@ -14,20 +14,22 @@
 
 Lista de funcionalidades a serem desenvolvidas e status de progresso
 
-|              Problema              |                              Descrição                               |    Status     |
-| :--------------------------------: | :------------------------------------------------------------------: | :-----------: |
-|       Arrumar banco de dados       |    Fazer relacionamentos e descobrir como arrumar banco de dados     |   Concluido   |
-|        Crud de disciplinas         |      Fazer as rotas de get, post, put e delete das disciplinas       | Desenvolvendo |
-|               Alunos               |       Fazer rotas e view para cadastrar alunos nas disciplinas       |   Concluido   |
-|         Relacionamentos BD         |           Fazer relacionamento entre ALUNO/DISCIPLINA/NOTA           |   Concluido   |
-| Pesquisar disciplina por professor | Mostrar ao professor todas as disciplinas que ele da aula (BACKEND)  |   Concluido   |
-| Pesquisar disciplina por professor | Mostrar ao professor todas as disciplinas que ele da aula (Frontend) |   Concluido   |
-|            Lançar notas            |                 Termina view de lançamento de notas                  | Desenvolvendo |
+|              Problema              |                                 Descrição                                 |    Status     |
+| :--------------------------------: | :-----------------------------------------------------------------------: | :-----------: |
+|       Arrumar banco de dados       |       Fazer relacionamentos e descobrir como arrumar banco de dados       |   Concluido   |
+|        Crud de disciplinas         |         Fazer as rotas de get, post, put e delete das disciplinas         | Desenvolvendo |
+|               Alunos               |         Fazer rotas e view para cadastrar alunos nas disciplinas          |   Concluido   |
+|         Relacionamentos BD         |             Fazer relacionamento entre ALUNO/DISCIPLINA/NOTA              |   Concluido   |
+| Pesquisar disciplina por professor |    Mostrar ao professor todas as disciplinas que ele da aula (BACKEND)    |   Concluido   |
+| Pesquisar disciplina por professor |   Mostrar ao professor todas as disciplinas que ele da aula (Frontend)    |   Concluido   |
+|            Lançar notas            |                    Termina view de lançamento de notas                    | Desenvolvendo |
+|     Inserir alunos/disciplina      | Cadastrar aluno em disciplina e disciplina em aluno com menção e semestre |   Concluido   |
+|             Validações             |               Fazer validações nas rotas de adicionar aluno               |   Concluido   |
 
 ## 3 - proximos objetivos
 
-- desenvolver a tela de editar nota
+- ~~desenvolver a tela de editar nota~~
 - mostrar ao usuario suas notas
-- Cadastrar aluno em disciplina e disciplina em aluno com menção e semestre
-- fazer validações nas rotas de adicionar aluno
+- ~~Cadastrar aluno em disciplina e disciplina em aluno com menção e semestre~~
+- ~~fazer validações nas rotas de adicionar aluno~~
 - continuar arrumando views e validações nas adição de nota

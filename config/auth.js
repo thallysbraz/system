@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
 //Model de usuário
-
 require("../models/Usuario");
 
 const Usuario = mongoose.model("usuarios");

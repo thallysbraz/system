@@ -363,7 +363,7 @@ router.get("/:disciplinaId", async (req, res) => {
 router.get("/disciplinas/edit/:id", eAdmin, (req, res) => {
   Disciplina.findOne({ _id: req.params.id })
     .then(disciplina => {
-      Usuario.find()
+      Usuario.find(/*{ eAdmin: false }*/)
         .then(usuarios => {
           res.render("admin/editdisciplinas", {
             usuarios: usuarios,
@@ -385,45 +385,58 @@ router.get("/disciplinas/edit/:id", eAdmin, (req, res) => {
 });
 
 //rota para validar e cadastrar alunos na disciplina
-router.post("/disciplinas/edit", eAdmin, (req, res) => {
+router.post("/disciplinas/edit", eAdmin, async (req, res) => {
   Disciplina.findOne({ _id: req.body.id })
     .then(disciplina => {
       const alun = req.body.matricula;
-      disciplina.matriculados.push({
-        user: alun
-      });
-      //Salvar disciplina no aluno
-      const RefDisc = disciplina._id;
-      Usuario.findOne({ _id: alun }).then(usuario => {
-        usuario.notas.push({
-          mencao: "0",
-          disciplina: RefDisc,
-          semestre: "2/2019"
+      //const matricula = disciplina.matriculados;
+      const erros = [];
+      for (var i = 0; i < disciplina.matriculados.length; i++) {
+        if (alun == disciplina.matriculados[i].user) {
+          erros.push({ texto: "Aluno ja matriculado" });
+          break;
+        }
+      }
+      if (erros.length > 0) {
+        req.flash("error_msg", "Aluno ja matriculado");
+        res.redirect("/admin/disciplinas");
+      } else {
+        //Salvar disciplina no aluno
+        const RefDisc = disciplina._id;
+        Usuario.findOne({ _id: alun }).then(usuario => {
+          usuario.notas.push({
+            mencao: "0",
+            disciplina: RefDisc,
+            semestre: "2/2019"
+          });
+          usuario
+            .save()
+            .then(() => {
+              console.log("Disciplina adicionada ao aluno");
+            })
+            .catch(err => {
+              console.log("error ao adicionar disciplina ao aluno: ", err);
+              res.redirect("/admin/disciplinas");
+            });
         });
-        usuario
+        //FInalizando Salvar disicplina no aluno
+        // ----------------------------------\\
+        //salvando aluno na disciplina
+        disciplina.matriculados.push({
+          user: alun
+        });
+        disciplina
           .save()
           .then(() => {
-            console.log("Disciplina adicionada ao aluno");
+            req.flash("success_msg", "Aluno matriculado com sucesso");
+            res.redirect("/admin/disciplinas");
           })
           .catch(err => {
-            console.log("error ao adicionar disciplina ao aluno: ", err);
+            req.flash("error_msg", "Houve erro ao salvar a matricula");
             res.redirect("/admin/disciplinas");
           });
-      });
-      //FInalizando Salvar disicplina no aluno
-
-      //salvando aluno na disciplina
-      disciplina
-        .save()
-        .then(() => {
-          req.flash("success_msg", "Aluno matriculado com sucesso");
-          res.redirect("/admin/disciplinas");
-        })
-        .catch(err => {
-          req.flash("error_msg", "Houve erro ao salvar a matricula");
-          res.redirect("/admin/disciplinas");
-        });
-      //res.redirect("/admin/disciplinas");
+        //res.redirect("/admin/disciplinas");
+      }
     })
     .catch(err => {
       console.log("err: ", err);
@@ -432,7 +445,7 @@ router.post("/disciplinas/edit", eAdmin, (req, res) => {
     });
 });
 
-//rota para deletar disciplina
+//rota para deletar disciplina, falta implementar
 router.post("/disciplinas/deletar", eAdmin, (req, res) => {
   Categoria.remove({ _id: req.body.id })
     .then(() => {

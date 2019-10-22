@@ -58,11 +58,15 @@ router.get("/disciplinas/notas/edit/:id", async (req, res) => {
         //matricula.push({ mat: disciplina.matriculados[i].user });
         matricula.push(disciplina.matriculados[i].user);
       }
+      console.log("disciplinaID: ", disciplina._id);
       Usuario.find({ _id: matricula })
         .then(usuario => {
           //console.log("id: ", matricula);
           //return res.send({ usuario });
-          res.render("professor/teste2", { usuario: usuario });
+          res.render("professor/teste2", {
+            usuario: usuario,
+            disciplina: disciplina
+          });
         })
         .catch(err => {
           console.log(err);
@@ -98,10 +102,10 @@ router.post("/notas/matricula/:id", (req, res) => {
   const nota = req.body.nota;
   const id = req.body.id;
   const semestre = req.body.semestre;
-  const disci = req.body.disci;
+  //const disci = req.body.disci;
   try {
     console.log("id: ", id);
-    console.log("disc: ", disci);
+    //console.log("disc: ", disci);
     console.log("semestre: ", semestre);
     console.log("nota: ", nota);
   } catch (err) {
