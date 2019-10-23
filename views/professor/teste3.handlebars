@@ -14,47 +14,27 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>
-                    <center>
-                        <h4>Codigo da disciplina: <strong>{{disciplina}}</strong></h4>
-                    </center>
-                </td>
-            </tr>
             {{#each usuario}}
             <tr>
                 <td>
                     <form action="/professor/notas/matricula/{{_id}}" method="POST">
-                        <div class="form-group row">
-                            <label for="inputPassword" class="col-sm-2 col-form-label">Nota</label>
-                            <div class="col-sm-10">
-                                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-                            </div>
-                            <label for="inputPassword" class="col-sm-2 col-form-label">Semestre vigente:</label>
-                            <div class="col-sm-10 mt-2">
-                                <select name="semestre" class="custom-select">
-                                    <option value="2/2019">2/2019</option>
-                                    <option value="1/2020">1/2020</option>
-                                    <option value="2/2020">2/2020</option>
-                                    <option value="1/2021">1/2021</option>
-                                    <option value="2/2021">2/2021</option>
-                                </select>
-                            </div>
-                            <label for="inputPassword" class="col-sm-2 col-form-label">ID da disciplina:</label>
-                            <div class="col-sm-10 mt-2">
-                                <select name="semestre" class="custom-select">
-                                    {{#each ../discID}}
-                                    <option value="{{text}}">{{text}}</option>
-                                    {{/each}}
-                                </select>
-                            </div>
-                            <div class="col-sm-2 col-form-label"></div>
-                            <div class="col-sm-10 mt-2">
-                                <button class="btn btn-success mt-2" type="submit">
-                                    <i class="far fa-check-circle"> Salvar</i>
-                                </button>
-                            </div>
-                        </div>
+                        <label for="nome" class="form-control"><strong> {{this.nome}}</strong></label><br>
+                        <label for="matricula" class="form-control"><strong>{{id}}</strong></label><br>
+                        <input type="hidden" name="matricula" value="{{id}}">
+                        <input type="text" class="form-control" name="nota" placeholder="Nota" required><br>
+                        <select name="semestre" class="custom-select form-control">
+                            <option value="2/2019">2/2019</option>
+                            <option value="1/2020">1/2020</option>
+                            <option value="2/2020">2/2020</option>
+                            <option value="1/2021">1/2021</option>
+                            <option value="2/2021">2/2021</option>
+                        </select>
+                        {{#each ../discID}}
+                        <input type="hidden" name="disciplina" value="{{text}}">
+                        {{/each}}
+                        <button class="btn btn-success mt-2" type="submit">
+                            <i class="far fa-check-circle"> Salvar</i>
+                        </button>
                     </form>
                 </td>
             </tr>

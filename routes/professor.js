@@ -99,14 +99,17 @@ router.post("/notas/edit/:id", eProf, (req, res) => {
 });
 
 router.post("/notas/matricula/:id", (req, res) => {
+  //const nome = req.body.nome;
+  const matricula = req.body.matricula;
   const nota = req.body.nota;
-  const id = req.body.id;
-  //const semestre = matri;
-  const disci = req.body.cod;
+  const semestre = req.body.semestre;
+  const disci = req.body.disciplina;
   try {
-    //console.log("id: ", id);
-    //console.log("global: ", global.matri);
-    res.send({ disci });
+    console.log("matricula: ", matricula);
+    console.log("nota: ", nota);
+    console.log("semestre: ", semestre);
+    console.log("disci: ", disci);
+    //res.send({ disci });
   } catch (err) {
     console.log("err: ", err);
   }
