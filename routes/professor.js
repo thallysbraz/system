@@ -63,7 +63,7 @@ router.get("/disciplinas/notas/edit/:id", async (req, res) => {
       Usuario.find({ _id: matricula })
         .then(usuario => {
           //return res.send({ usuario });
-          res.render("professor/teste2", {
+          res.render("professor/teste3", {
             usuario: usuario,
             discID: discID
           });
