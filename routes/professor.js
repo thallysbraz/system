@@ -55,6 +55,7 @@ router.get("/disciplinas/notas/edit/:id", async (req, res) => {
         //matricula.push({ mat: disciplina.matriculados[i].user });
         matricula.push(disciplina.matriculados[i].user);
       }
+
       //global.matri = disciplina._id;
       const discID = [];
 
