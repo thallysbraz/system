@@ -37,6 +37,12 @@
                             <option value="1/2021">1/2021</option>
                             <option value="2/2021">2/2021</option>
                         </select>
+                        <label for="semestre">ID da disciplina:</label>
+                        <select name="semestre" class="custom-select">
+                            {{#each ../discID}}
+                            <option value="{{text}}">{{text}}</option>
+                            {{/each}}
+                        </select><br>
                         <label for="cod">Confirme o codigo da disciplina</label>
                         <input type="text" id="cod" name="cod" placeholder="Codigo da disciplina (Informado acima)"
                             class="form-control"><br>
