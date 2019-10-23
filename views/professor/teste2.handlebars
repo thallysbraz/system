@@ -14,30 +14,40 @@
             </tr>
         </thead>
         <tbody>
-
+            <tr>
+                <td>
+                    <center>
+                        <h4>Codigo da disciplina: <strong>{{disciplina}}</strong></h4>
+                    </center>
+                </td>
+            </tr>
             {{#each usuario}}
             <tr>
                 <td>
                     <form action="/professor/notas/matricula/{{_id}}" method="POST">
-                        <label for="id">{{nome}} <strong>{{_id}}</strong></label>
-                        <input type="hidden" name="id" value="{{_id}}">
+                        <label for="id">Nome: <strong>{{this.nome}}</strong></label><br>
+                        <label for="id">Matricula: <strong>{{id}}</strong></label>
+                        <input type="hidden" name="id" value="{{id}}">
                         <input type="text" id="nota" name="nota" placeholder="Nota" class="form-control">
-                        <input type="hidden" name="disci" value="{{notas}}">
-                        <label for="nota">Semestre vigente:</label>
+                        <label for="semestre">Semestre vigente:</label>
                         <select name="semestre" class="custom-select">
                             <option value="2/2019">2/2019</option>
                             <option value="1/2020">1/2020</option>
                             <option value="2/2020">2/2020</option>
                             <option value="1/2021">1/2021</option>
                             <option value="2/2021">2/2021</option>
-                        </select><br><br>
-                        <button class="btn btn-success" type="submit">
+                        </select>
+                        <label for="cod">Confirme o codigo da disciplina</label>
+                        <input type="text" id="cod" name="cod" placeholder="Codigo da disciplina (Informado acima)"
+                            class="form-control"><br>
+                        <button class="btn btn-success mt-2" type="submit">
                             <i class="far fa-check-circle"> Salvar</i>
                         </button>
                     </form>
                 </td>
             </tr>
             {{else}}
+            <h2>Nenhum aluno encontrado</h2>
             {{/each}}
         </tbody>
     </table>

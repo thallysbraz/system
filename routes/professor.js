@@ -49,23 +49,22 @@ router.post("/consulta", eProf, async (req, res) => {
 router.get("/disciplinas/notas/edit/:id", async (req, res) => {
   Disciplina.findOne({ _id: req.params.id })
     .then(disciplina => {
-      //const limite = disciplina.matriculados.length; // saber quantos alunos tem cadastrados
-      //console.log("limite: ", limite);
-      //matricula.push({ text: disciplina.matriculados }); // vou usar
       const matricula = []; //array de alunos
       //for para colocar os alunos matriculados dentro de matricula
       for (var i = 0; i < disciplina.matriculados.length; i++) {
         //matricula.push({ mat: disciplina.matriculados[i].user });
         matricula.push(disciplina.matriculados[i].user);
       }
-      console.log("disciplinaID: ", disciplina._id);
+      //global.matri = disciplina._id;
+      const discID = [];
+
+      discID.push({ text: disciplina._id });
       Usuario.find({ _id: matricula })
         .then(usuario => {
-          //console.log("id: ", matricula);
           //return res.send({ usuario });
           res.render("professor/teste2", {
             usuario: usuario,
-            disciplina: disciplina
+            discID: discID
           });
         })
         .catch(err => {
@@ -74,7 +73,7 @@ router.get("/disciplinas/notas/edit/:id", async (req, res) => {
           res.redirect("/");
         });
       //res.send({ matricula });
-      //res.render("professor/teste2", { matricula: matricula });
+      //res.render("professor/teste", { matricula: matricula });
     })
     .catch(err => {
       console.log("err: ", err);
@@ -101,13 +100,12 @@ router.post("/notas/edit/:id", eProf, (req, res) => {
 router.post("/notas/matricula/:id", (req, res) => {
   const nota = req.body.nota;
   const id = req.body.id;
-  const semestre = req.body.semestre;
-  //const disci = req.body.disci;
+  //const semestre = matri;
+  const disci = req.body.cod;
   try {
-    console.log("id: ", id);
-    //console.log("disc: ", disci);
-    console.log("semestre: ", semestre);
-    console.log("nota: ", nota);
+    //console.log("id: ", id);
+    //console.log("global: ", global.matri);
+    res.send({ disci });
   } catch (err) {
     console.log("err: ", err);
   }
