@@ -401,6 +401,7 @@ router.post("/disciplinas/edit", eAdmin, async (req, res) => {
         req.flash("error_msg", "Aluno ja matriculado");
         res.redirect("/admin/disciplinas");
       } else {
+        /*
         //Salvar disciplina no aluno
         const RefDisc = disciplina._id;
         Usuario.findOne({ _id: alun }).then(usuario => {
@@ -421,6 +422,7 @@ router.post("/disciplinas/edit", eAdmin, async (req, res) => {
         });
         //FInalizando Salvar disicplina no aluno
         // ----------------------------------\\
+        */
         //salvando aluno na disciplina
         disciplina.matriculados.push({
           user: alun

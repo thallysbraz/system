@@ -103,8 +103,8 @@ router.post("/notas/matricula/:id", (req, res) => {
   const matricula = req.body.matricula;
   const nota = req.body.nota;
   const semestre = req.body.semestre;
-  const disci = req.body.disciplina;
-  try {
+  const disciplina = req.body.disciplina;
+  /*try {
     console.log("matricula: ", matricula);
     console.log("nota: ", nota);
     console.log("semestre: ", semestre);
@@ -112,7 +112,27 @@ router.post("/notas/matricula/:id", (req, res) => {
     //res.send({ disci });
   } catch (err) {
     console.log("err: ", err);
-  }
+  }*/
+  //Salvar disciplina no aluno
+  Usuario.findOne({ _id: matricula }).then(usuario => {
+    usuario.notas.push({
+      mencao: nota,
+      disciplina: disciplina,
+      semestre: semestre
+    });
+    usuario
+      .save()
+      .then(() => {
+        console.log("Nota do aluno atualizada com sucesso");
+        res.redirect("/admin/disciplinas");
+      })
+      .catch(err => {
+        console.log("error ao adicionar disciplina ao aluno: ", err);
+        res.redirect("/admin/disciplinas");
+      });
+  });
+  //FInalizando Salvar disicplina no aluno
+  // ----------------------------------\\
 });
 
 module.exports = router;
