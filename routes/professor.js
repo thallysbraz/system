@@ -104,35 +104,38 @@ router.post("/notas/matricula/:id", (req, res) => {
   const nota = req.body.nota;
   const semestre = req.body.semestre;
   const disciplina = req.body.disciplina;
-  /*try {
-    console.log("matricula: ", matricula);
-    console.log("nota: ", nota);
-    console.log("semestre: ", semestre);
-    console.log("disci: ", disci);
-    //res.send({ disci });
-  } catch (err) {
-    console.log("err: ", err);
-  }*/
-  //Salvar disciplina no aluno
-  Usuario.findOne({ _id: matricula }).then(usuario => {
-    usuario.notas.push({
-      mencao: nota,
-      disciplina: disciplina,
-      semestre: semestre
-    });
-    usuario
-      .save()
-      .then(() => {
-        console.log("Nota do aluno atualizada com sucesso");
-        res.redirect("/admin/disciplinas");
-      })
-      .catch(err => {
-        console.log("error ao adicionar disciplina ao aluno: ", err);
-        res.redirect("/admin/disciplinas");
+  const error = [];
+
+  if (nota < 0) {
+    error.push({ texto: "nota invalida: Menor que 0" });
+  }
+  if (nota > 10) {
+    error.push({ texto: "nota invalida: Maior que 10" });
+  }
+  if (error.length > 0) {
+    req.flash("error_msg", "Nota invalida");
+    res.redirect("/admin/disciplinas");
+  } 
+  else {
+    //Salvar nota do aluno
+    Usuario.findOne({ _id: matricula }).then(usuario => {
+      usuario.notas.push({
+        nota: nota,
+        disciplina: disciplina,
+        semestre: semestre
       });
-  });
-  //FInalizando Salvar disicplina no aluno
-  // ----------------------------------\\
+      usuario
+        .save()
+        .then(() => {
+          res.redirect("/admin/disciplinas");
+        })
+        .catch(err => {
+          console.log("error ao adicionar disciplina ao aluno: ", err);
+          res.redirect("/admin/disciplinas");
+        });
+    });
+    //FInalizando Salvar nota do aluno
+  }
 });
 
 module.exports = router;
@@ -157,7 +160,7 @@ module.exports = router;
     console.log("professor: ", professor);
     Disciplina.find({ professor })
       .then(disciplina => {
-        const erros = disciplina[0].matriculados[0].user;
+        const erros = disciplina.matriculados[0].user;
         return res.send(erros);
         //res.render("professor/teste", { disciplina: disciplina });
       })

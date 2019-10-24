@@ -385,4 +385,17 @@ router.post("/reset_password", async (req, res) => {
   }
 });
 
+router.get("/historico", async (req, res) => {
+  const user = req.user.id;
+  Usuario.findOne({ _id: user })
+    .then(usuario => {
+      //res.send({ usuario });
+      res.render("usuarios/index", { usuario: usuario });
+    })
+    .catch(err => {
+      req.flash("error_msg", "Error ao criar o usuário, tente novamente!");
+      res.redirect("/usuarios/registroADM");
+    });
+});
+
 module.exports = router;

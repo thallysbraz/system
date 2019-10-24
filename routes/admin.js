@@ -422,7 +422,7 @@ router.post("/disciplinas/edit", eAdmin, async (req, res) => {
         });
         //FInalizando Salvar disicplina no aluno
         // ----------------------------------\\
-        */
+*/
         //salvando aluno na disciplina
         disciplina.matriculados.push({
           user: alun

@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const Nota = new Schema({
-  mencao: {
-    type: String
+  nota: {
+    type: Number
   },
   disciplina: {
     type: Schema.Types.ObjectId,
