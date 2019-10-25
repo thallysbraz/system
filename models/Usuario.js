@@ -2,12 +2,15 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const Nota = new Schema({
-  mencao: {
-    type: String
+  nota: {
+    type: Number
+  },
+  disciplina: {
+    type: Schema.Types.ObjectId,
+    ref: "disciplinas"
   },
   semestre: {
-    type: String,
-    required: true
+    type: String
   }
 });
 
@@ -21,6 +24,10 @@ const Usuario = new Schema({
     required: true
   },
   eAdmin: {
+    type: Boolean,
+    default: 0
+  },
+  eProf: {
     type: Boolean,
     default: 0
   },

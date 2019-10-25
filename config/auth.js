@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
 //Model de usuário
-
 require("../models/Usuario");
 
 const Usuario = mongoose.model("usuarios");
@@ -23,6 +22,11 @@ module.exports = function(passport) {
                   global.adm = true;
                 } else {
                   global.adm = false;
+                }
+                if (usuario.eProf == true) {
+                  global.prof = true;
+                } else {
+                  global.prof = false;
                 }
                 return done(null, usuario);
               } else {

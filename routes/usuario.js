@@ -63,7 +63,8 @@ router.post("/registro", (req, res) => {
           const novoUsuario = new Usuario({
             nome: req.body.nome,
             email: req.body.email,
-            senha: req.body.senha
+            senha: req.body.senha,
+            eProf: req.body.professor
           });
           bcrypt.genSalt(10, (erro, salt) => {
             bcrypt.hash(novoUsuario.senha, salt, (erro, hash) => {
@@ -75,6 +76,7 @@ router.post("/registro", (req, res) => {
               novoUsuario
                 .save()
                 .then(() => {
+                  /*
                   //iniciando envio de email
                   let transporter = nodemailer.createTransport({
                     service: "gmail",
@@ -105,7 +107,7 @@ router.post("/registro", (req, res) => {
                     }
                   });
 
-                  //finalizando envio de email
+                  //finalizando envio de email*/
                   req.flash("success_msg", "Usuário criado com sucesso!");
                   res.redirect("/");
                 })
@@ -380,6 +382,33 @@ router.post("/reset_password", async (req, res) => {
     });
   } catch (err) {
     res.status(400).send({ error: "Cannot reset passord, try again" });
+  }
+});
+
+router.get("/historico", async (req, res) => {
+  try {
+    const user = req.user.id;
+    Usuario.findOne({ _id: user })
+      .then(usuario => {
+        const mencao = [];
+        const disciplinas = [];
+        const semestre = [];
+        for (var i = 0; i < usuario.notas.length; i++) {
+          mencao.push({
+            nota: usuario.notas[i].nota,
+            disciplina: usuario.notas[i].disciplina,
+            semestre: usuario.notas[i].semestre
+          });
+        }
+        //res.send({ mencao });
+        res.render("usuarios/index", { mencao: mencao });
+      })
+      .catch(err => {
+        req.flash("error_msg", "Error!");
+        res.redirect("/");
+      });
+  } catch (err) {
+    res.redirect("/usuarios/login");
   }
 });
 

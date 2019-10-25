@@ -1,15 +1,5 @@
 <div>
     <div class="jumbotron ">
-
-        {{#if user}}
-        {{else}}
-        <a class="btn btn-primary btn-lg" href="/usuarios/registro" role="button">Crie uma conta</a>
-        {{/if}}
-
-
-
-        <br><br>
-
         <div>
             <h1>{{categoria.nome}}</h1>
         </div>
@@ -21,13 +11,8 @@
                 <a href="/postagem/{{slug}}"><button class="btn btn-success">Leia mais!</button></a>
                 <hr>
                 <small>Data de publicação: {{data}}</small>
-
             </div>
         </div>
-
-
-
-
         {{else}}
         <h5>Nenhuma postagem.</h5>
         {{/each}}

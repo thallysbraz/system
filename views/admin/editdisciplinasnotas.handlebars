@@ -32,7 +32,12 @@
                         <option value="SS">SS - SUPERIOR (9,0 a 10,0)</option>
                     </select>
                 </td>
-                <td><button class="btn btn-success"><i class="far fa-check-circle"> Salvar</button></i></td>
+                <td>
+                    <a href="/professor/notas/edit/{{_id}}">
+                        <button class="btn btn-success" type="submit">
+                            <i class="far fa-check-circle"> Salvar</i></button>
+                    </a>
+                </td>
             </tr>
             {{else}}
             {{/each}}

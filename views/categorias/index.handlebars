@@ -1,18 +1,23 @@
 <div class="jumbotron">
     <div class="container">
-        <h1 class="display-4 text-center"><strong>Página de informações!</strong></h1><br>
-        {{#each categorias}}
+        <h1 class="display-4 text-center"><strong><i class="far fa-newspaper"></i> Informações por
+                categorias!</strong></h1><br>
 
-        <div class="card text-center">
-            <div class="card-body">
-                <h5 class="card-title">Aviso: {{nome}}</h5>
-                <p class="card-text">Descrição: {{slug}}</p>
-                <a href="/categorias/{{slug}}">
-                    <button class="btn btn-primary">Mais informações</button>
-                </a>
+        <div class="row">
+            {{#each categorias}}
+            <div class="col-sm-4 mt-2">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-exclamation-circle"></i> Aviso: {{nome}}</h5>
+                        <p class="card-text">Descrição: {{slug}}</p>
+                        <a href="/categorias/{{slug}}">
+                            <button class="btn btn-primary">Mais informações <i class="fas fa-question"></i></button>
+                        </a><br>
+                    </div>
+                </div>
             </div>
+            {{else}}
+            {{/each}}
         </div>
-        {{else}}
-        {{/each}}
     </div>
 </div>

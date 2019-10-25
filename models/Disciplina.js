@@ -3,11 +3,10 @@ const express = require("express");
 const Schema = mongoose.Schema;
 
 const Alunos = new Schema({
-  aluno: [
-    {
-      type: String
-    }
-  ]
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "usuarios"
+  }
 });
 
 const Disciplina = new Schema({
@@ -21,6 +20,10 @@ const Disciplina = new Schema({
     unique: true
   },
   ementa: {
+    type: String,
+    required: true
+  },
+  curso: {
     type: String,
     required: true
   },
