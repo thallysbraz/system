@@ -85,4 +85,5 @@ yarn dev
 6. Pronto, a aplicação irá executar na página web.
 
 ![](./image/System.png)
-<p align="center"> <img src="https://https://github.com/thallysbraz/system/blob/master/image/System.PNG" width="auto" height="400" />
+
+<p align="center"> <img src="https://github.com/thallysbraz/system/blob/master/image/System.PNG" width="auto" height="400" />
