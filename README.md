@@ -53,6 +53,7 @@ Lista de funcionalidades a serem desenvolvidas e status de progresso
 - ~~Fazer validações nas rotas de adicionar a nota do aluno~~
 - ~~continuar arrumando views e validações nas adição de nota~~
 - Refatorar o redirecionamento em rotas e views
+- fazer deploy da aplicação no heroku
 
 ## 5 - Para executar o projeto
 
