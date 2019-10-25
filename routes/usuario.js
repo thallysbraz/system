@@ -13,16 +13,18 @@ const path = require("path");
 
 require("dotenv").config();
 require("../models/Usuario");
+require("../models/Disciplina");
 
 const { eAdmin } = require("../helpers/eAdmin");
 const Usuario = mongoose.model("usuarios");
+const Disciplina = mongoose.model("disciplinas");
 
-router.get("/registro", (req, res) => {
+router.get("/registro", eAdmin, (req, res) => {
   res.render("usuarios/registro");
 });
 
 //validação de usuário
-router.post("/registro", (req, res) => {
+router.post("/registro", eAdmin, (req, res) => {
   var erros = [];
   if (
     !req.body.nome ||
@@ -392,18 +394,31 @@ router.get("/historico", async (req, res) => {
       .then(usuario => {
         const mencao = [];
         const disciplinas = [];
-        const semestre = [];
+        const disciplinas2 = [];
         for (var i = 0; i < usuario.notas.length; i++) {
           mencao.push({
             nota: usuario.notas[i].nota,
             disciplina: usuario.notas[i].disciplina,
             semestre: usuario.notas[i].semestre
           });
+          disciplinas.push(usuario.notas[i].disciplina);
         }
-        //res.send({ mencao });
+        /*Disciplina.findOne({ _id: disciplinas })
+          .then(disciplinas => {
+            const discNome = disciplinas.nome;
+            console.log(disciplinas.nome);
+            return res.send({ discNome });
+          })
+          .catch(err => {
+            console.log(err);
+            req.flash("error_msg", "Houve error interno ao testar");
+            res.redirect("/");
+          });*/
+        //res.send({ disciplinas });
         res.render("usuarios/index", { mencao: mencao });
       })
       .catch(err => {
+        console.log("err: ", err);
         req.flash("error_msg", "Error!");
         res.redirect("/");
       });

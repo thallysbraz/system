@@ -4,14 +4,12 @@
         <p class="lead"><strong>First Education and Technology</strong></p>
         <hr class="my-4">
     </div>
-
     <center>
         <h2>Informações recentes:</h2>
     </center>
-
     {{#each postagens}}
     <div class="card mt-4" style="width: 50rem;">
-        <div class="card-body">
+        <div id="cardfinal" class="card-body">
             <h3><i class="fas fa-exclamation-circle"></i> Aviso: {{titulo}}</h3>
             <h5>Descrição: {{descricao}}</h5>
             <h5>Categoria: {{categoria.nome}}</h5>
@@ -21,5 +19,4 @@
     {{else}}
     <h5 class="alert alert-danger">Nenhuma informação!</h5>
     {{/each}}
-
 </div>

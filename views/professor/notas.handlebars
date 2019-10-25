@@ -14,34 +14,24 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>
-                    <center>
-                        <h4>Codigo da disciplina: <strong>{{disciplina}}</strong></h4>
-                    </center>
-                </td>
-            </tr>
             {{#each usuario}}
             <tr>
                 <td>
                     <form action="/professor/notas/matricula/{{_id}}" method="POST">
-                        <label for="nome"><strong>{{this.nome}}</strong></label><br>
-                        <label for="matricula"><strong>{{id}}</strong></label><br>
+                        <label for="nome" class="form-control"><strong> {{this.nome}}</strong></label><br>
+                        <label for="matricula" class="form-control"><strong>{{id}}</strong></label><br>
                         <input type="hidden" name="matricula" value="{{id}}">
-                        <label for="semestre">Semestre vigente:</label>
-                        <select name="semestre" class="custom-select">
+                        <input type="number" class="form-control" name="nota" placeholder="Nota" required><br>
+                        <select name="semestre" class="custom-select form-control">
                             <option value="2/2019">2/2019</option>
                             <option value="1/2020">1/2020</option>
                             <option value="2/2020">2/2020</option>
                             <option value="1/2021">1/2021</option>
                             <option value="2/2021">2/2021</option>
                         </select>
-                        <label for="semestre">ID da disciplina:</label>
-                        <select name="semestre" class="custom-select">
-                            {{#each ../discID}}
-                            <option value="{{text}}">{{text}}</option>
-                            {{/each}}
-                        </select><br>
+                        {{#each ../discID}}
+                        <input type="hidden" name="disciplina" value="{{text}}">
+                        {{/each}}
                         <button class="btn btn-success mt-2" type="submit">
                             <i class="far fa-check-circle"> Salvar</i>
                         </button>

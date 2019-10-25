@@ -1,7 +1,10 @@
 <div class="jumbotron">
-    <h2>Lista de Posts:</h2>
+    <center>
+        <h2>Posts:</h2>
+    </center>
     <hr>
-    <a href="/admin/postagens/add"><button class="btn btn-success">Novo Post</button></a>
+    <a href="/admin/postagens/add"><button class="btn btn-success"><i class="far fa-newspaper"></i> Novo
+            Post</button></a>
 
     {{#each postagens}}
     <div class="card mt-4">
@@ -10,8 +13,10 @@
             <p>Descrição: {{descricao}}</p>
             <small>Data: {{data}}</small><br>
             <small>Categoria: {{categoria.nome}}</small><br>
-            <a href="/admin/postagens/edit/{{_id}}"><button class="btn btn-success mt-4">Editar post</button></a>
-            <a href="/admin/postagens/deletar/{{_id}}"><button class="btn btn-danger mt-4">Deletar post</button></a>
+            <a href="/admin/postagens/edit/{{_id}}"><button class="btn btn-success mt-4"><i class="far fa-edit"></i>
+                    Editar post</button></a>
+            <a href="/admin/postagens/deletar/{{_id}}"><button class="btn btn-danger mt-4"><i
+                        class="fas fa-trash-alt"></i> Deletar post</button></a>
         </div>
     </div>
     {{else}}
