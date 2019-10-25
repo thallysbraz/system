@@ -75,3 +75,5 @@ yarn dev
 ```
 
 6. Pronto, a aplicação irá executar na página web.
+
+![](./image/System.png)
