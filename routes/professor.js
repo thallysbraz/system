@@ -46,7 +46,7 @@ router.post("/consulta", eProf, async (req, res) => {
 });
 
 //rota par view disciplina/edit
-router.get("/disciplinas/notas/edit/:id", async (req, res) => {
+router.get("/disciplinas/notas/edit/:id", eProf, async (req, res) => {
   Disciplina.findOne({ _id: req.params.id })
     .then(disciplina => {
       const matricula = []; //array de alunos
@@ -63,7 +63,7 @@ router.get("/disciplinas/notas/edit/:id", async (req, res) => {
       Usuario.find({ _id: matricula })
         .then(usuario => {
           //return res.send({ usuario });
-          res.render("professor/teste3", {
+          res.render("professor/notas", {
             usuario: usuario,
             discID: discID
           });
@@ -98,7 +98,7 @@ router.post("/notas/edit/:id", eProf, (req, res) => {
   //res.send({ resultado });
 });
 
-router.post("/notas/matricula/:id", (req, res) => {
+router.post("/notas/matricula/:id", eProf, (req, res) => {
   //const nome = req.body.nome;
   const matricula = req.body.matricula;
   const nota = req.body.nota;
@@ -114,9 +114,8 @@ router.post("/notas/matricula/:id", (req, res) => {
   }
   if (error.length > 0) {
     req.flash("error_msg", "Nota invalida");
-    res.redirect("/admin/disciplinas");
-  } 
-  else {
+    res.redirect("/professor");
+  } else {
     //Salvar nota do aluno
     Usuario.findOne({ _id: matricula }).then(usuario => {
       usuario.notas.push({
