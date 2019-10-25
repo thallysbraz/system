@@ -386,16 +386,30 @@ router.post("/reset_password", async (req, res) => {
 });
 
 router.get("/historico", async (req, res) => {
-  const user = req.user.id;
-  Usuario.findOne({ _id: user })
-    .then(usuario => {
-      //res.send({ usuario });
-      res.render("usuarios/index", { usuario: usuario });
-    })
-    .catch(err => {
-      req.flash("error_msg", "Error ao criar o usuário, tente novamente!");
-      res.redirect("/usuarios/registroADM");
-    });
+  try {
+    const user = req.user.id;
+    Usuario.findOne({ _id: user })
+      .then(usuario => {
+        const mencao = [];
+        const disciplinas = [];
+        const semestre = [];
+        for (var i = 0; i < usuario.notas.length; i++) {
+          mencao.push({
+            nota: usuario.notas[i].nota,
+            disciplina: usuario.notas[i].disciplina,
+            semestre: usuario.notas[i].semestre
+          });
+        }
+        //res.send({ mencao });
+        res.render("usuarios/index", { mencao: mencao });
+      })
+      .catch(err => {
+        req.flash("error_msg", "Error!");
+        res.redirect("/");
+      });
+  } catch (err) {
+    res.redirect("/usuarios/login");
+  }
 });
 
 module.exports = router;

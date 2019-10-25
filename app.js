@@ -12,13 +12,11 @@ require("./models/Usuario");
 require("./models/Categoria");
 require("./models/Postagem");
 require("./models/Disciplina");
-require("./models/Nota");
 require("./config/auth")(passport);
 
 const Categoria = mongoose.model("categorias");
 const Postagem = mongoose.model("postagens");
 const Disciplina = mongoose.model("disciplinas");
-const Nota = mongoose.model("notas");
 const admin = require("./routes/admin");
 const professor = require("./routes/professor");
 const usuarios = require("./routes/usuario");
@@ -189,5 +187,5 @@ app.use("/professor", professor); //rota de professor;
 //outros
 
 app.listen(PORT, () => {
-  console.log("server startado, na porta:", PORT);
+  console.log("server startado, na porta: " + PORT);
 });
