@@ -54,6 +54,8 @@ Lista de funcionalidades a serem desenvolvidas e status de progresso
 |             Validações             |          Fazer validações nas rotas de adicionar a nota do aluno          |    Concluido    |
 |          Redirecionamento          |               Refatorar o redirecionamento em rotas e views               | Desenvolvimento |
 |           Envio de email           |                  Refatora o envio de email para usuarios                  | Desenvolvimento |
+|                Bug                 |                    Corrigir bug na criação de usuário                     | Desenvolvimento |
+|            Refatorando             |               Refatorar o redirecionamento em rotas e views               | Desenvolvimento |
 
 ## 4 - proximos objetivos
 
