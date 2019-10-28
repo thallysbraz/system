@@ -1,5 +1,5 @@
 global.ID =
-  "<strong> Olá, {0}. Use a matricula e CPF para acessar o portal http://localhost:3000</strong>";
+  "<strong> Olá, {0}. Use seu EMAIL e CPF para acessar o portal http://localhost:3000</strong>";
 
 const express = require("express");
 const router = express.Router();
@@ -66,7 +66,8 @@ router.post("/registro", eAdmin, (req, res) => {
             nome: req.body.nome,
             email: req.body.email,
             senha: req.body.senha,
-            eProf: req.body.professor
+            eProf: req.body.professor,
+            eAdmin: req.body.eAdmin
           });
           bcrypt.genSalt(10, (erro, salt) => {
             bcrypt.hash(novoUsuario.senha, salt, (erro, hash) => {
@@ -87,7 +88,6 @@ router.post("/registro", eAdmin, (req, res) => {
                     }
                   });
                   const nom = novoUsuario.nome;
-
                   let mailOptions = {
                     from: "",
                     to: req.body.email,
@@ -118,120 +118,6 @@ router.post("/registro", eAdmin, (req, res) => {
                   );
                   console.log("errCath: ", err);
                   res.redirect("/usuarios/registro");
-                });
-            });
-          });
-        }
-      })
-      .catch(err => {
-        req.flash("error_msg", "Houve error interno");
-        res.redirect("/");
-      });
-  }
-});
-
-router.get("/registroADM", eAdmin, (req, res) => {
-  res.render("usuarios/registroADM");
-});
-
-//validação de usuário
-router.post("/registroADM", eAdmin, (req, res) => {
-  var erros = [];
-  if (
-    !req.body.nome ||
-    typeof req.body.nome == undefined ||
-    req.body.nome == null
-  ) {
-    erros.push({ texto: "Nome inválido" });
-  }
-  if (
-    !req.body.email ||
-    typeof req.body.email == undefined ||
-    req.body.email == null
-  ) {
-    erros.push({ texto: "E-mail inválido" });
-  }
-  if (
-    !req.body.senha ||
-    typeof req.body.senha == undefined ||
-    req.body.senha == null
-  ) {
-    erros.push({ texto: "Senha inválido" });
-  }
-  if (req.body.senha.length < 4) {
-    erros.push({ texto: "Senha muito curta" });
-  }
-  if (req.body.senha != req.body.senha2) {
-    erros.push({ texto: "as senhas são diferentes" });
-  }
-  if (erros.length > 0) {
-    res.render("usuarios/registroADM", { erros: erros });
-  } else {
-    Usuario.findOne({ email: req.body.email })
-      .then(usuario => {
-        if (usuario) {
-          req.flash("error_msg", "Email ja registrado!");
-          res.redirect("/usuarios/registroADM");
-        } else {
-          const novoUsuario = new Usuario({
-            nome: req.body.nome,
-            email: req.body.email,
-            senha: req.body.senha,
-            eAdmin: 1
-          });
-          bcrypt.genSalt(10, (erro, salt) => {
-            bcrypt.hash(novoUsuario.senha, salt, (erro, hash) => {
-              if (erro) {
-                req.flash("error_msg", "Error ao salvar usuário");
-                res.redirect("/");
-              }
-              novoUsuario.senha = hash;
-              novoUsuario
-                .save()
-                .then(() => {
-                  //iniciando envio de email
-                  let transporter = nodemailer.createTransport({
-                    service: "gmail",
-                    auth: {
-                      user: process.env.EMAIL,
-                      pass: process.env.PASSWORD
-                    }
-                  });
-                  const nom = novoUsuario.nome;
-                  const matricula = novoUsuario._id;
-                  const teste = nom + ", matricula: " + matricula;
-                  let mailOptions = {
-                    from: "",
-                    to: req.body.email,
-                    subject: "Seja bem-vindo", //assunto
-                    html: global.ID.replace("{0}", teste)
-                  };
-
-                  transporter.sendMail(mailOptions, function(err, data) {
-                    if (err) {
-                      req.flash(
-                        "error_msg",
-                        "Error ao criar o usuário, tente novamente!"
-                      );
-                      res.redirect("/usuarios/registro");
-                      //console.log("error occurs: ", err);
-                    } else {
-                      console.log("email enviado!!!");
-                    }
-                  });
-                  //finalizando envio de email
-                  req.flash(
-                    "success_msg",
-                    "Usuário Admnistrador criado com sucesso!"
-                  );
-                  res.redirect("/");
-                })
-                .catch(err => {
-                  req.flash(
-                    "error_msg",
-                    "Error ao criar o usuário, tente novamente!"
-                  );
-                  res.redirect("/usuarios/registroADM");
                 });
             });
           });

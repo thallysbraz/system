@@ -55,17 +55,17 @@ router.get("/disciplinas/notas/edit/:id", eProf, async (req, res) => {
         //matricula.push({ mat: disciplina.matriculados[i].user });
         matricula.push(disciplina.matriculados[i].user);
       }
-
-      //global.matri = disciplina._id;
       const discID = [];
-
       discID.push({ text: disciplina._id });
+      const prof = [];
+      prof.push({ text2: disciplina.professor });
       Usuario.find({ _id: matricula })
         .then(usuario => {
           //return res.send({ usuario });
           res.render("professor/notas", {
             usuario: usuario,
-            discID: discID
+            discID: discID,
+            prof: prof
           });
         })
         .catch(err => {
@@ -86,24 +86,15 @@ router.get("/disciplinas/notas/edit/:id", eProf, async (req, res) => {
     });
 });
 
-//rota para validar e registrar edição na disciplina
-router.post("/notas/edit/:id", eProf, (req, res) => {
-  //const resultado = req.params.id;
-  const matricula = req.body.matricula;
-  try {
-    console.log("nota: ", matricula);
-  } catch (err) {
-    console.log("err: ", err);
-  }
-  //res.send({ resultado });
-});
-
+//rota para validar e lançar nota
 router.post("/notas/matricula/:id", eProf, async (req, res) => {
   //const nome = req.body.nome;
   const matricula = req.body.matricula;
   const nota = req.body.nota;
   const semestre = req.body.semestre;
   const disciplina = req.body.disciplina;
+  const prof = req.body.professor;
+  console.log("prof: ", prof);
   var nome;
   const error = [];
 
@@ -120,31 +111,27 @@ router.post("/notas/matricula/:id", eProf, async (req, res) => {
     await Disciplina.findOne({ _id: disciplina })
       .then(disciplina => {
         nome = disciplina.nome;
-        //console.log("nome: ", nome);
-        //return res.send({ nome });
+        //pegando nome da disciplina
       })
       .catch(err => {
-        //console.log("err: ", err);
         req.flash(
           "error_msg",
           "Houve error interno, por favor tente novamente!"
         );
-        res.redirect("/professor/consulta");
+        res.redirect("/professor");
       });
-
-    const nameDIs = nome;
 
     //Salvar nota do aluno
     Usuario.findOne({ _id: matricula }).then(usuario => {
       usuario.notas.push({
         nota: nota,
-        disciplina: nameDIs,
+        disciplina: nome,
         semestre: semestre
       });
       usuario
         .save()
         .then(() => {
-          res.redirect("/professor");
+          res.redirect("/professor/testando");
         })
         .catch(err => {
           console.log("error ao adicionar disciplina ao aluno: ", err);
@@ -153,6 +140,10 @@ router.post("/notas/matricula/:id", eProf, async (req, res) => {
     });
     //FInalizando Salvar nota do aluno
   }
+});
+
+router.get("/testando", async (req, res) => {
+  res.send("ok, chegou na rota testando");
 });
 
 module.exports = router;

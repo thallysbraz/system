@@ -32,6 +32,9 @@
                         {{#each ../discID}}
                         <input type="hidden" name="disciplina" value="{{text}}">
                         {{/each}}
+                        {{#each ../prof}}
+                        <input type="hidden" name="professor" value="{{text2}}">
+                        {{/each}}
                         <button class="btn btn-success mt-2" type="submit">
                             <i class="far fa-check-circle"> Salvar</i>
                         </button>

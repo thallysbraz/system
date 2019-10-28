@@ -351,7 +351,7 @@ router.post("/disciplinas/nova", eAdmin, async (req, res) => {
 router.get("/disciplinas/edit/:id", eAdmin, (req, res) => {
   Disciplina.findOne({ _id: req.params.id })
     .then(disciplina => {
-      Usuario.find(/*{ eAdmin: false }*/)
+      Usuario.find({ eAdmin: false, eProf: false })
         .then(usuarios => {
           res.render("admin/editdisciplinas", {
             usuarios: usuarios,
