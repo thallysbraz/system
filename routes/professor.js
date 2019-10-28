@@ -98,12 +98,13 @@ router.post("/notas/edit/:id", eProf, (req, res) => {
   //res.send({ resultado });
 });
 
-router.post("/notas/matricula/:id", eProf, (req, res) => {
+router.post("/notas/matricula/:id", eProf, async (req, res) => {
   //const nome = req.body.nome;
   const matricula = req.body.matricula;
   const nota = req.body.nota;
   const semestre = req.body.semestre;
   const disciplina = req.body.disciplina;
+  var nome;
   const error = [];
 
   if (nota < 0) {
@@ -116,11 +117,28 @@ router.post("/notas/matricula/:id", eProf, (req, res) => {
     req.flash("error_msg", "Nota invalida");
     res.redirect("/professor");
   } else {
+    await Disciplina.findOne({ _id: disciplina })
+      .then(disciplina => {
+        nome = disciplina.nome;
+        //console.log("nome: ", nome);
+        //return res.send({ nome });
+      })
+      .catch(err => {
+        //console.log("err: ", err);
+        req.flash(
+          "error_msg",
+          "Houve error interno, por favor tente novamente!"
+        );
+        res.redirect("/admin/disciplinas");
+      });
+
+    const nameDIs = nome;
+
     //Salvar nota do aluno
     Usuario.findOne({ _id: matricula }).then(usuario => {
       usuario.notas.push({
         nota: nota,
-        disciplina: disciplina,
+        disciplina: nameDIs,
         semestre: semestre
       });
       usuario

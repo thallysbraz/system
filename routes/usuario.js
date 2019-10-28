@@ -403,11 +403,11 @@ router.get("/historico", async (req, res) => {
           });
           disciplinas.push(usuario.notas[i].disciplina);
         }
-        /*Disciplina.findOne({ _id: disciplinas })
+        /*Disciplina.find({ _id: disciplinas })
           .then(disciplinas => {
-            const discNome = disciplinas.nome;
+            //const discNome = disciplinas.nome;
             console.log(disciplinas.nome);
-            return res.send({ discNome });
+            return res.send({ disciplinas });
           })
           .catch(err => {
             console.log(err);
