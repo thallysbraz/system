@@ -129,7 +129,7 @@ router.post("/notas/matricula/:id", eProf, async (req, res) => {
           "error_msg",
           "Houve error interno, por favor tente novamente!"
         );
-        res.redirect("/admin/disciplinas");
+        res.redirect("/professor/consulta");
       });
 
     const nameDIs = nome;
@@ -144,7 +144,7 @@ router.post("/notas/matricula/:id", eProf, async (req, res) => {
       usuario
         .save()
         .then(() => {
-          res.redirect("/admin/disciplinas");
+          res.redirect("/professor");
         })
         .catch(err => {
           console.log("error ao adicionar disciplina ao aluno: ", err);
