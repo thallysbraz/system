@@ -181,6 +181,15 @@ app.get("/disciplinas", (req, res) => {
     });
 });
 
+app.get("/teste", (req, res) => {
+  var string = "Contrato no valor de R$ 1000. Lucro de R$ 200 para a empresa.";
+  var resultado = string.replace(/\d+/g, function aplicarIndice(x) {
+    x = x * 1.05;
+    return Math.floor(x);
+  });
+  console.log("resultado: ", resultado);
+});
+
 app.use("/admin", admin); // rota admin
 app.use("/usuarios", usuarios); // rota usuario
 app.use("/professor", professor); //rota de professor;

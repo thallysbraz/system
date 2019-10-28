@@ -1,5 +1,5 @@
 global.ID =
-  "<strong> Olá, {0} sua matricula está concluida. Use o número da matricula e senha para acessar o portal http://localhost:3000</strong>";
+  "<strong> Olá, {0}. Use a matricula e CPF para acessar o portal http://localhost:3000</strong>";
 
 const express = require("express");
 const router = express.Router();
@@ -78,7 +78,6 @@ router.post("/registro", eAdmin, (req, res) => {
               novoUsuario
                 .save()
                 .then(() => {
-                  /*
                   //iniciando envio de email
                   let transporter = nodemailer.createTransport({
                     service: "gmail",
@@ -108,8 +107,7 @@ router.post("/registro", eAdmin, (req, res) => {
                       console.log("email enviado!!!");
                     }
                   });
-
-                  //finalizando envio de email*/
+                  //finalizando envio de email
                   req.flash("success_msg", "Usuário criado com sucesso!");
                   res.redirect("/");
                 })
@@ -199,12 +197,14 @@ router.post("/registroADM", eAdmin, (req, res) => {
                       pass: process.env.PASSWORD
                     }
                   });
-
+                  const nom = novoUsuario.nome;
+                  const matricula = novoUsuario._id;
+                  const teste = nom + ", matricula: " + matricula;
                   let mailOptions = {
                     from: "",
                     to: req.body.email,
                     subject: "Seja bem-vindo", //assunto
-                    text: "Bem-vindo ao Blog App"
+                    html: global.ID.replace("{0}", teste)
                   };
 
                   transporter.sendMail(mailOptions, function(err, data) {
@@ -219,7 +219,6 @@ router.post("/registroADM", eAdmin, (req, res) => {
                       console.log("email enviado!!!");
                     }
                   });
-
                   //finalizando envio de email
                   req.flash(
                     "success_msg",
@@ -391,29 +390,16 @@ router.get("/historico", async (req, res) => {
   try {
     const user = req.user.id;
     Usuario.findOne({ _id: user })
+      .sort({ notas: "desc" })
       .then(usuario => {
         const mencao = [];
-        const disciplinas = [];
-        const disciplinas2 = [];
         for (var i = 0; i < usuario.notas.length; i++) {
           mencao.push({
             nota: usuario.notas[i].nota,
             disciplina: usuario.notas[i].disciplina,
             semestre: usuario.notas[i].semestre
           });
-          disciplinas.push(usuario.notas[i].disciplina);
         }
-        /*Disciplina.findOne({ _id: disciplinas })
-          .then(disciplinas => {
-            const discNome = disciplinas.nome;
-            console.log(disciplinas.nome);
-            return res.send({ discNome });
-          })
-          .catch(err => {
-            console.log(err);
-            req.flash("error_msg", "Houve error interno ao testar");
-            res.redirect("/");
-          });*/
         //res.send({ disciplinas });
         res.render("usuarios/index", { mencao: mencao });
       })

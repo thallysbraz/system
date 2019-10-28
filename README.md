@@ -63,7 +63,7 @@ Lista de funcionalidades a serem desenvolvidas e status de progresso
 Verifique se a porta localhost 3000  não estão sendo usada.
 ```
 
-2. Clone o repositório:
+2. Clone o repositório com o comando, via terminal:
 
 ```bash
 git clone: https://github.com/thallysbraz/system
