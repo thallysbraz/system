@@ -66,6 +66,7 @@ Lista de funcionalidades a serem desenvolvidas e status de progresso
 - Refatorar o redirecionamento em rotas e views
 - Refatorar cadastro de usuario.
 - Refatorar o envio de email.
+- Refatorar login de usuário para ser com matricula e CPF.
 - Refatorar o codigo para deixar mais limpo e excluir comentarios desnecessarios.
 - Se der tempo, refatora algumas partes do front para deixar visualmente mais bonito.
 - fazer deploy da aplicação no heroku.
