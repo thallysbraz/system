@@ -5,27 +5,31 @@
 {{else}}
 
 {{/each}}
-
-<div class="card">
-    <div class="card-body">
-        <h3>Cadastrar: </h3>
-        <form action="" method="post">
-            <label for="nome"><i class="fas fa-pencil-alt"></i> Nome:</label>
-            <input type="text" name="nome" class="form-control" placeholder="Nome" required>
-            <label for="email"><i class="far fa-envelope"></i> Email:</label>
-            <input type="email" name="email" class="form-control" placeholder="Email" required>
-            <label for="email"><i class="fas fa-user-graduate"></i> Professor ou Aluno:</label>
-            <select name="professor" placeholder="Professor ou Aluno" class="custom-select">
-                <option value="false">Aluno</option>
-                <option value="true">Professor</option>
-            </select>
-            <label for="email"><i class="fas fa-user-cog"></i> Administrador:</label>
-            <select name="eAdmin" placeholder="Administrador" class="custom-select">
-                <option value="false">Não</option>
-                <option value="true">Sim</option>
-            </select>
-            <button type="submit" class="btn btn-primary btn-lg btn-block mt-4"><i class="fas fa-user-plus"></i> Criar
-                usuário</button><br>
-        </form>
+<div class="jumbotron">
+    <div class="card">
+        <div class="card-body">
+            <center>
+                <h3><i class="fas fa-user-plus"></i> Cadastrar novo usuário</h3>
+            </center>
+            <form action="" method="post">
+                <label for="nome"><i class="fas fa-pencil-alt"></i> Nome:</label>
+                <input type="text" name="nome" class="form-control" placeholder="Nome" required>
+                <label for="email"><i class="far fa-envelope"></i> Email:</label>
+                <input type="email" name="email" class="form-control" placeholder="Email" required>
+                <label for="email"><i class="fas fa-user-graduate"></i> Professor ou Aluno:</label>
+                <select name="professor" placeholder="Professor ou Aluno" class="custom-select">
+                    <option value="false">Aluno</option>
+                    <option value="true">Professor</option>
+                </select>
+                <label for="email"><i class="fas fa-user-cog"></i> Administrador:</label>
+                <select name="eAdmin" placeholder="Administrador" class="custom-select">
+                    <option value="false">Não</option>
+                    <option value="true">Sim</option>
+                </select>
+                <button type="submit" class="btn btn-primary btn-lg btn-block mt-4"><i class="fas fa-user-plus"></i>
+                    Criar
+                    usuário</button><br>
+            </form>
+        </div>
     </div>
 </div>
