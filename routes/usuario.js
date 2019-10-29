@@ -1,6 +1,5 @@
-global.ID =
-  "<strong> Olá, {0}. Use seu EMAIL e CPF para acessar o portal http://localhost:3000</strong>";
-global.SENHA = "<strong> Olá, {0}</strong>";
+global.ID = "<strong> Olá, {0}.</strong>";
+global.FORGOT = "<strong> Olá, {0}</strong>";
 
 const express = require("express");
 const router = express.Router();
@@ -63,10 +62,15 @@ router.post("/registro", (req, res) => {
           req.flash("error_msg", "Email ja registrado!");
           res.redirect("/usuarios/registro");
         } else {
+          //gera uma password convertendo em base36 e depois usando somente os ultimos 8 caracteres
+          const passSenha = Math.random()
+            .toString(36)
+            .slice(-8);
+          console.log("passSenha: ", passSenha);
           const novoUsuario = new Usuario({
             nome: req.body.nome,
             email: req.body.email,
-            senha: req.body.senha,
+            senha: passSenha,
             eProf: req.body.professor,
             eAdmin: req.body.eAdmin
           });
@@ -80,7 +84,6 @@ router.post("/registro", (req, res) => {
               novoUsuario
                 .save()
                 .then(() => {
-                  /*
                   //iniciando envio de email
                   let transporter = nodemailer.createTransport({
                     service: "gmail",
@@ -90,11 +93,16 @@ router.post("/registro", (req, res) => {
                     }
                   });
                   const nom = novoUsuario.nome;
+                  const text =
+                    nom +
+                    ", use seu email e senha: " +
+                    passSenha +
+                    ". Para entrar no portal da faculdade pelo link http://localhost:3000";
                   let mailOptions = {
                     from: "",
                     to: req.body.email,
                     subject: "Seja bem-vindo", //assunto
-                    html: global.ID.replace("{0}", nom)
+                    html: global.ID.replace("{0}", text)
                   };
 
                   transporter.sendMail(mailOptions, function(err, data) {
@@ -109,7 +117,7 @@ router.post("/registro", (req, res) => {
                       console.log("email enviado!!!");
                     }
                   });
-                  //finalizando envio de email*/
+                  //finalizando envio de email
                   req.flash("success_msg", "Usuário criado com sucesso!");
                   res.redirect("/");
                 })
@@ -196,7 +204,7 @@ router.post("/forgot_password", async (req, res) => {
       from: "",
       to: req.body.email,
       subject: "Seja bem-vindo", //assunto
-      html: global.SENHA.replace("{0}", text)
+      html: global.FORGOT.replace("{0}", text)
     };
 
     transporter.sendMail(mailOptions, function(err, data) {

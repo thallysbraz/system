@@ -183,8 +183,10 @@ app.get("/disciplinas", (req, res) => {
 });
 
 app.get("/teste", (req, res) => {
-  const number = Math.floor(Math.random() * 10 + 1);
-  res.send({ number });
+  const passSenha = Math.random()
+    .toString(36)
+    .slice(-8);
+  res.send({ passSenha });
 });
 
 app.use("/admin", admin); // rota admin

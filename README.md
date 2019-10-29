@@ -56,6 +56,7 @@ Lista de funcionalidades a serem desenvolvidas e status de progresso
 |           Envio de email           |                  Refatora o envio de email para usuarios                  | Desenvolvimento |
 |                Bug                 |                    Corrigir bug na criação de usuário                     |    Concluido    |
 |            Refatorando             |                       Refatorar cadastro de usuário                       |    Concluido    |
+|              Password              |              Fazer gerador de senha aleatório para o usuário              |    Concluido    |
 
 ## 4 - proximos objetivos
 
@@ -68,6 +69,7 @@ Lista de funcionalidades a serem desenvolvidas e status de progresso
 - Refatorar o redirecionamento em rotas e views
 - ~~Refatorar cadastro de usuario.~~
 - Refatorar o envio de email.
+- ~~Fazer gerador de senha aleatório para o usuário.~~
 - Refatorar o codigo para deixar mais limpo e excluir comentarios desnecessarios.
 - Se der tempo, refatora algumas partes do front para deixar visualmente mais bonito.
 - fazer deploy da aplicação no heroku.
