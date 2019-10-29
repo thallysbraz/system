@@ -93,8 +93,6 @@ router.post("/notas/matricula/:id", eProf, async (req, res) => {
   const nota = req.body.nota;
   const semestre = req.body.semestre;
   const disciplina = req.body.disciplina;
-  const prof = req.body.professor;
-  console.log("prof: ", prof);
   var nome;
   const error = [];
 

@@ -1,5 +1,6 @@
 global.ID =
   "<strong> Olá, {0}. Use seu EMAIL e CPF para acessar o portal http://localhost:3000</strong>";
+global.SENHA = "<strong> Olá, {0}</strong>";
 
 const express = require("express");
 const router = express.Router();
@@ -158,7 +159,10 @@ router.post("/forgot_password", async (req, res) => {
   const { email } = req.body;
 
   try {
-    const user = await Usuario.findOne({ email }); // verificando se o email esta cadastrado
+    // verificando se o email esta cadastrado
+    const user = await Usuario.findOne({ email });
+    const name = user.nome;
+    //res.send({ name });
 
     if (!user) {
       return res.status(400).send({ error: "Usuario não existe" });
@@ -175,26 +179,44 @@ router.post("/forgot_password", async (req, res) => {
       }
     });
     //console.log(token, now);
-    mailer.sendMail(
-      {
-        to: email,
-        from: "thallys.braz@firstdecision.com.br",
-        template: "auth/forgot_password",
-        context: { token }
-      },
-      err => {
-        if (err) {
-          res
-            .status(401)
-            .send({ error: "Cannot send forgot password email, ok" });
-        }
+    const text =
+      name +
+      ". Seu código para recuperar senha: " +
+      token +
+      ". Caso não tenha solicitado a troca de senha, por favor desconsidere";
+    //iniciando envio de email
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD
       }
-    );
-    //console.log("chegou aqui");
+    });
+    let mailOptions = {
+      from: "",
+      to: req.body.email,
+      subject: "Seja bem-vindo", //assunto
+      html: global.SENHA.replace("{0}", text)
+    };
+
+    transporter.sendMail(mailOptions, function(err, data) {
+      if (err) {
+        req.flash(
+          "error_msg",
+          "Error ao enviar email de recuperação de senha!"
+        );
+        res.redirect("/");
+        //console.log("error occurs: ", err);
+      } else {
+        console.log("email enviado!!!");
+      }
+    });
+    //finalizando envio de email
+    console.log("finalizou");
 
     res.redirect("/usuarios/reset_password");
   } catch (err) {
-    //console.log(err);
+    console.log(err);
     res.status(400).send({ error: "Error na rota de esqueci minha senha." });
   }
 });

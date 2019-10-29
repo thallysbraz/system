@@ -54,8 +54,8 @@ Lista de funcionalidades a serem desenvolvidas e status de progresso
 |             Validações             |          Fazer validações nas rotas de adicionar a nota do aluno          |    Concluido    |
 |          Redirecionamento          |               Refatorar o redirecionamento em rotas e views               | Desenvolvimento |
 |           Envio de email           |                  Refatora o envio de email para usuarios                  | Desenvolvimento |
-|                Bug                 |                    Corrigir bug na criação de usuário                     | Desenvolvimento |
-|            Refatorando             |               Refatorar o redirecionamento em rotas e views               | Desenvolvimento |
+|                Bug                 |                    Corrigir bug na criação de usuário                     |    Concluido    |
+|            Refatorando             |                       Refatorar cadastro de usuário                       |    Concluido    |
 
 ## 4 - proximos objetivos
 
@@ -66,9 +66,8 @@ Lista de funcionalidades a serem desenvolvidas e status de progresso
 - ~~Fazer validações nas rotas de adicionar a nota do aluno.~~
 - ~~continuar arrumando views e validações nas adição de nota.~~
 - Refatorar o redirecionamento em rotas e views
-- Refatorar cadastro de usuario.
+- ~~Refatorar cadastro de usuario.~~
 - Refatorar o envio de email.
-- Refatorar login de usuário para ser com matricula e CPF.
 - Refatorar o codigo para deixar mais limpo e excluir comentarios desnecessarios.
 - Se der tempo, refatora algumas partes do front para deixar visualmente mais bonito.
 - fazer deploy da aplicação no heroku.
