@@ -40,23 +40,24 @@ Git na versão 2.23.0 ou mais atual.
 
 Lista de funcionalidades a serem desenvolvidas e status de progresso
 
-|              Problema              |                                 Descrição                                 |     Status      |
-| :--------------------------------: | :-----------------------------------------------------------------------: | :-------------: |
-|       Arrumar banco de dados       |       Fazer relacionamentos e descobrir como arrumar banco de dados       |    Concluido    |
-|        Crud de disciplinas         |         Fazer as rotas de get, post, put e delete das disciplinas         |    Concluido    |
-|               Alunos               |         Fazer rotas e view para cadastrar alunos nas disciplinas          |    Concluido    |
-|         Relacionamentos BD         |             Fazer relacionamento entre ALUNO/DISCIPLINA/NOTA              |    Concluido    |
-| Pesquisar disciplina por professor |    Mostrar ao professor todas as disciplinas que ele da aula (BACKEND)    |    Concluido    |
-| Pesquisar disciplina por professor |   Mostrar ao professor todas as disciplinas que ele da aula (Frontend)    |    Concluido    |
-|            Lançar notas            |                    Termina view de lançamento de notas                    |    Concluido    |
-|     Inserir alunos/disciplina      | Cadastrar aluno em disciplina e disciplina em aluno com menção e semestre |    Concluido    |
-|             Validações             |               Fazer validações nas rotas de adicionar aluno               |    Concluido    |
-|             Validações             |          Fazer validações nas rotas de adicionar a nota do aluno          |    Concluido    |
-|          Redirecionamento          |               Refatorar o redirecionamento em rotas e views               | Desenvolvimento |
-|           Envio de email           |                  Refatora o envio de email para usuarios                  | Desenvolvimento |
-|                Bug                 |                    Corrigir bug na criação de usuário                     |    Concluido    |
-|            Refatorando             |                       Refatorar cadastro de usuário                       |    Concluido    |
-|              Password              |              Fazer gerador de senha aleatório para o usuário              |    Concluido    |
+|              Problema              |                                  Descrição                                  |     Status      |
+| :--------------------------------: | :-------------------------------------------------------------------------: | :-------------: |
+|       Arrumar banco de dados       |        Fazer relacionamentos e descobrir como arrumar banco de dados        |    Concluido    |
+|        Crud de disciplinas         |          Fazer as rotas de get, post, put e delete das disciplinas          |    Concluido    |
+|               Alunos               |          Fazer rotas e view para cadastrar alunos nas disciplinas           |    Concluido    |
+|         Relacionamentos BD         |              Fazer relacionamento entre ALUNO/DISCIPLINA/NOTA               |    Concluido    |
+| Pesquisar disciplina por professor |     Mostrar ao professor todas as disciplinas que ele da aula (BACKEND)     |    Concluido    |
+| Pesquisar disciplina por professor |    Mostrar ao professor todas as disciplinas que ele da aula (Frontend)     |    Concluido    |
+|            Lançar notas            |                     Termina view de lançamento de notas                     |    Concluido    |
+|     Inserir alunos/disciplina      |  Cadastrar aluno em disciplina e disciplina em aluno com menção e semestre  |    Concluido    |
+|             Validações             |                Fazer validações nas rotas de adicionar aluno                |    Concluido    |
+|             Validações             |           Fazer validações nas rotas de adicionar a nota do aluno           |    Concluido    |
+|          Redirecionamento          |                Refatorar o redirecionamento em rotas e views                | Desenvolvimento |
+|           Envio de email           |                   Refatora o envio de email para usuarios                   | Desenvolvimento |
+|                Bug                 |                     Corrigir bug na criação de usuário                      |    Concluido    |
+|            Refatorando             |                        Refatorar cadastro de usuário                        |    Concluido    |
+|              Password              |               Fazer gerador de senha aleatório para o usuário               |    Concluido    |
+|              Frontend              | Refatora partes do front para deixar visualmente mais agradavel ao usuário. | Desenvolvimento |
 
 ## 4 - proximos objetivos
 

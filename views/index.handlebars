@@ -2,21 +2,41 @@
     <div class="text-center">
         <h1 class="display-4"><strong>Bem-vindo, {{user.nome}} <i class="fab fa-java"></i></strong></h1>
         <p class="lead"><strong>First Education and Technology</strong></p>
-        <hr class="my-4">
+        <hr class="mt-4">
     </div>
     <center>
         <h2>Informações recentes:</h2>
     </center>
     {{#each postagens}}
-    <div class="card mt-4" style="width: 50rem;">
-        <div id="cardfinal" class="card-body">
-            <h3><i class="fas fa-exclamation-circle"></i> Aviso: {{titulo}}</h3>
-            <h5>Descrição: {{descricao}}</h5>
-            <h5>Categoria: {{categoria.nome}}</h5>
-            <h5><i class="fas fa-calendar-alt"></i> Data de publicação: {{data}}</h5><br>
+    <center>
+        <div class="card card-signin mt-4" style="width: 50rem;">
+            <div id="cardfinal" class="card-body">
+                <h3 class="card-title text-center text-uppercase"><i class="fas fa-exclamation-circle"></i> Aviso:
+                    {{titulo}}</h3>
+                <h5>Descrição: {{descricao}}</h5>
+                <h5>Categoria: {{categoria.nome}}</h5>
+                <h5><i class="fas fa-calendar-alt"></i> Data de publicação: {{data}}</h5><br>
+            </div>
         </div>
-    </div>
+    </center>
     {{else}}
     <h5 class="alert alert-danger">Nenhuma informação!</h5>
     {{/each}}
 </div>
+<style>
+    .card-signin {
+        border: 0;
+        border-radius: 1rem;
+        box-shadow: 0 1rem 1rem 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .card-signin .card-title {
+        margin-bottom: 2rem;
+        font-weight: 300;
+        font-size: 2rem;
+    }
+
+    .card-signin .card-body {
+        padding: 2rem;
+    }
+</style>
