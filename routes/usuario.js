@@ -79,6 +79,7 @@ router.post("/registro", eAdmin, (req, res) => {
               novoUsuario
                 .save()
                 .then(() => {
+                  /*
                   //iniciando envio de email
                   let transporter = nodemailer.createTransport({
                     service: "gmail",
@@ -107,7 +108,7 @@ router.post("/registro", eAdmin, (req, res) => {
                       console.log("email enviado!!!");
                     }
                   });
-                  //finalizando envio de email
+                  //finalizando envio de email*/
                   req.flash("success_msg", "Usuário criado com sucesso!");
                   res.redirect("/");
                 })

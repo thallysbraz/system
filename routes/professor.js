@@ -131,7 +131,37 @@ router.post("/notas/matricula/:id", eProf, async (req, res) => {
       usuario
         .save()
         .then(() => {
-          res.redirect("/professor/testando");
+          Disciplina.findOne({ _id: disciplina })
+            .then(disciplina => {
+              const matricula = []; //array de alunos
+              //for para colocar os alunos matriculados dentro de matricula
+              for (var i = 0; i < disciplina.matriculados.length; i++) {
+                //matricula.push({ mat: disciplina.matriculados[i].user });
+                matricula.push(disciplina.matriculados[i].user);
+              }
+              const discID = [];
+              discID.push({ text: disciplina._id });
+              Usuario.find({ _id: matricula })
+                .then(usuario => {
+                  //return res.send({ usuario });
+                  res.render("professor/notas2", {
+                    usuario: usuario,
+                    discID: discID
+                  });
+                })
+                .catch(err => {
+                  console.log(err);
+                  req.flash("error_msg", "Houve error interno ao testar");
+                  res.redirect("/");
+                });
+            })
+            .catch(err => {
+              req.flash(
+                "error_msg",
+                "Houve error ao carregar o formulario de lançamento"
+              );
+              res.redirect("/professor");
+            });
         })
         .catch(err => {
           console.log("error ao adicionar disciplina ao aluno: ", err);
@@ -143,7 +173,43 @@ router.post("/notas/matricula/:id", eProf, async (req, res) => {
 });
 
 router.get("/testando", async (req, res) => {
-  res.send("ok, chegou na rota testando");
+  Disciplina.findOne({ _id: "5db73527ae013526809abdb2" })
+    .then(disciplina => {
+      const matricula = []; //array de alunos
+      //for para colocar os alunos matriculados dentro de matricula
+      for (var i = 0; i < disciplina.matriculados.length; i++) {
+        //matricula.push({ mat: disciplina.matriculados[i].user });
+        matricula.push(disciplina.matriculados[i].user);
+      }
+      const discID = [];
+      discID.push({ text: disciplina._id });
+      const prof = [];
+      prof.push({ text2: disciplina.professor });
+      Usuario.find({ _id: matricula })
+        .then(usuario => {
+          //return res.send({ usuario });
+          res.render("professor/notas", {
+            usuario: usuario,
+            discID: discID,
+            prof: prof
+          });
+        })
+        .catch(err => {
+          console.log(err);
+          req.flash("error_msg", "Houve error interno ao testar");
+          res.redirect("/");
+        });
+      //res.send({ matricula });
+      //res.render("professor/teste", { matricula: matricula });
+    })
+    .catch(err => {
+      console.log("err: ", err);
+      req.flash(
+        "error_msg",
+        "Houve error ao carregar o formulario de lançamento"
+      );
+      res.redirect("/professor");
+    });
 });
 
 module.exports = router;

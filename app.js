@@ -69,7 +69,8 @@ mongoose.Promise = global.Promise;
 mongoose
   .connect("mongodb://localhost/scholl", {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true
   })
   .then(() => {
     console.log("conectado ao banco MONGODB");
