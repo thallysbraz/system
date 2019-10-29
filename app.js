@@ -69,7 +69,8 @@ mongoose.Promise = global.Promise;
 mongoose
   .connect("mongodb://localhost/scholl", {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true
   })
   .then(() => {
     console.log("conectado ao banco MONGODB");
@@ -182,12 +183,10 @@ app.get("/disciplinas", (req, res) => {
 });
 
 app.get("/teste", (req, res) => {
-  var string = "Contrato no valor de R$ 1000. Lucro de R$ 200 para a empresa.";
-  var resultado = string.replace(/\d+/g, function aplicarIndice(x) {
-    x = x * 1.05;
-    return Math.floor(x);
-  });
-  console.log("resultado: ", resultado);
+  const passSenha = Math.random()
+    .toString(36)
+    .slice(-8);
+  res.send({ passSenha });
 });
 
 app.use("/admin", admin); // rota admin

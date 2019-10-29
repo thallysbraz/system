@@ -21,7 +21,8 @@ const Usuario = new Schema({
   },
   email: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   eAdmin: {
     type: Boolean,

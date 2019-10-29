@@ -1,15 +1,60 @@
-<div class="card">
-    <div class="card-body">
-        <h4><i class="far fa-user"></i> Login:</h4>
-        <form class="mt-4" action="/usuarios/login" method="POST">
-            <label for="email"><i class="far fa-envelope"></i> Email:</label>
-            <input type="email" class="form-control" name="email" placeholder="Email" required>
-            <label for="senha"><i class="fas fa-key"></i> Senha:</label>
-            <input type="password" class="form-control" name="password" placeholder="Senha" required>
-            <button class="btn btn-primary btn-lg btn-block mt-4" type="submit"> <i class="fas fa-sign-in-alt"></i>
-                Login</button>
-            <br>
-            <a href="/usuarios/forgot_password">Esqueceu a senha?</a><br>
-        </form>
+<script src="https://kit.fontawesome.com/c45719822e.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="../../node_modules/font-awesome/css/font-awesome.css">
+
+<body>
+    <div class="jumbotron ">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                    <div class="card card-signin mt-5">
+                        <div class="card-body">
+                            <h5 class="card-title text-center text-uppercase"><i class="fas fa-user-lock"></i>
+                                AUTENTICAÇÃO </h5>
+                            <form action="/usuarios/login" method="POST">
+                                <label for="email"><i class="far fa-envelope"></i> Email:</label>
+                                <input type="email" class="form-control" name="email" placeholder="Email" required>
+                                <label for="senha"><i class="fas fa-key"></i> Senha:</label>
+                                <input type="password" class="form-control" name="password" placeholder="Senha"
+                                    required>
+                                <br>
+                                <button class="btn btn-lg bbtn btn-outline-primary btn-block text-uppercase"
+                                    type="submit"><i class="fas fa-sign-in-alt"></i> Sign
+                                    in</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+    <style>
+        .card-signin {
+            border: 0;
+            border-radius: 1rem;
+            box-shadow: 0 2rem 1rem 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .card-signin .card-title {
+            margin-bottom: 2rem;
+            font-weight: 300;
+            font-size: 1.5rem;
+        }
+
+        .card-signin .card-body {
+            padding: 2rem;
+        }
+
+        .form-signin {
+            width: 100%;
+        }
+
+        .btn {
+            font-size: 80%;
+            border-radius: 10rem;
+            letter-spacing: .1rem;
+            font-weight: bold;
+            padding: 1rem;
+            transition: all 0.2s;
+        }
+    </style>
+</body>

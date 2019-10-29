@@ -347,23 +347,11 @@ router.post("/disciplinas/nova", eAdmin, async (req, res) => {
   }
 });
 
-//rota para mostrar ao professor suas disciplinas
-router.get("/:disciplinaId", async (req, res) => {
-  const professor = req.params.disciplinaId;
-  try {
-    const disciplina = await Disciplina.find({ professor });
-    return res.send({ disciplina });
-  } catch (err) {
-    console.log(err);
-    return res.status(400).send({ error: "Error, loading disciplina" });
-  }
-});
-
 //rota para cadastrar alunos na disciplina
 router.get("/disciplinas/edit/:id", eAdmin, (req, res) => {
   Disciplina.findOne({ _id: req.params.id })
     .then(disciplina => {
-      Usuario.find(/*{ eAdmin: false }*/)
+      Usuario.find({ eAdmin: false, eProf: false })
         .then(usuarios => {
           res.render("admin/editdisciplinas", {
             usuarios: usuarios,
@@ -383,7 +371,7 @@ router.get("/disciplinas/edit/:id", eAdmin, (req, res) => {
       res.redirect("/admin/disciplinas");
     });
 });
-
+//testando git
 //rota para validar e cadastrar alunos na disciplina
 router.post("/disciplinas/edit", eAdmin, async (req, res) => {
   Disciplina.findOne({ _id: req.body.id })

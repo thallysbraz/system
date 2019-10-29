@@ -6,10 +6,10 @@
 
 <div class="card">
     <div class="card-body">
-        <h4>Adicionar alunos:</h4>
+        <h4>Matricular aluno:</h4>
         <form action="/admin/disciplinas/edit" method="POST">
             <input type="hidden" value="{{disciplina._id}}" name="id">
-            <label for="matricula">Alunos: </label>
+            <label for="matricula">Lista de alunos: </label>
             <select name="matricula" class="custom-select">
                 {{#each usuarios}}
                 <option value="{{_id}}">{{_id}}</option>
