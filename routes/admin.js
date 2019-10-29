@@ -371,7 +371,7 @@ router.get("/disciplinas/edit/:id", eAdmin, (req, res) => {
       res.redirect("/admin/disciplinas");
     });
 });
-
+//testando git
 //rota para validar e cadastrar alunos na disciplina
 router.post("/disciplinas/edit", eAdmin, async (req, res) => {
   Disciplina.findOne({ _id: req.body.id })
