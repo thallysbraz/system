@@ -7,9 +7,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const passport = require("passport");
-const mailer = require("../modules/mailer");
 const nodemailer = require("nodemailer");
-const path = require("path");
 
 require("dotenv").config();
 require("../models/Usuario");

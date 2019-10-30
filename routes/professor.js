@@ -40,7 +40,7 @@ router.post("/consulta", eProf, async (req, res) => {
 });
 
 //rota par view disciplina/edit
-router.get("/disciplinas/notas/edit/:id", eProf, async (req, res) => {
+router.get("/disciplinas/notas/edit/:id", async (req, res) => {
   Disciplina.findOne({ _id: req.params.id })
     .then(disciplina => {
       const matricula = []; //array de alunos
@@ -51,13 +51,16 @@ router.get("/disciplinas/notas/edit/:id", eProf, async (req, res) => {
       }
       const discID = [];
       discID.push({ text: disciplina._id });
-
-      Usuario.find({ _id: matricula })
+      //continuar daqui
+      /* , { nome: 0 } 0 oculta o objeto e 1 mostra somente o objeto*/
+      //http://db4beginners.com/blog/consultas-no-mongodb/
+      Usuario.find({ _id: matricula }, { nome: 0 })
         .then(usuario => {
-          res.render("professor/notas", {
+          res.send({ usuario });
+          /*res.render("professor/notas", {
             usuario: usuario,
             discID: discID
-          });
+          });*/
         })
         .catch(err => {
           console.log(err);

@@ -182,13 +182,6 @@ app.get("/disciplinas", (req, res) => {
     });
 });
 
-app.get("/teste", (req, res) => {
-  const passSenha = Math.random()
-    .toString(36)
-    .slice(-8);
-  res.send({ passSenha });
-});
-
 app.use("/admin", admin); // rota admin
 app.use("/usuarios", usuarios); // rota usuario
 app.use("/professor", professor); //rota de professor;
