@@ -17,7 +17,7 @@
             {{#each usuario}}
             <tr>
                 <td>
-                    <form action="/professor/notas2/matricula/{{_id}}" method="POST">
+                    <form action="/professor/notas/matricula/{{_id}}" method="POST">
                         <label for="nome" class="form-control"><strong> {{this.nome}}</strong></label><br>
                         <label for="matricula" class="form-control"><strong>{{id}}</strong></label><br>
                         <input type="hidden" name="matricula" value="{{id}}">
