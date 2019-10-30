@@ -17,7 +17,7 @@
             {{#each usuario}}
             <tr>
                 <td>
-                    <form action="/professor/notas/matricula/{{_id}}" method="POST">
+                    <form action="/professor/notas2/matricula/{{_id}}" method="POST">
                         <label for="nome" class="form-control"><strong> {{this.nome}}</strong></label><br>
                         <label for="matricula" class="form-control"><strong>{{id}}</strong></label><br>
                         <input type="hidden" name="matricula" value="{{id}}">
@@ -32,9 +32,6 @@
                         {{#each ../discID}}
                         <input type="hidden" name="disciplina" value="{{text}}">
                         {{/each}}
-                        {{#each ../prof}}
-                        <input type="hidden" name="professor" value="{{text2}}">
-                        {{/each}}
                         <button class="btn btn-success mt-2" type="submit">
                             <i class="far fa-check-circle"> Salvar</i>
                         </button>
@@ -47,3 +44,13 @@
         </tbody>
     </table>
 </div>
+<style>
+    .btn {
+        font-size: 80%;
+        border-radius: 10rem;
+        letter-spacing: .1rem;
+        font-weight: bold;
+        padding: 1rem;
+        transition: all 0.2s;
+    }
+</style>

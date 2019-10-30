@@ -6,6 +6,9 @@ const Alunos = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: "usuarios"
+  },
+  semestre: {
+    type: String
   }
 });
 

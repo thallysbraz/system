@@ -14,9 +14,9 @@
             <small>Data: {{data}}</small><br>
             <small>Categoria: {{categoria.nome}}</small><br>
             <a href="/admin/postagens/edit/{{_id}}"><button class="btn btn-success mt-4"><i class="far fa-edit"></i>
-                    Editar post</button></a>
+                    Editar</button></a>
             <a href="/admin/postagens/deletar/{{_id}}"><button class="btn btn-danger mt-4"><i
-                        class="fas fa-trash-alt"></i> Deletar post</button></a>
+                        class="fas fa-trash-alt"></i> Deletar</button></a>
         </div>
     </div>
     {{else}}
@@ -25,3 +25,13 @@
     </p>
     {{/each}}
 </div>
+<style>
+    .btn {
+        font-size: 80%;
+        border-radius: 10rem;
+        letter-spacing: .1rem;
+        font-weight: bold;
+        padding: 1rem;
+        transition: all 0.2s;
+    }
+</style>

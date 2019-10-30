@@ -351,7 +351,9 @@ router.post("/disciplinas/nova", eAdmin, async (req, res) => {
 router.get("/disciplinas/edit/:id", eAdmin, (req, res) => {
   Disciplina.findOne({ _id: req.params.id })
     .then(disciplina => {
-      Usuario.find({ eAdmin: false, eProf: false })
+      Usuario.find({
+        /*eAdmin: false, eProf: false*/
+      })
         .then(usuarios => {
           res.render("admin/editdisciplinas", {
             usuarios: usuarios,
@@ -371,16 +373,20 @@ router.get("/disciplinas/edit/:id", eAdmin, (req, res) => {
       res.redirect("/admin/disciplinas");
     });
 });
-//testando git
+
 //rota para validar e cadastrar alunos na disciplina
 router.post("/disciplinas/edit", eAdmin, async (req, res) => {
   Disciplina.findOne({ _id: req.body.id })
     .then(disciplina => {
       const alun = req.body.matricula;
+      const semestre = req.body.semestre;
       //const matricula = disciplina.matriculados;
       const erros = [];
       for (var i = 0; i < disciplina.matriculados.length; i++) {
-        if (alun == disciplina.matriculados[i].user) {
+        if (
+          disciplina.matriculados[i].user == alun &&
+          disciplina.matriculados[i].semestre == semestre
+        ) {
           erros.push({ texto: "Aluno ja matriculado" });
           break;
         }
@@ -389,14 +395,14 @@ router.post("/disciplinas/edit", eAdmin, async (req, res) => {
         req.flash("error_msg", "Aluno ja matriculado");
         res.redirect("/admin/disciplinas");
       } else {
-        /*
         //Salvar disciplina no aluno
-        const RefDisc = disciplina._id;
+        const NomeDisc = disciplina.nome;
+        console.log("NomeDisc: ", NomeDisc);
         Usuario.findOne({ _id: alun }).then(usuario => {
           usuario.notas.push({
-            mencao: "0",
-            disciplina: RefDisc,
-            semestre: "2/2019"
+            nota: 0,
+            disciplina: NomeDisc,
+            semestre: semestre
           });
           usuario
             .save()
@@ -410,10 +416,11 @@ router.post("/disciplinas/edit", eAdmin, async (req, res) => {
         });
         //FInalizando Salvar disicplina no aluno
         // ----------------------------------\\
-*/
+
         //salvando aluno na disciplina
         disciplina.matriculados.push({
-          user: alun
+          user: alun,
+          semestre: semestre
         });
         disciplina
           .save()
