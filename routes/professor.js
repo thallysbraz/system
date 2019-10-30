@@ -54,7 +54,6 @@ router.get("/disciplinas/notas/edit/:id", eProf, async (req, res) => {
 
       Usuario.find({ _id: matricula })
         .then(usuario => {
-          //return res.send({ usuario });
           res.render("professor/notas", {
             usuario: usuario,
             discID: discID
