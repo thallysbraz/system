@@ -397,7 +397,6 @@ router.post("/disciplinas/edit", eAdmin, async (req, res) => {
       } else {
         //Salvar disciplina no aluno
         const NomeDisc = disciplina.nome;
-        console.log("NomeDisc: ", NomeDisc);
         Usuario.findOne({ _id: alun }).then(usuario => {
           usuario.notas.push({
             nota: 0,
@@ -406,9 +405,7 @@ router.post("/disciplinas/edit", eAdmin, async (req, res) => {
           });
           usuario
             .save()
-            .then(() => {
-              console.log("Disciplina adicionada ao aluno");
-            })
+            .then(() => {})
             .catch(err => {
               console.log("error ao adicionar disciplina ao aluno: ", err);
               res.redirect("/admin/disciplinas");

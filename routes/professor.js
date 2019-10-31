@@ -46,21 +46,23 @@ router.get("/disciplinas/notas/edit/:id", async (req, res) => {
       const matricula = []; //array de alunos
       //for para colocar os alunos matriculados dentro de matricula
       for (var i = 0; i < disciplina.matriculados.length; i++) {
-        //matricula.push({ mat: disciplina.matriculados[i].user });
         matricula.push(disciplina.matriculados[i].user);
       }
       const discID = [];
       discID.push({ text: disciplina._id });
+
       //continuar daqui
       /* , { nome: 0 } 0 oculta o objeto e 1 mostra somente o objeto*/
       //http://db4beginners.com/blog/consultas-no-mongodb/
-      Usuario.find({ _id: matricula }, { nome: 0 })
+      Usuario.find({ _id: matricula })
+        .sort({ nome: 1, _id: 1 })
         .then(usuario => {
-          res.send({ usuario });
-          /*res.render("professor/notas", {
+          //res.send({ usuario });
+          res.render("professor/notas", {
+            disciplina: disciplina,
             usuario: usuario,
             discID: discID
-          });*/
+          });
         })
         .catch(err => {
           console.log(err);
@@ -139,6 +141,7 @@ router.post("/notas/matricula/:id", eProf, async (req, res) => {
                   const discID = [];
                   discID.push({ text: disciplina._id });
                   Usuario.find({ _id: matricula })
+                    .sort({ nome: 1, _id: 1 })
                     .then(usuario => {
                       //return res.send({ usuario });
                       res.render("professor/notas", {
