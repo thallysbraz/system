@@ -305,7 +305,7 @@ router.get("/historico", async (req, res) => {
   try {
     const user = req.user.id;
     Usuario.findOne({ _id: user })
-      .sort({ notas: "desc" })
+      .sort({ notas: 1 })
       .then(usuario => {
         const mencao = [];
         for (var i = 0; i < usuario.notas.length; i++) {

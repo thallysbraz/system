@@ -51,24 +51,42 @@ router.get("/disciplinas/notas/edit/:id", async (req, res) => {
       const discID = [];
       discID.push({ text: disciplina._id });
 
+      // ----------- teste -----------
+      try {
+        var limite = [];
+        Usuario.find({ _id: matricula })
+          .then(usuario => {
+            res.send({ usuario });
+          })
+          .catch(err => {
+            console.log(err);
+            req.flash("error_msg", "Houve error interno ao testar");
+            res.send("ok, deu erro, dentro do catch");
+          });
+
+        console.log("limite: ", limite.length);
+      } catch {
+        res.send("ok, deu erro");
+      }
+      // ----------- fim do teste -----------
+
       //continuar daqui
       /* , { nome: 0 } 0 oculta o objeto e 1 mostra somente o objeto*/
       //http://db4beginners.com/blog/consultas-no-mongodb/
-      Usuario.find({ _id: matricula })
+      /*Usuario.find({ _id: matricula })
         .sort({ nome: 1, _id: 1 })
         .then(usuario => {
-          //res.send({ usuario });
           res.render("professor/notas", {
-            disciplina: disciplina,
             usuario: usuario,
-            discID: discID
+            discID: discID,
+            disciplina: disciplina
           });
         })
         .catch(err => {
           console.log(err);
           req.flash("error_msg", "Houve error interno ao testar");
           res.redirect("/");
-        });
+        });*/
       //res.send({ matricula });
       //res.render("professor/teste", { matricula: matricula });
     })
@@ -126,16 +144,15 @@ router.post("/notas/matricula/:id", eProf, async (req, res) => {
             break;
           }
         }
+        //if salvando aluno editado
         if (edit > 0) {
           usuario
             .save()
             .then(() => {
               Disciplina.findOne({ _id: disciplina })
                 .then(disciplina => {
-                  const matricula = []; //array de alunos
-                  //for para colocar os alunos matriculados dentro de matricula
+                  const matricula = [];
                   for (var i = 0; i < disciplina.matriculados.length; i++) {
-                    //matricula.push({ mat: disciplina.matriculados[i].user });
                     matricula.push(disciplina.matriculados[i].user);
                   }
                   const discID = [];
@@ -179,6 +196,7 @@ router.post("/notas/matricula/:id", eProf, async (req, res) => {
         req.flash("error_msg", "Houve error interno ao testar!!!!!!!!");
         res.redirect("/");
       });
+    edit = 0;
     //FInalizando Salvar nota do aluno
   }
 });
