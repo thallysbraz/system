@@ -24,7 +24,11 @@
                         <h4>Semestre</h4>
                     </center>
                 </th>
-
+                <th scope="col">
+                    <center>
+                        <h4>Status</h4>
+                    </center>
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -38,17 +42,16 @@
                 <td>
                     <center>
                         {{#if this.status}}
-                        <h4 id="p1">{{this.nota}}</h4>
+                        <h4 id="aprovado">{{this.nota}}</h4>
                         <style>
-                            #p1 {
+                            #aprovado {
                                 color: green;
                             }
                         </style>
-
                         {{else}}
-                        <h4 id="p1">{{this.nota}}</h4>
+                        <h4 id="reprovado">{{this.nota}}</h4>
                         <style>
-                            #p1 {
+                            #reprovado {
                                 color: red;
                             }
                         </style>
@@ -60,7 +63,25 @@
                         <h4>{{this.semestre}}</h4>
                     </center>
                 </td>
-
+                <td>
+                    <center>
+                        {{#if this.status}}
+                        <h4 id="icon1"><i class="far fa-check-circle"></i></h4>
+                        <style>
+                            #icon1 {
+                                color: green;
+                            }
+                        </style>
+                        {{else}}
+                        <h4 id="icon2"><i class="fas fa-times"></i></h4>
+                        <style>
+                            #icon2 {
+                                color: red;
+                            }
+                        </style>
+                        {{/if}}
+                    </center>
+                </td>
             </tr>
             {{/each}}
         </tbody>
