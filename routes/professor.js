@@ -39,7 +39,7 @@ router.post("/consulta", eProf, async (req, res) => {
   }*/
 });
 
-//rota par view disciplina/edit
+//rota para view disciplina/edit
 router.get("/disciplinas/notas/edit/:id", async (req, res) => {
   Disciplina.findOne({ _id: req.params.id })
     .then(disciplina => {
@@ -51,10 +51,9 @@ router.get("/disciplinas/notas/edit/:id", async (req, res) => {
       const discID = [];
       discID.push({ text: disciplina._id });
 
-      // ----------- teste -----------
+      /*/ ----------- teste -----------
       try {
-        var limite = [];
-        Usuario.find({ _id: matricula })
+        Usuario.find({ _id: matricula }, { notas: 1 })
           .then(usuario => {
             res.send({ usuario });
           })
@@ -63,17 +62,15 @@ router.get("/disciplinas/notas/edit/:id", async (req, res) => {
             req.flash("error_msg", "Houve error interno ao testar");
             res.send("ok, deu erro, dentro do catch");
           });
-
-        console.log("limite: ", limite.length);
       } catch {
         res.send("ok, deu erro");
       }
-      // ----------- fim do teste -----------
+      // ----------- fim do teste -----------*/
 
       //continuar daqui
       /* , { nome: 0 } 0 oculta o objeto e 1 mostra somente o objeto*/
       //http://db4beginners.com/blog/consultas-no-mongodb/
-      /*Usuario.find({ _id: matricula })
+      Usuario.find({ _id: matricula })
         .sort({ nome: 1, _id: 1 })
         .then(usuario => {
           res.render("professor/notas", {
@@ -86,9 +83,7 @@ router.get("/disciplinas/notas/edit/:id", async (req, res) => {
           console.log(err);
           req.flash("error_msg", "Houve error interno ao testar");
           res.redirect("/");
-        });*/
-      //res.send({ matricula });
-      //res.render("professor/teste", { matricula: matricula });
+        });
     })
     .catch(err => {
       console.log("err: ", err);
@@ -160,7 +155,6 @@ router.post("/notas/matricula/:id", eProf, async (req, res) => {
                   Usuario.find({ _id: matricula })
                     .sort({ nome: 1, _id: 1 })
                     .then(usuario => {
-                      //return res.send({ usuario });
                       res.render("professor/notas", {
                         usuario: usuario,
                         discID: discID

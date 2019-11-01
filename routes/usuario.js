@@ -309,11 +309,21 @@ router.get("/historico", async (req, res) => {
       .then(usuario => {
         const mencao = [];
         for (var i = 0; i < usuario.notas.length; i++) {
-          mencao.push({
-            nota: usuario.notas[i].nota,
-            disciplina: usuario.notas[i].disciplina,
-            semestre: usuario.notas[i].semestre
-          });
+          if (usuario.notas[i].nota > 5) {
+            mencao.push({
+              nota: usuario.notas[i].nota,
+              disciplina: usuario.notas[i].disciplina,
+              semestre: usuario.notas[i].semestre,
+              status: true
+            });
+          } else {
+            mencao.push({
+              nota: usuario.notas[i].nota,
+              disciplina: usuario.notas[i].disciplina,
+              semestre: usuario.notas[i].semestre,
+              status: false
+            });
+          }
         }
         //res.send({ disciplinas });
         res.render("usuarios/index", { mencao: mencao });

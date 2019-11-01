@@ -24,6 +24,7 @@
                         <h4>Semestre</h4>
                     </center>
                 </th>
+
             </tr>
         </thead>
         <tbody>
@@ -36,7 +37,22 @@
                 </th>
                 <td>
                     <center>
-                        <h4>{{this.nota}}</h4>
+                        {{#if this.status}}
+                        <h4 id="p1">{{this.nota}}</h4>
+                        <style>
+                            #p1 {
+                                color: green;
+                            }
+                        </style>
+
+                        {{else}}
+                        <h4 id="p1">{{this.nota}}</h4>
+                        <style>
+                            #p1 {
+                                color: red;
+                            }
+                        </style>
+                        {{/if}}
                     </center>
                 </td>
                 <td>
@@ -44,6 +60,7 @@
                         <h4>{{this.semestre}}</h4>
                     </center>
                 </td>
+
             </tr>
             {{/each}}
         </tbody>
