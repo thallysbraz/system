@@ -304,12 +304,12 @@ router.post("/reset_password", async (req, res) => {
 router.get("/historico", async (req, res) => {
   try {
     const user = req.user.id;
-    Usuario.findOne({ _id: user })
-      .sort({ notas: 1 })
+    await Usuario.findOne({ _id: user })
+      .sort({ semestre: 1 })
       .then(usuario => {
         const mencao = [];
         for (var i = 0; i < usuario.notas.length; i++) {
-          if (usuario.notas[i].nota > 5) {
+          if (usuario.notas[i].nota >= 5) {
             mencao.push({
               nota: usuario.notas[i].nota,
               disciplina: usuario.notas[i].disciplina,
@@ -325,7 +325,6 @@ router.get("/historico", async (req, res) => {
             });
           }
         }
-        //res.send({ disciplinas });
         res.render("usuarios/index", { mencao: mencao });
       })
       .catch(err => {

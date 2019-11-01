@@ -53,9 +53,6 @@ router.get("/disciplinas/notas/edit/:id", async (req, res) => {
       const discID = [];
       discID.push({ text: disciplina._id });
       const nomeDisc = disciplina.nome;
-      //continuar daqui
-      /* , { nome: 0 } 0 oculta o objeto e 1 mostra somente o objeto*/
-      //http://db4beginners.com/blog/consultas-no-mongodb/
       Usuario.find({ _id: matricula })
         .sort({ nome: 1, _id: 1 })
         .then(usuario => {
@@ -63,7 +60,8 @@ router.get("/disciplinas/notas/edit/:id", async (req, res) => {
             usuario: usuario,
             discID: discID,
             nomeDisc: nomeDisc,
-            semestreTeste: semestreTeste
+            semestreTeste: semestreTeste,
+            edit: false
           });
         })
         .catch(err => {
@@ -86,6 +84,7 @@ router.get("/disciplinas/notas/edit/:id", async (req, res) => {
 router.post("/notas/matricula/:id", eProf, async (req, res) => {
   const matricula = req.body.matricula;
   const nota = req.body.nota;
+  const notaExibida = req.body.nota;
   const semestre = req.body.semestre;
   const disciplina = req.body.disciplina;
   var nome;
@@ -112,7 +111,7 @@ router.post("/notas/matricula/:id", eProf, async (req, res) => {
         );
         res.redirect("/professor");
       });
-    var edit = 0;
+    var edit = false;
     //Salvar nota do aluno
     Usuario.findOne({ _id: matricula })
       .then(usuario => {
@@ -122,12 +121,13 @@ router.post("/notas/matricula/:id", eProf, async (req, res) => {
             usuario.notas[i].semestre == semestre
           ) {
             usuario.notas[i].nota = nota;
-            edit++;
+            edit = true;
             break;
           }
         }
+
         //if salvando aluno editado
-        if (edit > 0) {
+        if (edit == true) {
           usuario
             .save()
             .then(() => {
@@ -148,7 +148,8 @@ router.post("/notas/matricula/:id", eProf, async (req, res) => {
                         discID: discID,
                         nomeDisc: nomeDisc,
                         semestreTeste: semestre,
-                        valor: 0
+                        edit: true,
+                        notaExibida: notaExibida
                       });
                     })
                     .catch(err => {
@@ -181,7 +182,7 @@ router.post("/notas/matricula/:id", eProf, async (req, res) => {
         req.flash("error_msg", "Houve error interno ao testar!!!!!!!!");
         res.redirect("/");
       });
-    edit = 0;
+    edit = false;
     //FInalizando Salvar nota do aluno
   }
 });
