@@ -321,7 +321,8 @@ router.post("/disciplinas/nova", eAdmin, async (req, res) => {
       codigo: req.body.codigo,
       ementa: req.body.ementa,
       curso: req.body.curso,
-      professor: req.body.professor
+      professor: req.body.professor,
+      semestreVigente: "2/2019"
       /* matriculados: [
         { aluno: ["5d9cb6fa369c1d778493fd2b", "MM", "2/2019"] },
         { aluno: ["5d5ee71cb9156b4c28a432d6", "SS", "2/2019"] },

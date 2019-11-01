@@ -30,6 +30,9 @@ const Disciplina = new Schema({
     type: String,
     required: true
   },
+  semestreVigente: {
+    type: String
+  },
   professor: {
     type: Schema.Types.ObjectId,
     ref: "usuarios"

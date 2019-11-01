@@ -1,6 +1,6 @@
 <div class="jumbotron">
     <center>
-        <h2><i class="fas fa-edit"></i> Lançamento de notas: {{disciplina.nome}}</h2>
+        <h2><i class="fas fa-edit"></i> Lançamento de notas: {{nomeDisc}}</h2>
     </center>
 
     <table class="table table-striped table-bordered mt-3">
@@ -18,17 +18,14 @@
             <tr>
                 <td>
                     <form action="/professor/notas/matricula/{{_id}}" method="POST">
+
                         <label for="nome" class="form-control"><strong> {{this.nome}}</strong></label><br>
                         <label for="matricula" class="form-control"><strong>{{id}}</strong></label><br>
                         <input type="hidden" name="matricula" value="{{id}}">
                         <input type="text" class="form-control" name="nota" placeholder="Nota" required><br>
-                        <select name="semestre" class="custom-select form-control">
-                            <option value="2/2019">2/2019</option>
-                            <option value="1/2020">1/2020</option>
-                            <option value="2/2020">2/2020</option>
-                            <option value="1/2021">1/2021</option>
-                            <option value="2/2021">2/2021</option>
-                        </select>
+                        <label for="semestre" class="form-control">{{../semestreTeste}}</label><br>
+                        <input type="hidden" class="form-control" name="semestre" value="{{../semestreTeste}}"
+                            placeholder="Semestre" required>
                         {{#each ../discID}}
                         <input type="hidden" name="disciplina" value="{{text}}">
                         {{/each}}

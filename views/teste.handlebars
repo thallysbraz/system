@@ -33,3 +33,43 @@
     }
 </script>
 <p id="resultado"></p>
+
+
+
+
+{{#each usuario}}
+<p>Name: {{this.nome}} </p>
+
+{{#with this.notas}}
+<p>Nota[{{@index}}]: {{this.[0].nota}} </p>
+{{/with}}
+
+{{/each}}
+<p>semestreTeste: {{semestreTeste}}</p>
+
+<input type="button" onclick="Sumar();" value="Calcular Horas Tradução">
+{{#each usuario}}
+<input type="hidden" id="txtN1" value="{{../nomeDisc}}" />
+<input type="hidden" id="txtN2" value="{{../semestreTeste}}" />
+<script>
+    function Sumar() {
+
+        var n1 = document.getElementById('txtN1').value;
+        var n2 = document.getElementById('txtN2').value;
+
+        var suma = "";
+        if (n1 === n2) {
+            suma = "igual"
+        }
+        else {
+            suma = "diferentes"
+        }
+
+
+        document.getElementById("resultado").innerHTML = suma;
+        /* alert("Número estimado em horas: " + suma1)*/
+    }
+</script>
+<p id="resultado"></p>
+
+{{/each}}
