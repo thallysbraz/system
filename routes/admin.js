@@ -316,34 +316,50 @@ router.post("/disciplinas/nova", eAdmin, async (req, res) => {
   if (erros.length > 0) {
     res.render("admin/adddisciplinas", { erros: erros });
   } else {
-    const novaDisciplina = {
-      nome: req.body.nome,
-      codigo: req.body.codigo,
-      ementa: req.body.ementa,
-      curso: req.body.curso,
-      professor: req.body.professor,
-      semestreVigente: "2/2019"
-      /* matriculados: [
-        { aluno: ["5d9cb6fa369c1d778493fd2b", "MM", "2/2019"] },
-        { aluno: ["5d5ee71cb9156b4c28a432d6", "SS", "2/2019"] },
-        { aluno: ["5d9795601088223e8cc40760", "II", "2/2019"] }
-      ]*/
-    };
-
-    //const prof = req.body.professor;
-    new Disciplina(novaDisciplina)
-      .save()
-      .then(() => {
-        req.flash("success_msg", "Disciplina criada com sucesso!");
-        res.redirect("/admin/disciplinas");
+    const codigo = req.body.codigo;
+    console.log("codigo: ", codigo);
+    Disciplina.findOne({ codigo })
+      .then(disciplina => {
+        if (disciplina) {
+          erros.push({ texto: "Disciplina ja cadastrada" });
+          res.render("admin/adddisciplinas", { erros: erros });
+        } else {
+          const novaDisciplina = {
+            nome: req.body.nome,
+            codigo: req.body.codigo,
+            ementa: req.body.ementa,
+            curso: req.body.curso,
+            professor: req.body.professor,
+            semestreVigente: "2/2019"
+            /* matriculados: [
+            { aluno: ["5d9cb6fa369c1d778493fd2b", "MM", "2/2019"] },
+            { aluno: ["5d5ee71cb9156b4c28a432d6", "SS", "2/2019"] },
+            { aluno: ["5d9795601088223e8cc40760", "II", "2/2019"] }
+          ]*/
+          };
+          //const prof = req.body.professor;
+          new Disciplina(novaDisciplina)
+            .save()
+            .then(() => {
+              req.flash("success_msg", "Disciplina criada com sucesso!");
+              res.redirect("/admin/disciplinas");
+            })
+            .catch(err => {
+              req.flash(
+                "error_msg",
+                "Error ao salvar a disciplina, tente novamente!"
+              );
+              console.log("error: ", err);
+              res.redirect("/admin");
+            });
+        }
       })
       .catch(err => {
         req.flash(
           "error_msg",
-          "Error ao salvar a disciplina, tente novamente!"
+          "Houve error interno, por favor repita o processo"
         );
-        console.log("error: ", err);
-        res.redirect("/admin");
+        res.render("admin/adddisciplinas", { erros: erros });
       });
   }
 });
