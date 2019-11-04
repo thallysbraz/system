@@ -5,19 +5,21 @@
 
         <div class="row">
             {{#each categorias}}
-            <div class="col-sm-4 mt-2">
-                <div class="card card-signin text-center">
+            <center>
+                <div class="card card-signin mt-4" style="width: 50rem;">
                     <div id="cardfinal" class="card-body">
-                        <h3 class="card-title text-center text-uppercase"><i class="fas fa-exclamation-circle"></i>
-                            Aviso: {{nome}}</h3>
-                        <p class="card-text">Descrição: {{slug}}</p>
+                        <h3 class="card-title text-center text-uppercase"><strong><i
+                                    class="fas fa-exclamation-circle"></i>
+                                Aviso: {{nome}}</strong></h3>
+                        <h5>Descrição: {{slug}}</h5>
+                        <h5>Categoria: {{categoria.nome}}</h5>
                         <a href="/categorias/{{slug}}">
                             <button class="btn btn-primary">Mais informações <i
                                     class="far fa-question-circle"></i></button>
                         </a><br>
                     </div>
                 </div>
-            </div>
+            </center>
             {{else}}
             {{/each}}
         </div>

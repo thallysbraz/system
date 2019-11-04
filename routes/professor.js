@@ -3,16 +3,10 @@ const mongoose = require("mongoose");
 const router = express.Router();
 
 require("../models/Usuario");
-require("../models/Categoria");
-require("../models/Postagem");
 require("../models/Disciplina");
-require("../models/Nota");
 
-const Categoria = mongoose.model("categorias");
-const Postagem = mongoose.model("postagens");
 const Disciplina = mongoose.model("disciplinas");
 const Usuario = mongoose.model("usuarios");
-const { eAdmin } = require("../helpers/eAdmin");
 const { eProf } = require("../helpers/eProf");
 
 //rota para pegar a matricula do professor
@@ -45,27 +39,28 @@ router.post("/consulta", eProf, async (req, res) => {
   }*/
 });
 
-//rota par view disciplina/edit
-router.get("/disciplinas/notas/edit/:id", eProf, async (req, res) => {
+//rota para view disciplina/edit
+router.get("/disciplinas/notas/edit/:id", async (req, res) => {
   Disciplina.findOne({ _id: req.params.id })
     .then(disciplina => {
       const matricula = []; //array de alunos
+      var semestreTeste = "0";
       //for para colocar os alunos matriculados dentro de matricula
       for (var i = 0; i < disciplina.matriculados.length; i++) {
-        //matricula.push({ mat: disciplina.matriculados[i].user });
         matricula.push(disciplina.matriculados[i].user);
       }
+      semestreTeste = disciplina.semestreVigente;
       const discID = [];
       discID.push({ text: disciplina._id });
-      const prof = [];
-      prof.push({ text2: disciplina.professor });
+      const nomeDisc = disciplina.nome;
       Usuario.find({ _id: matricula })
+        .sort({ nome: 1, _id: 1 })
         .then(usuario => {
-          //return res.send({ usuario });
           res.render("professor/notas", {
             usuario: usuario,
             discID: discID,
-            prof: prof
+            nomeDisc: nomeDisc,
+            semestreTeste: semestreTeste
           });
         })
         .catch(err => {
@@ -73,8 +68,6 @@ router.get("/disciplinas/notas/edit/:id", eProf, async (req, res) => {
           req.flash("error_msg", "Houve error interno ao testar");
           res.redirect("/");
         });
-      //res.send({ matricula });
-      //res.render("professor/teste", { matricula: matricula });
     })
     .catch(err => {
       console.log("err: ", err);
@@ -88,9 +81,9 @@ router.get("/disciplinas/notas/edit/:id", eProf, async (req, res) => {
 
 //rota para validar e lançar nota
 router.post("/notas/matricula/:id", eProf, async (req, res) => {
-  //const nome = req.body.nome;
   const matricula = req.body.matricula;
   const nota = req.body.nota;
+  const notaExibida = req.body.nota;
   const semestre = req.body.semestre;
   const disciplina = req.body.disciplina;
   var nome;
@@ -108,8 +101,7 @@ router.post("/notas/matricula/:id", eProf, async (req, res) => {
   } else {
     await Disciplina.findOne({ _id: disciplina })
       .then(disciplina => {
-        nome = disciplina.nome;
-        //pegando nome da disciplina
+        nome = disciplina.nome; //pegando nome da disciplina
       })
       .catch(err => {
         req.flash(
@@ -118,96 +110,78 @@ router.post("/notas/matricula/:id", eProf, async (req, res) => {
         );
         res.redirect("/professor");
       });
-
+    var edit = false;
     //Salvar nota do aluno
-    Usuario.findOne({ _id: matricula }).then(usuario => {
-      usuario.notas.push({
-        nota: nota,
-        disciplina: nome,
-        semestre: semestre
-      });
-      usuario
-        .save()
-        .then(() => {
-          Disciplina.findOne({ _id: disciplina })
-            .then(disciplina => {
-              const matricula = []; //array de alunos
-              //for para colocar os alunos matriculados dentro de matricula
-              for (var i = 0; i < disciplina.matriculados.length; i++) {
-                //matricula.push({ mat: disciplina.matriculados[i].user });
-                matricula.push(disciplina.matriculados[i].user);
-              }
-              const discID = [];
-              discID.push({ text: disciplina._id });
-              Usuario.find({ _id: matricula })
-                .then(usuario => {
-                  //return res.send({ usuario });
-                  res.render("professor/notas2", {
-                    usuario: usuario,
-                    discID: discID
-                  });
+    Usuario.findOne({ _id: matricula })
+      .then(usuario => {
+        for (var i = 0; i < usuario.notas.length; i++) {
+          if (
+            usuario.notas[i].disciplina == nome &&
+            usuario.notas[i].semestre == semestre
+          ) {
+            usuario.notas[i].nota = nota;
+            edit = true;
+            break;
+          }
+        }
+
+        //if salvando aluno editado
+        if (edit == true) {
+          usuario
+            .save()
+            .then(() => {
+              Disciplina.findOne({ _id: disciplina })
+                .then(disciplina => {
+                  const matricula = [];
+                  for (var i = 0; i < disciplina.matriculados.length; i++) {
+                    matricula.push(disciplina.matriculados[i].user);
+                  }
+                  const discID = [];
+                  discID.push({ text: disciplina._id });
+                  const nomeDisc = disciplina.nome;
+                  Usuario.find({ _id: matricula })
+                    .sort({ nome: 1, _id: 1 })
+                    .then(usuario => {
+                      res.render("professor/notas", {
+                        usuario: usuario,
+                        discID: discID,
+                        nomeDisc: nomeDisc,
+                        semestreTeste: semestre
+                      });
+                    })
+                    .catch(err => {
+                      console.log(err);
+                      req.flash("error_msg", "Houve error interno ao testar");
+                      res.redirect("/");
+                    });
                 })
                 .catch(err => {
-                  console.log(err);
-                  req.flash("error_msg", "Houve error interno ao testar");
-                  res.redirect("/");
+                  req.flash(
+                    "error_msg",
+                    "Houve error ao carregar o formulario de lançamento"
+                  );
+                  res.redirect("/professor");
                 });
             })
             .catch(err => {
-              req.flash(
-                "error_msg",
-                "Houve error ao carregar o formulario de lançamento"
-              );
-              res.redirect("/professor");
+              console.log("error ao adicionar disciplina ao aluno: ", err);
+              res.redirect("/admin/disciplinas");
             });
-        })
-        .catch(err => {
-          console.log("error ao adicionar disciplina ao aluno: ", err);
-          res.redirect("/admin/disciplinas");
-        });
-    });
+        } else {
+          req.flash(
+            "error_msg",
+            "Houve error interno. Semestre inválido, por favor, repita o processo"
+          );
+          res.redirect("/");
+        }
+      })
+      .catch(err => {
+        req.flash("error_msg", "Houve error interno ao testar!!!!!!!!");
+        res.redirect("/");
+      });
+    edit = false;
     //FInalizando Salvar nota do aluno
   }
-});
-
-router.get("/testando", async (req, res) => {
-  Disciplina.findOne({ _id: "5db73527ae013526809abdb2" })
-    .then(disciplina => {
-      const matricula = []; //array de alunos
-      //for para colocar os alunos matriculados dentro de matricula
-      for (var i = 0; i < disciplina.matriculados.length; i++) {
-        //matricula.push({ mat: disciplina.matriculados[i].user });
-        matricula.push(disciplina.matriculados[i].user);
-      }
-      const discID = [];
-      discID.push({ text: disciplina._id });
-      const prof = [];
-      prof.push({ text2: disciplina.professor });
-      Usuario.find({ _id: matricula })
-        .then(usuario => {
-          //return res.send({ usuario });
-          res.render("professor/notas", {
-            usuario: usuario,
-            discID: discID,
-            prof: prof
-          });
-        })
-        .catch(err => {
-          console.log(err);
-          req.flash("error_msg", "Houve error interno ao testar");
-          res.redirect("/");
-        });
-      //res.send({ matricula });
-      //res.render("professor/teste", { matricula: matricula });
-    })
-    .catch(err => {
-      console.log("err: ", err);
-      req.flash(
-        "error_msg",
-        "Houve error ao carregar o formulario de lançamento"
-      );
-      res.redirect("/professor");
-    });
 });
 
 module.exports = router;

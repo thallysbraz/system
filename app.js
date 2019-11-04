@@ -17,6 +17,7 @@ require("./config/auth")(passport);
 const Categoria = mongoose.model("categorias");
 const Postagem = mongoose.model("postagens");
 const Disciplina = mongoose.model("disciplinas");
+const Usuario = mongoose.model("usuarios");
 const admin = require("./routes/admin");
 const professor = require("./routes/professor");
 const usuarios = require("./routes/usuario");
@@ -182,11 +183,10 @@ app.get("/disciplinas", (req, res) => {
     });
 });
 
-app.get("/teste", (req, res) => {
-  const passSenha = Math.random()
-    .toString(36)
-    .slice(-8);
-  res.send({ passSenha });
+//possivelmente poderei usar esse teste
+app.get("/teste", async (req, res) => {
+  const valor = 7;
+  res.render("teste", { valor: valor });
 });
 
 app.use("/admin", admin); // rota admin

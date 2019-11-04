@@ -6,6 +6,9 @@ const Alunos = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: "usuarios"
+  },
+  semestre: {
+    type: String
   }
 });
 
@@ -26,6 +29,9 @@ const Disciplina = new Schema({
   curso: {
     type: String,
     required: true
+  },
+  semestreVigente: {
+    type: String
   },
   professor: {
     type: Schema.Types.ObjectId,

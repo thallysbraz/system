@@ -7,7 +7,6 @@ const Nota = new Schema({
   },
   disciplina: {
     type: String
-    //ref: "disciplinas"
   },
   semestre: {
     type: String

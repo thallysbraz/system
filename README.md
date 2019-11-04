@@ -67,11 +67,11 @@ Lista de funcionalidades a serem desenvolvidas e status de progresso
 - ~~fazer validações nas rotas de adicionar aluno.~~
 - ~~Fazer validações nas rotas de adicionar a nota do aluno.~~
 - ~~continuar arrumando views e validações nas adição de nota.~~
-- Refatorar o redirecionamento em rotas e views
+- ~~Refatorar o redirecionamento em rotas e views~~
 - ~~Refatorar cadastro de usuario.~~
 - ~~Refatorar o envio de email.~~
 - ~~Fazer gerador de senha aleatório para o usuário.~~
-- Refatorar o codigo para deixar mais limpo e excluir comentarios desnecessarios.
+- ~~Refatorar o codigo para deixar mais limpo e excluir comentarios desnecessarios.~~
 - Se der tempo, refatora algumas partes do front para deixar visualmente mais bonito.
 - fazer deploy da aplicação no heroku.
 

@@ -1,0 +1,75 @@
+<input type="hidden" id="txtN1" value="{{valor}}" />
+<input type="hidden" id="txtN2" value="{{valor}}" />
+<input type="hidden" id="txtN3" value="{{valor}}" />
+<input type="hidden" id="txtN4" value="{{valor}}" />
+<input type="hidden" id="txtN5" value="{{valor}}" />
+<input type="hidden" id="txtN6" value="{{valor}}" />
+<input type="hidden" id="txtN7" value="{{valor}}" />
+<input type="hidden" id="txtN8" value="{{valor}}" />
+<input type="hidden" id="txtN9" value="{{valor}}" />
+
+<input type="button" onclick="Sumar();" value="Calcular Horas Tradução">
+
+<script>
+    function Sumar() {
+        var n7 = document.getElementById('txtN7').value; /*Fator tempo*/
+        var n8 = n7.replace(',', '.');
+        var cem = (n8) / 4; /*Calculo de fator*/
+        var n1 = document.getElementById('txtN1').value; /*100%*/
+        var n2 = document.getElementById('txtN2').value; /*101%*/
+
+        var suma = ((parseInt(n1) + parseInt(n2)) * cem); /*Resultado somenta dos valores de 100 e 101*/
+
+        var n3 = document.getElementById('txtN3').value; /*95-99%*/
+        var n4 = document.getElementById('txtN4').value; /*85%-94%*/
+        var n5 = document.getElementById('txtN5').value; /*75%-84*/
+        var n6 = document.getElementById('txtN6').value; /*50%-74%*/
+        var n9 = document.getElementById('txtN9').value; /*No Match*/
+
+        var suma1 = (((parseInt(n3) + parseInt(n4) + parseInt(n5) + parseInt(n6) + parseInt(n9)) * n8) + suma);
+
+        document.getElementById("resultado").innerHTML = suma1;
+        /* alert("Número estimado em horas: " + suma1)*/
+    }
+</script>
+<p id="resultado"></p>
+
+
+
+
+{{#each usuario}}
+<p>Name: {{this.nome}} </p>
+
+{{#with this.notas}}
+<p>Nota[{{@index}}]: {{this.[0].nota}} </p>
+{{/with}}
+
+{{/each}}
+<p>semestreTeste: {{semestreTeste}}</p>
+
+<input type="button" onclick="Sumar();" value="Calcular Horas Tradução">
+{{#each usuario}}
+<input type="hidden" id="txtN1" value="{{../nomeDisc}}" />
+<input type="hidden" id="txtN2" value="{{../semestreTeste}}" />
+<script>
+    function Sumar() {
+
+        var n1 = document.getElementById('txtN1').value;
+        var n2 = document.getElementById('txtN2').value;
+
+        var suma = "";
+        if (n1 === n2) {
+            suma = "igual"
+        }
+        else {
+            suma = "diferentes"
+        }
+
+
+        document.getElementById("resultado").innerHTML = suma;
+        /* alert("Número estimado em horas: " + suma1)*/
+    }
+</script>
+<p id="resultado"></p>
+
+{{/each}}

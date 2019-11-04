@@ -7,9 +7,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const passport = require("passport");
-const mailer = require("../modules/mailer");
 const nodemailer = require("nodemailer");
-const path = require("path");
 
 require("dotenv").config();
 require("../models/Usuario");
@@ -25,118 +23,110 @@ router.get("/registro", (req, res) => {
 
 //validação de usuário
 router.post("/registro", (req, res) => {
-  var erros = [];
-  if (
-    !req.body.nome ||
-    typeof req.body.nome == undefined ||
-    req.body.nome == null
-  ) {
-    erros.push({ texto: "Nome inválido" });
-  }
-  if (
-    !req.body.email ||
-    typeof req.body.email == undefined ||
-    req.body.email == null
-  ) {
-    erros.push({ texto: "E-mail inválido" });
-  }
-  if (
-    !req.body.senha ||
-    typeof req.body.senha == undefined ||
-    req.body.senha == null
-  ) {
-    erros.push({ texto: "Senha inválido" });
-  }
-  if (req.body.senha.length < 4) {
-    erros.push({ texto: "Senha muito curta" });
-  }
-  if (req.body.senha != req.body.senha2) {
-    erros.push({ texto: "as senhas são diferentes" });
-  }
-  if (erros.length > 0) {
-    res.render("usuarios/registro", { erros: erros });
-  } else {
-    Usuario.findOne({ email: req.body.email })
-      .then(usuario => {
-        if (usuario) {
-          req.flash("error_msg", "Email ja registrado!");
-          res.redirect("/usuarios/registro");
-        } else {
-          //gera uma password convertendo em base36 e depois usando somente os ultimos 8 caracteres
-          const passSenha = Math.random()
-            .toString(36)
-            .slice(-8);
-          console.log("passSenha: ", passSenha);
-          const novoUsuario = new Usuario({
-            nome: req.body.nome,
-            email: req.body.email,
-            senha: passSenha,
-            eProf: req.body.professor,
-            eAdmin: req.body.eAdmin
-          });
-          bcrypt.genSalt(10, (erro, salt) => {
-            bcrypt.hash(novoUsuario.senha, salt, (erro, hash) => {
-              if (erro) {
-                req.flash("error_msg", "Error ao salvar usuário");
-                res.redirect("/");
-              }
-              novoUsuario.senha = hash;
-              novoUsuario
-                .save()
-                .then(() => {
-                  //iniciando envio de email
-                  let transporter = nodemailer.createTransport({
-                    service: "gmail",
-                    auth: {
-                      user: process.env.EMAIL,
-                      pass: process.env.PASSWORD
-                    }
-                  });
-                  const nom = novoUsuario.nome;
-                  const text =
-                    nom +
-                    ", use seu email e senha: " +
-                    passSenha +
-                    ". Para entrar no portal da faculdade pelo link http://localhost:3000";
-                  let mailOptions = {
-                    from: "",
-                    to: req.body.email,
-                    subject: "Seja bem-vindo", //assunto
-                    html: global.ID.replace("{0}", text)
-                  };
-
-                  transporter.sendMail(mailOptions, function(err, data) {
-                    if (err) {
-                      req.flash(
-                        "error_msg",
-                        "Error ao criar o usuário, tente novamente!"
-                      );
-                      res.redirect("/usuarios/registro");
-                      //console.log("error occurs: ", err);
-                    } else {
-                      console.log("email enviado!!!");
-                    }
-                  });
-                  //finalizando envio de email
-                  req.flash("success_msg", "Usuário criado com sucesso!");
-                  res.redirect("/");
-                })
-                .catch(err => {
-                  req.flash(
-                    "error_msg",
-                    "Error ao criar o usuário, tente novamente!"
-                  );
-                  console.log("errCath: ", err);
-                  res.redirect("/usuarios/registro");
-                });
+  try {
+    var erros = [];
+    if (
+      !req.body.nome ||
+      typeof req.body.nome == undefined ||
+      req.body.nome == null
+    ) {
+      erros.push({ texto: "Nome inválido" });
+    }
+    if (
+      !req.body.email ||
+      typeof req.body.email == undefined ||
+      req.body.email == null
+    ) {
+      erros.push({ texto: "E-mail inválido" });
+    }
+    if (erros.length > 0) {
+      res.render("usuarios/registro", { erros: erros });
+    } else {
+      Usuario.findOne({ email: req.body.email })
+        .then(usuario => {
+          if (usuario) {
+            req.flash("error_msg", "Email ja registrado!");
+            res.redirect("/usuarios/registro");
+          } else {
+            //gera uma password convertendo em base36 e depois usando somente os ultimos 8 caracteres
+            const passSenha = Math.random()
+              .toString(36)
+              .slice(-8);
+            console.log("passSenha: ", passSenha);
+            const novoUsuario = new Usuario({
+              nome: req.body.nome,
+              email: req.body.email,
+              senha: passSenha,
+              eProf: req.body.professor,
+              eAdmin: req.body.eAdmin
             });
-          });
-        }
-      })
-      .catch(err => {
-        req.flash("error_msg", "Houve error interno");
-        res.redirect("/");
-      });
+            bcrypt.genSalt(10, (erro, salt) => {
+              bcrypt.hash(novoUsuario.senha, salt, (erro, hash) => {
+                if (erro) {
+                  req.flash("error_msg", "Error ao salvar usuário");
+                  res.redirect("/");
+                }
+                novoUsuario.senha = hash;
+                novoUsuario
+                  .save()
+                  .then(() => {
+                    //iniciando envio de email
+                    let transporter = nodemailer.createTransport({
+                      service: "gmail",
+                      auth: {
+                        user: process.env.EMAIL,
+                        pass: process.env.PASSWORD
+                      }
+                    });
+                    const nom = novoUsuario.nome;
+                    const text =
+                      nom +
+                      ", use seu email e senha: " +
+                      passSenha +
+                      ". Para entrar no portal da faculdade pelo link http://localhost:3000";
+                    let mailOptions = {
+                      from: "",
+                      to: req.body.email,
+                      subject: "Seja bem-vindo", //assunto
+                      html: global.ID.replace("{0}", text)
+                    };
+
+                    transporter.sendMail(mailOptions, function(err, data) {
+                      if (err) {
+                        req.flash(
+                          "error_msg",
+                          "Error ao criar o usuário, tente novamente!"
+                        );
+                        res.redirect("/usuarios/registro");
+                        //console.log("error occurs: ", err);
+                      } else {
+                        console.log("email enviado!!!");
+                      }
+                    });
+                    //finalizando envio de email
+                    req.flash("success_msg", "Usuário criado com sucesso!");
+                    res.redirect("/");
+                  })
+                  .catch(err => {
+                    req.flash(
+                      "error_msg",
+                      "Error ao criar o usuário, tente novamente!"
+                    );
+                    console.log("errCath: ", err);
+                    res.redirect("/usuarios/registro");
+                  });
+              });
+            });
+          }
+        })
+        .catch(err => {
+          req.flash("error_msg", "Houve error interno");
+          res.redirect("/");
+        });
+    }
+  } catch (err) {
+    console.log("err: ", err);
+    res.send("error no registro");
   }
 });
 
@@ -306,18 +296,27 @@ router.post("/reset_password", async (req, res) => {
 router.get("/historico", async (req, res) => {
   try {
     const user = req.user.id;
-    Usuario.findOne({ _id: user })
-      .sort({ notas: "desc" })
+    await Usuario.findOne({ _id: user })
+      .sort({ semestre: 1 })
       .then(usuario => {
         const mencao = [];
         for (var i = 0; i < usuario.notas.length; i++) {
-          mencao.push({
-            nota: usuario.notas[i].nota,
-            disciplina: usuario.notas[i].disciplina,
-            semestre: usuario.notas[i].semestre
-          });
+          if (usuario.notas[i].nota >= 5) {
+            mencao.push({
+              nota: usuario.notas[i].nota,
+              disciplina: usuario.notas[i].disciplina,
+              semestre: usuario.notas[i].semestre,
+              status: true
+            });
+          } else {
+            mencao.push({
+              nota: usuario.notas[i].nota,
+              disciplina: usuario.notas[i].disciplina,
+              semestre: usuario.notas[i].semestre,
+              status: false
+            });
+          }
         }
-        //res.send({ disciplinas });
         res.render("usuarios/index", { mencao: mencao });
       })
       .catch(err => {
