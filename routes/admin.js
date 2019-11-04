@@ -291,8 +291,8 @@ router.get("/disciplinas", eAdmin, (req, res) => {
 
 //view para disciplina/add
 router.get("/disciplinas/add", eAdmin, (req, res) => {
-  Usuario.find()
-    .sort({ date: "desc" })
+  Usuario.find({ eAdmin: false, eProf: true })
+    .sort({ codigo: 1 })
     .then(usuarios => {
       res.render("admin/adddisciplinas", { usuarios: usuarios });
     })
