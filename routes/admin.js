@@ -6,15 +6,16 @@ require("../models/Usuario");
 require("../models/Categoria");
 require("../models/Postagem");
 require("../models/Disciplina");
-require("../models/Nota");
+require("../models/Cursos");
 
 const Categoria = mongoose.model("categorias");
 const Postagem = mongoose.model("postagens");
 const Disciplina = mongoose.model("disciplinas");
 const Usuario = mongoose.model("usuarios");
+const Curso = mongoose.model("cursos");
 const { eAdmin } = require("../helpers/eAdmin");
 
-router.get("/", (req, res) => {
+router.get("/", eAdmin, (req, res) => {
   res.render("admin/index");
 });
 
@@ -464,6 +465,19 @@ router.post("/disciplinas/deletar", eAdmin, (req, res) => {
     .catch(err => {
       req.flash("error_msg", "Error ao deletar categoria!");
       res.redirect("/admin/categorias");
+    });
+});
+
+// CURSOS -----
+
+router.get("/cursos", async (req, res) => {
+  Curso.find()
+    .then(cursos => {
+      res.render("cursos/index", { cursos: cursos });
+    })
+    .catch(err => {
+      console.log("error ao adicionar disciplina ao aluno: ", err);
+      res.redirect("/admin/disciplinas");
     });
 });
 

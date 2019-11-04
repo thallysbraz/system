@@ -24,8 +24,21 @@ const Usuario = new Schema({
     unique: true
   },
   curso: {
+    type: Schema.Types.ObjectId,
+    ref: "cursos",
+    required: true
+  },
+  cpf: {
     type: String,
-    require: true
+    required: true
+  },
+  rg: {
+    type: String,
+    required: true
+  },
+  sexo: {
+    type: String,
+    required: true
   },
   eAdmin: {
     type: Boolean,

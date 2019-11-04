@@ -27,8 +27,8 @@ const Disciplina = new Schema({
     required: true
   },
   curso: {
-    type: String,
-    required: true
+    type: Schema.Types.ObjectId,
+    ref: "cursos"
   },
   semestreVigente: {
     type: String

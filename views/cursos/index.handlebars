@@ -12,21 +12,18 @@
                             <h2>Nome</h2>
                         </th>
                         <th scope="col">
-                            <h2>Ementa</h2>
+                            <h2>Codigo</h2>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each disciplinas}}
+                    {{#each cursos}}
                     <tr>
                         <th scope="row">
-                            <h4>{{codigo}}</h4>
+                            <h4>{{nome}}</h4>
                         </th>
                         <td>
-                            <h4>{{nome}}</h4>
-                        </td>
-                        <td>
-                            <h4>{{ementa}}</h4>
+                            <h4>{{codigo}}</h4>
                         </td>
                     </tr>
                     {{else}}
