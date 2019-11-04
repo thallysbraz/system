@@ -17,12 +17,12 @@ const { eAdmin } = require("../helpers/eAdmin");
 const Usuario = mongoose.model("usuarios");
 const Disciplina = mongoose.model("disciplinas");
 
-router.get("/registro", (req, res) => {
+router.get("/registro", eAdmin, (req, res) => {
   res.render("usuarios/registro");
 });
 
 //validação de usuário
-router.post("/registro", (req, res) => {
+router.post("/registro", eAdmin, (req, res) => {
   try {
     var erros = [];
     if (
