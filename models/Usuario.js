@@ -23,6 +23,10 @@ const Usuario = new Schema({
     required: true,
     unique: true
   },
+  curso: {
+    type: String,
+    require: true
+  },
   eAdmin: {
     type: Boolean,
     default: 0

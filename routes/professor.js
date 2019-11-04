@@ -40,7 +40,7 @@ router.post("/consulta", eProf, async (req, res) => {
 });
 
 //rota para view disciplina/edit
-router.get("/disciplinas/notas/edit/:id", async (req, res) => {
+router.get("/disciplinas/notas/edit/:id", eProf, async (req, res) => {
   Disciplina.findOne({ _id: req.params.id })
     .then(disciplina => {
       const matricula = []; //array de alunos
@@ -185,37 +185,3 @@ router.post("/notas/matricula/:id", eProf, async (req, res) => {
 });
 
 module.exports = router;
-
-//rota para testar como mostrar o professor as suas disciplinas
-/*router.get("/:disciplinaId", async (req, res) => {
-  try {
-    const professor = req.params.disciplinaId;
-    console.log("professor: ", professor);
-    const disciplina = await Disciplina.find({ professor });
-    return res.send({ disciplina });
-  } catch (err) {
-    console.log(err);
-    return res.status(400).send({ error: "Error, loading disciplina" });
-  }
-});*/
-
-//rota para tentar mostrar somente os usuarios dessa disciplina (aprendendo)
-/*router.get("/:disciplinaId", async (req, res) => {
-  try {
-    const professor = req.params.disciplinaId;
-    console.log("professor: ", professor);
-    Disciplina.find({ professor })
-      .then(disciplina => {
-        const erros = disciplina.matriculados[0].user;
-        return res.send(erros);
-        //res.render("professor/teste", { disciplina: disciplina });
-      })
-      .catch(err => {
-        console.log("error: ", err);
-        return res.send("Error");
-      });
-  } catch (err) {
-    console.log(err);
-    return res.status(400).send({ error: "Error, loading disciplina" });
-  }
-});*/

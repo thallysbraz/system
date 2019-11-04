@@ -58,7 +58,8 @@ router.post("/registro", (req, res) => {
               email: req.body.email,
               senha: passSenha,
               eProf: req.body.professor,
-              eAdmin: req.body.eAdmin
+              eAdmin: req.body.eAdmin,
+              curso: req.body.curso
             });
             bcrypt.genSalt(10, (erro, salt) => {
               bcrypt.hash(novoUsuario.senha, salt, (erro, hash) => {
@@ -317,7 +318,50 @@ router.get("/historico", async (req, res) => {
             });
           }
         }
-        res.render("usuarios/index", { mencao: mencao });
+        res.render("usuarios/index", { mencao: mencao, usuario: usuario });
+      })
+      .catch(err => {
+        console.log("err: ", err);
+        req.flash("error_msg", "Error!");
+        res.redirect("/");
+      });
+  } catch (err) {
+    res.redirect("/usuarios/login");
+  }
+});
+router.get("/dados", async (req, res) => {
+  try {
+    const user = req.user.id;
+    var aprovado = 0;
+    var reprovado = 0;
+    await Usuario.findOne({ _id: user })
+      .then(usuario => {
+        const mencao = [];
+        for (var i = 0; i < usuario.notas.length; i++) {
+          if (usuario.notas[i].nota >= 5) {
+            mencao.push({
+              nota: usuario.notas[i].nota,
+              disciplina: usuario.notas[i].disciplina,
+              semestre: usuario.notas[i].semestre,
+              status: true
+            });
+            aprovado++;
+          } else {
+            mencao.push({
+              nota: usuario.notas[i].nota,
+              disciplina: usuario.notas[i].disciplina,
+              semestre: usuario.notas[i].semestre,
+              status: false
+            });
+            reprovado++;
+          }
+        }
+        res.render("usuarios/dados", {
+          mencao: mencao,
+          usuario: usuario,
+          reprovado,
+          aprovado
+        });
       })
       .catch(err => {
         console.log("err: ", err);
