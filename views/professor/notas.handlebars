@@ -21,11 +21,7 @@
                         <label for="nome" class="form-control"><strong> {{this.nome}}</strong></label><br>
                         <label for="matricula" class="form-control"><strong>{{id}}</strong></label><br>
                         <input type="hidden" name="matricula" value="{{id}}">
-                        {{#if ../edit}}
-                        <label for="nome" class="form-control">{{../notaExibida}}</label><br>
-                        {{else}}
                         <input type="text" class="form-control" name="nota" placeholder="Nota" required><br>
-                        {{/if}}
                         <label for="semestre" class="form-control">{{../semestreTeste}}</label><br>
                         <input type="hidden" class="form-control" name="semestre" value="{{../semestreTeste}}"
                             placeholder="Semestre" required>

@@ -60,8 +60,7 @@ router.get("/disciplinas/notas/edit/:id", async (req, res) => {
             usuario: usuario,
             discID: discID,
             nomeDisc: nomeDisc,
-            semestreTeste: semestreTeste,
-            edit: false
+            semestreTeste: semestreTeste
           });
         })
         .catch(err => {
@@ -147,9 +146,7 @@ router.post("/notas/matricula/:id", eProf, async (req, res) => {
                         usuario: usuario,
                         discID: discID,
                         nomeDisc: nomeDisc,
-                        semestreTeste: semestre,
-                        edit: true,
-                        notaExibida: notaExibida
+                        semestreTeste: semestre
                       });
                     })
                     .catch(err => {
