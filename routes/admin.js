@@ -471,14 +471,18 @@ router.post("/disciplinas/deletar", eAdmin, (req, res) => {
 // CURSOS -----
 
 router.get("/cursos", async (req, res) => {
-  Curso.find()
-    .then(cursos => {
-      res.render("cursos/index", { cursos: cursos });
-    })
-    .catch(err => {
-      console.log("error ao adicionar disciplina ao aluno: ", err);
-      res.redirect("/admin/disciplinas");
-    });
+  try {
+    Curso.find()
+      .then(cursos => {
+        res.render("cursos/index", { cursos: cursos });
+      })
+      .catch(err => {
+        console.log("error ao listar os cursos: ", err);
+        res.redirect("/");
+      });
+  } catch {
+    res.redirect("/");
+  }
 });
 
 module.exports = router;

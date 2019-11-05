@@ -12,15 +12,18 @@ require("./models/Usuario");
 require("./models/Categoria");
 require("./models/Postagem");
 require("./models/Disciplina");
+require("./models/Cursos");
 require("./config/auth")(passport);
 
 const Categoria = mongoose.model("categorias");
 const Postagem = mongoose.model("postagens");
 const Disciplina = mongoose.model("disciplinas");
 const Usuario = mongoose.model("usuarios");
+const Curso = mongoose.model("cursos");
 const admin = require("./routes/admin");
 const professor = require("./routes/professor");
 const usuarios = require("./routes/usuario");
+
 const app = express();
 
 //configurações
@@ -181,6 +184,22 @@ app.get("/disciplinas", (req, res) => {
       req.flash("error_msg", "Error ao listar disciplinas");
       res.redirect("/");
     });
+});
+
+app.get("/cursos", async (req, res) => {
+  try {
+    Curso.find()
+      .then(cursos => {
+        res.render("cursos/index", { cursos: cursos });
+      })
+      .catch(err => {
+        console.log("erro aqui2");
+        res.redirect("/");
+      });
+  } catch (err) {
+    console.log("erro aqui2");
+    res.redirect("/");
+  }
 });
 
 //possivelmente poderei usar esse teste
