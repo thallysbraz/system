@@ -470,6 +470,7 @@ router.post("/disciplinas/deletar", eAdmin, (req, res) => {
 
 // CURSOS -----
 
+//rota pra add curso
 router.get("/cursos", async (req, res) => {
   try {
     Curso.find()
